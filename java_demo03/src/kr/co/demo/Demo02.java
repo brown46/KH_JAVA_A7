@@ -26,7 +26,7 @@ public class Demo02 {
 		
 		System.out.println("문자열 '"+str1+"'을 변수 str1에 저장하였습니다.");
 		
-		
+		 
 		//지금은 필요없음.
 		sc.close();
 	}
