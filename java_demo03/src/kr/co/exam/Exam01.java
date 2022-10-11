@@ -1,4 +1,4 @@
-package kr.co.demo;
+package kr.co.exam;
 import java.util.*;
 public class Exam01 {
 
