@@ -32,6 +32,7 @@ public class Demo04 {
 		 * 
 		 */
 		
+		/*
 		int x ;
 		for(x=1;x<=3;x++) {
 			System.out.printf("반복 횟수 및 변수에 저장된 값 ->%d회/%d\n",x,x);
@@ -42,8 +43,60 @@ public class Demo04 {
 			System.out.printf("반복 횟수 및 변수에 저장된 값 ->%d회/%d\n",x2,x2);
 		}
 		//System.out.printf("변수 x에 저장된 최종값->%d",x2);
-			
-
+		
+		*/
+		/*
+		for(int x3=1;x3<=3;) {
+			System.out.printf("%d 번째 반복\n",x3);
+			x3++;
+		}
+		*/
+		/*
+		for(int x4 =1;;x4++) {
+			System.out.printf("%d번째 반복 \n",x4);
+			if(x4>=3) break;
+		}
+		*/
+		/*
+		int x5=1;
+		for(;x5<=3;x5++) {
+			System.out.printf("%d번째 반복 \n",x5);
+		}
+		*/
+		
+		//일정 횟수 반복을 위한 반복문(0부터 시작)
+		/*
+		for(int x6=0; x6<10;x6++) {
+			System.out.printf("총 10번 반복중 %d번 반복함\n",x6+1);
+		}
+		*/
+		
+		//1 ~ n 까지의 범위에서 m의 배수에 해당하는 값만 출력할때
+		/*int n=100;
+		int m=7;
+		for (int x7 =1 ; x7<= n;x7++) {
+			if(x7%m==0) {
+				System.out.printf("%d\n",x7);
+			}
+		}
+		*/
+		
+		//누적합을 구하기 위한 반복문
+		int sum1 = 0;
+		for(int x8=1;x8<=10;x8++) {
+			sum1+=x8;
+		}
+		System.out.printf("1~10 까지의 누적합은 %d입니다\n",sum1);
+		
+	
+				int sum2 = 0;
+				for(int x8=0;x8<=100;x8+=2) {
+					sum2+=x8;
+				}
+				System.out.printf("1~100 까지의 짝수 누적합은 %d입니다\n",sum2);
+				
+		
 	}
 
+	
 }
