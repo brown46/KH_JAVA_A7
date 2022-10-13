@@ -12,7 +12,7 @@ public class Exam03 {
 		 */
 
 		Scanner sc = new Scanner(System.in);
-		int size, input2;
+		int size, temp;
 		int arr[];
 		System.out.println("배열의 크기를 입력해주세요(2~5)");
 		while (true) {
@@ -25,22 +25,25 @@ public class Exam03 {
 				System.out.println("다시 입력해 주세요");
 			}
 		}
-		System.out.println("초기화 할 정수를 입력해 주세요 (1~10)");
+
 		while (true) {
-			input2 = sc.nextInt();
-			if (1 <= input2 && input2 <= 10) {
-				int i = 0;
-				while (i < size) {
-					arr[i] = input2;
+
+			int i = 0;
+			while (i < size) {
+				System.out.println("초기화 할 정수를 입력해 주세요 (1~10)");
+				temp = sc.nextInt();
+				if (1 <= temp && temp <= 10) {
+					arr[i] = temp;
 					i++;
+				} else {
+					System.out.println("다시 입력해 주세요");
 				}
-				for(int j=0;j<size;j++) {
-					System.out.println(arr[j]);
-				}
-				break;
-			}else {
-				System.out.println("다시 입력해 주세요");
 			}
+			for (int j = 0; j < size; j++) {
+				System.out.println(arr[j]);
+			}
+			break;
+
 		}
 	}
 
