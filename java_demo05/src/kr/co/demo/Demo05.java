@@ -26,9 +26,7 @@ public class Demo05 {
 
 		int arr2[]= arr1.clone();//복제. 기존 배열에 영향이 가지 않는다.(얕은복사가 아님)
 		
-		for(int i=0; i<arr1.length;i++) {
-			System.out.printf("%d\t",arr1[i]);
-		}
+		System.out.println(Arrays.toString(arr2));
 
 
 	}
