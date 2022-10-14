@@ -13,22 +13,28 @@ public class Exam06 {
 		int odd[] = new int[0];
 		int count = 0;
 		Random random = new Random();
-		while (true) {
-			int temp[] = new int[odd.length + 1];
-			for (int j = 0; j < odd.length; j++) {
-				temp[j] = odd[j];
-			}
+		int i=0;
+		while (i<5) {
+		//	int temp[] = new int[odd.length + 1];
+			
+//			for (int j = 0; j < odd.length; j++) {
+//				temp[j] = odd[j];
+//			}
+//			System.arraycopy(odd, 0, temp,0 , odd.length);
+			
+			odd =Arrays.copyOf(odd,odd.length+1);
 			int odd1 = random.nextInt(101);
+			odd[odd.length-1]=odd1;
 //			int odd1 = (int)(Math.random()*101);
-			if (odd1 % 2 == 1) {
-				temp[count] = odd1;
-				odd = temp;
-				count++;
-				
+		//	if (odd1 % 2 == 1) {
+			//	temp[count] = odd1;
+		//		odd = temp;
+			//	count++;
+				i++;
 			}
-			if (count == 5)
-				break;
-		}
+			
+	
+	
 		System.out.println(Arrays.toString(odd));
 		
 		
