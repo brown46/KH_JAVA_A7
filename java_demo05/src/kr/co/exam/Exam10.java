@@ -71,22 +71,22 @@ public class Exam10 {
 		 * 		3번째(2번 인덱스)에 추가할 배열로 만들어 추가하낟.
 		 */
 	arr2=Arrays.copyOf(arr2, arr2.length+1);
-	arr2[2][0]=0;
-	for(int i=0;i<10;i++) {
-		arr2[2]=Arrays.copyOf(arr2[2], arr2[2].length+1);
-		arr2[2][i]=arr2[0][i]+arr2[1][i];
-	}
-//	int arr3[][]=new int[3][10];
-//	for(int i=0;i<2;i++) {
-//		for(int j=0;j<10;j++) {
-//			arr3[i][j]=arr2[i][j];
-//		}
-//	}
+	
 //	for(int i=0;i<10;i++) {
-//		arr3[2][i]=arr2[0][i]+arr2[1][i];
+//		arr2[2]=Arrays.copyOf(arr2[2], arr2[2].length+1);
+//		arr2[2][i]=arr2[0][i]+arr2[1][i];
 //	}
-//	
-	System.out.println(Arrays.deepToString(arr2));
+	int arr3[][]=new int[3][10];
+	for(int i=0;i<2;i++) {
+		for(int j=0;j<10;j++) {
+			arr3[i][j]=arr2[i][j];
+		}
+	}
+	for(int i=0;i<10;i++) {
+		arr3[2][i]=arr2[0][i]+arr2[1][i];
+	}
+	
+	System.out.println(Arrays.deepToString(arr3));
 	}
 	
 
