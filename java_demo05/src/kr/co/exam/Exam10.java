@@ -10,10 +10,15 @@ public class Exam10 {
 		 * 1. 10~99 사이의 랜덤값을 10개 생성하여 정수 배열에 추가한다.
 		 * 
 		 */
-		int arr1[]= new int[10];
-		
-		for(int i=0;i<10;i++) {
-			arr1[i]= (int)(Math.random()*99+1);
+//		int arr1[]= new int[10];
+//		
+//		for(int i=0;i<10;i++) {
+//			arr1[i]= (int)(Math.random()*99+1);
+//		}
+		int arr1[] = new int[0];
+		for(;arr1.length<10;) {
+			arr1=Arrays.copyOf(arr1, arr1.length+1);
+			arr1[arr1.length-1]= (int)(Math.random()*91)+10;
 		}
 		
 		
@@ -22,21 +27,27 @@ public class Exam10 {
 		 * 
 		 */
 		int arr2[][]=new int[2][0];
-		int even=0;
-		int odd=0;
+//		int even=0;
+//		int odd=0;
 		
 		
 		
 		for(int i=0;i<10;i++) {
-			if(arr1[i]%2==0) {
-				arr2[0]=Arrays.copyOf(arr2[0], arr2[0].length+1);
-				arr2[0][even] =arr1[i];
-				even++;
-			}else {
-				arr2[1]=Arrays.copyOf(arr2[1], arr2[1].length+1);
-				arr2[1][odd] =arr1[i];
-				odd++;
-			}
+			
+			int idx =arr1[i]%2;
+			arr2[idx]=Arrays.copyOf(arr2[0], arr2[0].length+1);
+			arr2[idx][arr2[idx].length-1]=arr1[i];
+//			if(arr1[i]%2==0) {
+//				arr2[0]=Arrays.copyOf(arr2[0], arr2[0].length+1);
+//				arr2[0][even] =arr1[i];
+//				even++;
+//				//even을 쓰는대신
+//				//arr2[0][arr2[0].length-1]=arr1[i];
+//			}else {
+//				arr2[1]=Arrays.copyOf(arr2[1], arr2[1].length+1);
+//				arr2[1][odd] =arr1[i];
+//				odd++;
+//			}
 		}
 		System.out.println(Arrays.deepToString(arr2));
 		/*
@@ -47,23 +58,36 @@ public class Exam10 {
 		 */
 		
 		
-	while(true) {
-		if(arr2[0].length==10&&arr2[1].length==10) {
-			break;
-		}
-		int num= (int)(Math.random()*99+1);
-		if((num%2==0)&&(arr2[0].length<10)) {
-			arr2[0]=Arrays.copyOf(arr2[0], arr2[0].length+1);
-			arr2[0][even] =num;
-			even++;
-		}else if((num%2==1)&&(arr2[1].length<10))
-			{
-			arr2[1]=Arrays.copyOf(arr2[1], arr2[1].length+1);
-			arr2[1][odd] =num;
-			odd++;
-			
-		}
+//	while(!(arr2[0].length==10&&arr2[1].length==10)) {
+////		if(arr2[0].length==10&&arr2[1].length==10) {
+////			break;
+////		}
+//		
+//		int num= (int)(Math.random()*91+10);
+//		if((num%2==0)&&(arr2[0].length<10)) {
+//			arr2[0]=Arrays.copyOf(arr2[0], arr2[0].length+1);
+//			arr2[0][even] =num;
+//			even++;
+//			//even을 쓰는대신
+//			//arr2[0][arr2[0].length-1]=num;
+//			
+//		}else if((num%2==1)&&(arr2[1].length<10))
+//			{
+//			arr2[1]=Arrays.copyOf(arr2[1], arr2[1].length+1);
+//			arr2[1][odd] =num;
+//			odd++;
+//			
+//		}
+//		
+//	}
+	while(arr2[0].length<10||arr2[1].length<10) {
+		int num= (int)(Math.random()*91+10);
+		int idx =num%2;
 		
+		if(arr2[idx].length<10) {
+			arr2[idx]=Arrays.copyOf(arr2[idx], arr2[idx].length+1);
+			arr2[idx][arr2[idx].length-1]=num;
+		}
 	}
 	System.out.println(Arrays.deepToString(arr2));
 		/*
@@ -72,21 +96,35 @@ public class Exam10 {
 		 */
 	arr2=Arrays.copyOf(arr2, arr2.length+1);
 	
+
+//	int arr3[]=new int[10];
 //	for(int i=0;i<10;i++) {
-//		arr2[2]=Arrays.copyOf(arr2[2], arr2[2].length+1);
-//		arr2[2][i]=arr2[0][i]+arr2[1][i];
+//		arr3[i]=arr2[0][i]+arr2[1][i];
 //	}
-	int arr3[][]=new int[3][10];
-	for(int i=0;i<2;i++) {
-		for(int j=0;j<10;j++) {
-			arr3[i][j]=arr2[i][j];
-		}
-	}
+//	
+//	arr2[2]=arr3;
+
+	
+	
+arr2=Arrays.copyOf(arr2, arr2.length+1);
+	arr2[2]= new int[0];
 	for(int i=0;i<10;i++) {
-		arr3[2][i]=arr2[0][i]+arr2[1][i];
+		arr2[2]=Arrays.copyOf(arr2[2], arr2[2].length+1);
+		arr2[2][i]=arr2[0][i]+arr2[1][i];
 	}
 	
-	System.out.println(Arrays.deepToString(arr3));
+//	int arr3[][]=Arrays.copyOf(arr2, arr2.length+1);
+//	arr3[2]=new int[0];
+//	for(int i=0;i<10;i++) {
+//		arr3[2]=Arrays.copyOf(arr3[2], arr3[2].length+1);
+//		arr3[2][i]=arr3[0][i]+arr3[1][i];
+//	}
+	
+	
+	
+	System.out.println(Arrays.toString(arr2[2]));
+	
+	System.out.println(Arrays.deepToString(arr2));
 	}
 	
 
