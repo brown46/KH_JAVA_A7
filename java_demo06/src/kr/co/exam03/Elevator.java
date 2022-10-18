@@ -19,13 +19,14 @@ public class Elevator {
 		this.targetFloor = targetFloor;
 		move();
 	}
+
 	private void move() {
 		if (minFloor <= targetFloor && targetFloor <= maxFloor) {
 			if (targetFloor == presentFloor) {
 				System.out.println("현재 위치한 층과 같습니다");
 			} else if (targetFloor == 0) {
 				System.out.println("1층으로 이동합니다.");
-				targetFloor=1;
+				targetFloor = 1;
 			}
 			if (targetFloor > presentFloor) {
 				System.out.println("현재층에서 " + targetFloor + "층으로 올라갑니다");
