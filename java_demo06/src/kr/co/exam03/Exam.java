@@ -48,19 +48,20 @@ public class Exam {
 		f.addFood("라면", 4000);
 		f.addFood("얼큰순대국", 7000);
 		
-		f.getMenu();
+	//	f.getMenu();
 		System.out.println();
 		f.delFood("돈까스");
 	
-		f.getMenu();
+	//	f.getMenu();
 		System.out.println();
 		f.addFood("피자", 10000);
 		f.addFood("치킨", 16000);
 		f.addFood("햄버거", 8500);
-		f.getMenu();
+		//f.getMenu();
 		f.delFood("김밥");
 		System.out.println();
 		f.getMenu();
+		
 		
 		
 		
