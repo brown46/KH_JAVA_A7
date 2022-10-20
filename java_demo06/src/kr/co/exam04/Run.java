@@ -110,9 +110,7 @@ public class Run {
 			case 6:
 				System.out.println("프로그램을 마칩니다.");
 				break loop;
-
 			}
-
 		}
 sc.close();
 	}
