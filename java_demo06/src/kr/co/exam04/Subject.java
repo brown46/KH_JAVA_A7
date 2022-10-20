@@ -5,9 +5,14 @@ public class Subject {
 	private String sName;
 	private double score;
 	private String sGrade;
-	Subject(String sName, int score ){
+	Subject(String sName, double score ){
 		this.sName=sName;
 		this.score=score;
+		setGrade();
+	}
+	Subject(String sName ){
+		this.sName=sName;
+		this.score=0;
 		setGrade();
 	}
 	
