@@ -15,7 +15,12 @@ public class Exam {
 		 */
 		
 		Student s= new Student("홍길동",3);
-		
+		s.addScore(new Subject("한국사",67));
+	
+//		Subject sub= new Subject("세계사",66);
+//		s.addScore(sub);
+		s.modScore(new Subject("한국사"),99);
+		//System.out.println(s.toString());
 		s.addScore("영어",90);
 		s.addScore("국어",80);
 		s.addScore("수학",84);
@@ -26,12 +31,13 @@ public class Exam {
 		System.out.println(score);
 		System.out.println(s.reportCard());
 		s.addScore("수학",70);
-		s.modScore("영어", 95);
-		s.delScore("수학");
-		s.removeScore("사회");
-		System.out.println(s.reportCard());
+//		s.modScore("영어", 95);
+//		s.delScore("수학");
+//		s.removeScore("사회");
+//		s.removeScore(new Subject("과학"));
 		
-	
+		s.removeScore(new Subject("사회"),new Subject("과학"),new Subject("국어"));
+		System.out.println(s.reportCard());
 	
 		
 	}
