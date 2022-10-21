@@ -39,7 +39,8 @@ public class Exam {
 		s.removeScore(new Subject("사회"),new Subject("과학"),new Subject("국어"));
 		System.out.println(s.reportCard());
 	
-		
+		Run2 run = new Run2();
+		run.start();
 	}
 
 }
