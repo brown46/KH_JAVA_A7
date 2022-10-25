@@ -39,8 +39,8 @@ public class Person {
 	public boolean equals(Object obj) {
 		Person person = (Person) obj;
 		if (name.equals(person.getName()) && 
-				age == person.age && 
-				gender == person.gender) {
+				age == person.getAge() && 
+				gender == person.getGender()) {
 			return true;
 		}
 
