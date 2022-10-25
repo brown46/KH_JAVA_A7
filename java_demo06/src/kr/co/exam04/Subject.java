@@ -43,5 +43,9 @@ public class Subject {
 			sGrade="D";
 		}else
 			sGrade="F";
+	}
+	@Override
+	public String toString() {
+		return "Subject [sName=" + sName + ", score=" + score + ", sGrade=" + sGrade + "]";
 	}	
 }

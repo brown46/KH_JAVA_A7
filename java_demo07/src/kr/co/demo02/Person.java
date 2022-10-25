@@ -1,5 +1,7 @@
 package kr.co.demo02;
 
+import java.util.Objects;
+
 public class Person {
 
 	private String name;
@@ -32,19 +34,24 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return String.format("Person[name:%s, age:%d]", name, age);
+		return "Person [name=" + name + ", age=" + age + ", gender=" + gender + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(age, gender, name);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		Person person = (Person) obj;
-		if (name.equals(person.getName()) && 
-				age == person.getAge() && 
-				gender == person.getGender()) {
+		if (this == obj)
 			return true;
-		}
-
-		return false;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		return age == other.age && gender == other.gender && Objects.equals(name, other.name);
 	}
 
 }

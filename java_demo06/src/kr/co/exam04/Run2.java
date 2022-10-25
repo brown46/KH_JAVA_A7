@@ -1,5 +1,6 @@
 package kr.co.exam04;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Run2 {
@@ -12,6 +13,8 @@ public class Run2 {
 		this.student.addScore("국어", 67.9);
 		this.student.addScore("영어", 77.7);
 		this.student.addScore("수학", 84.5);
+		
+		System.out.println(Arrays.toString(student.getSubjects()));
 	}
 
 	private String initMenu() {
