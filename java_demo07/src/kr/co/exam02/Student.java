@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 public class Student extends School{
 	
-	private String subArr[]=new String[0];
-	
 	Student(int grade, int cls){
 		super(grade, cls);
 	}

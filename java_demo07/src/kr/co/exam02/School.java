@@ -4,11 +4,14 @@ public class School {
 	
 	private int grade;
 	private int cls;
+	public String subArr[]=new String[0];
 	public School(int grade, int cls){
 		this.grade=grade;
 		this.cls=cls;
 	}
-	
+	public School() {
+		subArr = new String[0];
+	}
 	public int getGrade() {
 		return grade;
 	}
@@ -24,7 +27,7 @@ public class School {
 	public void setCls(int cls) {
 		this.cls = cls;
 	}
-
+	public void setSubject(String subject) {}
 	
 	
 
