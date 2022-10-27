@@ -15,17 +15,25 @@ public class Exam {
 		 * 
 		 */
 		Scanner sc = new Scanner(System.in);
-		String arr[]= new String[0];
+		String arr[];
+		int numArr[];
 		while (true) {
 			System.out.println("공백으로 구분된 정수값들을 입력하세요");
 			System.out.println("ex) 10 20 30 40");
 			String input = sc.nextLine();
 			 arr = input.split(" ");
+				numArr=new int[arr.length];
+				for(int i=0; i<arr.length;i++) {
+					numArr[i]=Integer.parseInt(arr[i]);
+				}
 			if (arr.length != 1) 	
 				break;
+		
+			
 		}
-		System.out.println("분리된 값 ->"+Arrays.toString(arr));
+		System.out.println("분리된 값 ->"+Arrays.toString(numArr));
 	
+		
 	}
 
 }
