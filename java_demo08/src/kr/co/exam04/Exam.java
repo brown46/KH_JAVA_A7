@@ -20,11 +20,12 @@ public class Exam {
 		 * 
 		 * 2022년 10월 중 주말에 해당하는 날짜만 문자열 배열에 담아 출력하세요
 		 * 
-		 * 자신의 생년월일을 입력하면 현재로부터 며칠 남았는지 알려주는 D-DAY 정보를
-		 * 출력하세요
 		 * 		-GregorianCalendar의 isLeapYear를 사용하면 윤년을 알 수 있습니다.
 		 * -GregorianCalendar의 getMaximum(Calendar.DAY_OF_MONTH)을 사용하면 해당 월의 최대 일자를 알 수 있습니다.
+		 * 
 		 */
+		
+		
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sd= new SimpleDateFormat("yyyy/MM/dd");
 		String date= sd.format(new Date());
@@ -57,27 +58,54 @@ public class Exam {
 			}
 		}
 		System.out.println(Arrays.toString(arr));
+
 		
+		/*
+		 * 자신의 생년월일을 입력하면 현재로부터 며칠 남았는지 알려주는 D-DAY 정보를
+		 * 출력하세요
+		 * 1. 현재 날짜로부터 다음 자신의 생일이 올해 안에 있는 경우...
+		 * 		- 현재 월의 남은 일수  -> A
+		 * 		- 다음 월 부터 생일 전 달 까지의 모든 일 수 -> B
+		 * 		- 생일달의 1 ~ 부터 생일까지의 일수 -> C
+		 * 		- A + B + C -> D-Day
+		 */
+		
+		/*
+		 * 2. 현재 날짜로부터 다음 자신의 생일이 다음년에 있는 경우..
+		 * 		- 
+		 */
 		
 		
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("생일 입력");
+		System.out.println("생일 입력 (yyyy-MM-dd)");
 		String birthDay = sc.nextLine();
-//	String birthDay ="2000-12-27";
+
 		GregorianCalendar gc2 = new GregorianCalendar();
+		try {
 		Date bd = new SimpleDateFormat("yyyy-MM-dd").parse(birthDay);
+		SimpleDateFormat df =new SimpleDateFormat("yyyy년 MM월 dd일");
+		
 		GregorianCalendar gc1 = new GregorianCalendar(gc2.get(Calendar.YEAR),bd.getMonth(),bd.getDate());
 		long f =gc2.getTimeInMillis()-gc1.getTimeInMillis();	
 		
-//		System.out.println(gc2.getTimeInMillis());
-//		System.out.println(gc1.getTimeInMillis());
-		 f= f/(1000*60*60*24);
-		 System.out.println(f);
-		//String now =sd.format(new Date());
-		//System.out.println(month);
+		f= f/(1000*60*60*24);
+		System.out.println("현재 날짜는 "+ df.format(gc2.getTime())+" 입니다");
+		if(f<0) {
+			System.out.println("다음 생일은 "+df.format(gc1.getTime())+" 입니다.");
+		}else if(f>0) {
+			gc1.add(GregorianCalendar.YEAR, 1);
+			f =gc2.getTimeInMillis()-gc1.getTimeInMillis();
+			f= f/(1000*60*60*24);
+			System.out.println("다음 생일은 "+df.format(gc1.getTime())+" 입니다.");
+			
+		}
 		
-		
+		System.out.println("D"+"-"+(-f) );
+		if(f==0)System.out.println("생일입니다.");
+		}catch(ParseException e) {
+			System.out.println("잘못 입력하였습니다.");
+			} 
 		
 	}
 
