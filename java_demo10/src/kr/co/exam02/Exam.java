@@ -9,7 +9,41 @@ import java.util.Arrays;
 
 
 public class Exam {
+	public static void save(Subject subject) {
+		File f = new File("D:\\홍길동.subjects");
+		try(FileWriter fw= new FileWriter(f,true)){
+			StringBuffer sb = new StringBuffer();
+			sb.append(subject.getName()+" ");
+			sb.append(subject.getScore()+" ");
+			sb.append(subject.getGrade()+"\r\n");
+			fw.write(sb.toString());
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	public static String load(String path) {
+		File f = new File(path);
+		char buffer[] = new char[8];
+		StringBuilder sb = new StringBuilder(512);
+		
+		try(FileReader fr = new FileReader(f)){
+			while(true) {
+			int readChars =fr.read(buffer);
+			if(readChars==-1) break;
+			sb.append(buffer, 0, readChars);
+			}
+			String strDatas[]=sb.toString().split("\r\n");
+
+			return Arrays.toString(strDatas);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 	public static void main(String[] args) {
 		/*
 		 * 파일에 저장된 성적 데이터를 읽고 프로그램에 
@@ -67,9 +101,6 @@ public class Exam {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
-		for(int i=0; i<subjects.length; i++) {
-			subjects[i].setScore(subjects[i].getScore()+5);
-		}
 		System.out.println(Arrays.toString(subjects));
 		
 		sb= new StringBuilder();
@@ -83,6 +114,15 @@ public class Exam {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(subjects[0].toString("/")); 
+		
+		Subject s = new Subject();
+		s.setGrade('C');
+		s.setName("사회");
+		s.setScore(71.1);
+		
+		save(s);
+		System.out.println(load("D:\\홍길동.subjects"));
 	}
 
 }

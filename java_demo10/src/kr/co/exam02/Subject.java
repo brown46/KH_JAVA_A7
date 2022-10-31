@@ -1,6 +1,7 @@
 package kr.co.exam02;
-
 import java.util.Objects;
+
+import pracrtice.Subject;
 
 public class Subject {
 
@@ -14,7 +15,7 @@ public class Subject {
 		for(int i=0; i<table.length;i++) {
 			subject.setName(table[0]);
 			subject.setScore(Double.valueOf(table[1]));
-			subject.setName(table[2]);
+			subject.setGrade(table[2].charAt(0));
 		}
 		return subject;
 	}
@@ -42,8 +43,8 @@ public class Subject {
 		return "Subject [name=" + name + ", score=" + score + ", grade=" + grade + "]";
 	}
 	public String toString(String delimiter) {
-		
-		return "";
+		String string =this.name+delimiter+this.score+delimiter+this.grade;
+		return string;
 	}
 	@Override
 	public int hashCode() {
@@ -61,4 +62,5 @@ public class Subject {
 		return grade == other.grade && Objects.equals(name, other.name)
 				&& Double.doubleToLongBits(score) == Double.doubleToLongBits(other.score);
 	}
+	
 }
