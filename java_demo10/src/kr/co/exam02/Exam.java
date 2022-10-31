@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
+
 public class Exam {
 
 	public static void main(String[] args) {
@@ -24,6 +25,18 @@ public class Exam {
 		 * 	  과목명3 점수3 등급3
 		 * 	  ...
 		 * 	  ...
+		 * 
+		 * load 메서드를 만들어서 "홍길동.subjects"파일을 읽고 문자열로
+		 * 반환하는 기능을 구현하세요.
+		 * 
+		 * parseSubject 정적 메서드를 만들어서 "과목명 점수 등급" 형식의 
+		 * 문자열이 Subject 인스턴스로 만들어져 반환될 수 있도록 하세요.
+		 * 
+		 * Subject 클래스의 메서드로 toString(String delimiter)메서드를 
+		 * 오버로딩 하여 delimiter를 구분자로 하는 문자열이 반환 될 수 있도록 하세요.
+		 * 
+		 * save 메서드를 만들어 Subject 객체들이 "홍길동.subjects" 파일로
+		 * 작성될 수 있도록 하세요.
 		 */
 		File f = new File("D:\\홍길동.subjects");
 		

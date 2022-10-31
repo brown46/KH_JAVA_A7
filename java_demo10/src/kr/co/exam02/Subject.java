@@ -7,6 +7,18 @@ public class Subject {
 	private String name;
 	private double score;
 	private char grade;
+	
+	public static Subject parseSubject(String arr) {
+		Subject subject = null ;
+		String table[] = arr.split(" ");
+		for(int i=0; i<table.length;i++) {
+			subject.setName(table[0]);
+			subject.setScore(Double.valueOf(table[1]));
+			subject.setName(table[2]);
+		}
+		return subject;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -28,6 +40,10 @@ public class Subject {
 	@Override
 	public String toString() {
 		return "Subject [name=" + name + ", score=" + score + ", grade=" + grade + "]";
+	}
+	public String toString(String delimiter) {
+		
+		return "";
 	}
 	@Override
 	public int hashCode() {
