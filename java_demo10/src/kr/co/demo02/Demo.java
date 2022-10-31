@@ -22,7 +22,7 @@ public class Demo {
 			
 			int idx =0;
 			while(true) {
-				int readBytes = fis.read(buffer);
+				int readBytes = fis.read(buffer);//buffer에 읽은만큼 저장
 				if(readBytes ==-1) break;
 				System.arraycopy(buffer, 0, bArr, idx, readBytes);
 				idx +=readBytes;
