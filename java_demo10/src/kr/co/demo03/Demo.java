@@ -22,13 +22,15 @@ public class Demo {
 			
 			while(true) {
 				int readChars=	fr.read(buffer);
-				//System.out.println(readChars);
+				System.out.println(buffer);
+				System.out.println();
 				if(readChars==-1)break;
 				cArr =Arrays.copyOf(cArr, cArr.length+readChars);
+				//System.out.println(cArr);
 				System.arraycopy(buffer, 0, cArr, cArr.length-readChars, readChars);
 				//System.out.println(buffer);
 			}
-			System.out.println(cArr);
+			//System.out.println(cArr);
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}catch(IOException e) {
