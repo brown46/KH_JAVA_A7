@@ -1,82 +1,50 @@
 package kr.co.exam01;
 
-import java.io.PrintWriter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import kr.co.exam01.exception.DayRangeException;
+import kr.co.exam01.exception.MonthRangeException;
+
 public class BirthDay {
 
 		public static final String FOUR_YEAR_FORMAT="yyyyMMdd";
 		public static final String TWO_YEAR_FORMAT="yyMMdd";
 		
+		/**
+		 * 정수값에 해당하는 년, 월, 일 을 입력받아 BithDay 객체를 생성하기 위한
+		 * 생성자.
+		 * 
+		 * @param year : 태어난 년도
+		 * @param month : 태어난 달
+		 * @param date : 태어난 일자
+		 */
+		
 		private Date date;
 		private SimpleDateFormat dateFormat  = new SimpleDateFormat("yyyyMMdd");
-
-		/**
-		 * 지정한 날짜 형식으로 변환할 수 있도록 SimpleDateFormat 객체를 생성하여
-		 * 활용하기 위해 사용.
-		 * @param format : BirthDay 클래스 상수에 정의된 포멧 문자열만 사용하게함.
-		 */
-		private void setDateFormat(String format) {
-			dateFormat = new SimpleDateFormat(format);
-		}
+		private int year;
+		private int month;
+		private int day;
 		
-		/**
-		 * 현재 날짜를 기준으로 다음 생일이 언제인지 반환한다,</br>
-		 * 이미 생일이 지난 경우 다음년도에 대한 BirthDay 객체를 반환하고</br>
-		 * 아직 생일이 지나지 않은 경우 올해에 대한 BirthDay 객체를 반환한다.
-		 * @return BirthDay : 다음 생일에 대한 정보를 담아 반환한다.
-		 */
-		public BirthDay nextBirthDay(Date date) {
-			GregorianCalendar gc1 = new GregorianCalendar();
-			GregorianCalendar gc2 = new GregorianCalendar(gc1.get(Calendar.YEAR),date.getMonth(),date.getDate());
-			long f = gc1.getTimeInMillis()-gc2.getTimeInMillis();
-			if(f>0) {
-				gc2.add(Calendar.YEAR, 1);
-				//Date d = new Date(gc2.get(Calendar.YEAR),gc2.get(Calendar.MONTH),gc2.get(Calendar.DATE));
-				Date d = new Date(gc2.getTimeInMillis());
-				return new BirthDay(d);
-			}else if(f<0) {
-				//Date d = new Date(gc2.get(Calendar.YEAR),gc2.get(Calendar.MONTH),gc2.get(Calendar.DATE));
-				Date d = new Date(gc2.getTimeInMillis());
-				return new BirthDay(d);
-			}
-			return new BirthDay(new Date());
-			
-		}
-		/**
-		 * 현재 날짜 정보를 java.util.Date 객체로 반환한다.
-		 * @return Date : 현재 시스템 날짜
-		 */
-		public Date currentDate() {
-			return new Date();
-		}
-		
-		/**
-		 * 현재 날짜 정보를 문자열로 반환한다. 기본 포멧을 yyyy년 mm월 dd일 이다.
-		 * @return String : 날짜 형식의 문자열  
-		 */
-		public String currentDateToString() {
-			
-			return String.format("%1$tY년 %1$tm월 %1$td일",new Date());
-		}
-	/**
-	 * 정수값에 해당하는 년, 월, 일 을 입력받아 BithDay 객체를 생성하기 위한
-	 * 생성자.
-	 * 
-	 * @param year : 태어난 년도
-	 * @param month : 태어난 달
-	 * @param date : 태어난 일자
-	 */
-	
 		public BirthDay(int year, int month, int date) {
 //			this.date.setYear(year);
 //			this.date.setMonth(month);
 //			this.date.setDate(year);
-			this.date= (new GregorianCalendar(year, month, date)).getTime();
+			if(!(month>=1&&month<=12)) {
+				throw new MonthRangeException(month +"월은 잘못된 월 입니다.");
+			}
+			if(!(date>=1&&date<=31)) {
+				throw new DayRangeException(date +"일은 잘못된 일자 입니다.");
+			}
+			this.date= (new GregorianCalendar(year, month-1, date)).getTime();
+			this.year=year;
+			this.month=month;
+			this.day=date;
+			
 		}
 		/**
 		 * java.util.Date 클래스를 입력받아 BirthDay객체를 생성하기 위한 생성자.		
@@ -84,6 +52,7 @@ public class BirthDay {
 		 */
 		public BirthDay(Date date) {
 			this.date =date;
+			dateSplit();
 		}
 		/**
 		 * 밀리초에 해당하는 정수값을 받아 BirthDay 객체를 생성하기 위한 생성자.</br>
@@ -94,6 +63,7 @@ public class BirthDay {
 		public BirthDay(long milliSecond) {
 			//date.setTime(milliSecond);
 			date= new Date(milliSecond);
+			dateSplit();
 		}
 		
 		
@@ -114,11 +84,119 @@ public class BirthDay {
 			}
 			try {
 			date =this.dateFormat.parse(dateFormat);
+			dateSplit();
 			}catch (ParseException e) {
-				e.printStackTrace();
 				date = new Date();
+				dateSplit();
+				e.printStackTrace();
 			}
 		}
+
+		/**
+		 * 지정한 날짜 형식으로 변환할 수 있도록 SimpleDateFormat 객체를 생성하여
+		 * 활용하기 위해 사용.
+		 * @param format : BirthDay 클래스 상수에 정의된 포멧 문자열만 사용하게함.
+		 */
+		private void setDateFormat(String format) {
+			dateFormat = new SimpleDateFormat(format);
+		}
+		
+		/**
+		 * Date 객체로 생성한 날짜를 year, month, day 로 분리하여 멤버 변수로 
+		 * 저장 후 차후 다른 계산에 사용하기 위해 만듦
+		 */
+		private void dateSplit() {
+			this.year =Integer.valueOf(String.format("%tY", this.date));
+			this.month =Integer.valueOf(String.format("%tm", this.date));
+			this.day =Integer.valueOf(String.format("%td", this.date));
+		}
+		/**
+		 * 현재 날짜를 기준으로 다음 생일이 언제인지 반환한다,</br>
+		 * 이미 생일이 지난 경우 다음년도에 대한 BirthDay 객체를 반환하고</br>
+		 * 아직 생일이 지나지 않은 경우 올해에 대한 BirthDay 객체를 반환한다.
+		 * @return BirthDay : 다음 생일에 대한 정보를 담아 반환한다.
+		 */
+		public BirthDay nextBirthDay() {
+			GregorianCalendar gc1 = new GregorianCalendar();
+			GregorianCalendar gc2 = new GregorianCalendar(gc1.get(Calendar.YEAR),date.getMonth(),date.getDate());
+			long f = gc1.getTimeInMillis()-gc2.getTimeInMillis();
+			if(f>=0) {
+				gc2.add(Calendar.YEAR, 1);
+				//Date d = new Date(gc2.get(Calendar.YEAR),gc2.get(Calendar.MONTH),gc2.get(Calendar.DATE));
+				Date d = new Date(gc2.getTimeInMillis());
+				return new BirthDay(d);
+			}else {
+				//Date d = new Date(gc2.get(Calendar.YEAR),gc2.get(Calendar.MONTH),gc2.get(Calendar.DATE));
+				Date d = new Date(gc2.getTimeInMillis());
+				return new BirthDay(d);
+			}
+			
+			
+		}
+		/**
+		 * 현재 날짜 정보를 java.util.Date 객체로 반환한다.
+		 * @return Date : 현재 시스템 날짜
+		 */
+		public Date currentDate() {
+			
+			return new Date();
+		}
+		
+		/**
+		 * 만 나이를 구하여 반환한다.
+		 * @return int : 만 나이
+		 */
+		public int getAge() {
+			GregorianCalendar gc1 = new GregorianCalendar();
+			GregorianCalendar gc2 = new GregorianCalendar(gc1.get(Calendar.YEAR),date.getMonth(),date.getDate());
+			long f = gc1.getTimeInMillis()-gc2.getTimeInMillis();
+			if(f>=0) {
+				return gc1.get(Calendar.YEAR)-(1900+date.getYear());//Date는 1900 이후부터 카운트되므로 1900 붙여야 함
+				
+			}else {
+				return gc1.get(Calendar.YEAR)-(1900+date.getYear())-1;//
+			}
+//			Date now =new Date();
+//			int nowYear = Integer.valueOf(String.format("%tY", now));
+//			int nowMonth = Integer.valueOf(String.format("%tm", now));
+//			int nowDay = Integer.valueOf(String.format("%td", now));
+//		
+//			int age = nowYear - this.year;
+//			if(nowMonth <this.month) {
+//				if(nowMonth == this.month&&nowDay< this.day) {
+//					age -= 1;
+//				}
+//			}
+//			return age;
+		}
+		
+		/**
+		 * zeroStart 가 true 이면, 만 나이를 구하여 반환하고</br>
+		 * zeroStart 가 false 이면, 태어난 날이 1살 부터 시작하는 나이를</br>
+		 * 구하여 반환한다.
+		 * @return int : zeroStart 값에 따라 만 나이 혹인 1살 부터 시작한 나이
+		 */
+		public int getAge(boolean zeroStart) {
+			GregorianCalendar gc1 = new GregorianCalendar();
+			if(zeroStart)
+				return getAge();
+			
+			else {
+				return gc1.get(Calendar.YEAR)-(1900+date.getYear())+1;
+			}
+		}
+		
+		/**
+		 * 현재 날짜 정보를 문자열로 반환한다. 기본 포멧을 yyyy년 mm월 dd일 이다.
+		 * @return String : 날짜 형식의 문자열  
+		 */
+		public String currentDateToString() {
+			
+			return String.format("%1$tY년 %1$tm월 %1$td일",new Date());
+		}
+
+	
+		
 		@Override
 		public String toString() {
 			
@@ -126,4 +204,3 @@ public class BirthDay {
 		}
 		
 }
-
