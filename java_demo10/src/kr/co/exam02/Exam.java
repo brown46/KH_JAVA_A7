@@ -3,6 +3,7 @@ package kr.co.exam02;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -27,7 +28,7 @@ public class Exam {
 		File f = new File("D:\\홍길동.subjects");
 		
 		StringBuilder sb = new StringBuilder(512);
-		
+		Subject subjects[]=null;
 		try(FileReader fr = new FileReader(f)){
 			char[] buffer= new char[8];
 			while(true) {
@@ -37,16 +38,35 @@ public class Exam {
 				sb.append(buffer, 0, readChars);
 			}
 			String strDatas[]=sb.toString().split("\r\n");//개행문자 주의!
+			subjects =new Subject[strDatas.length];
 			for(int i=0; i<strDatas.length;i++) {
 				String strSubject[] =strDatas[i].split(" ");
 				Subject s =new Subject();
 				s.setName(strSubject[0]);
 				s.setScore(Double.valueOf(strSubject[1]));
 				s.setGrade(strSubject[2].charAt(0));
-				System.out.println(s);
+				
+				subjects[i]=s;
 			}
+			System.out.println(Arrays.toString(subjects));
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		for(int i=0; i<subjects.length; i++) {
+			subjects[i].setScore(subjects[i].getScore()+5);
+		}
+		System.out.println(Arrays.toString(subjects));
+		
+		sb= new StringBuilder();
+		for(int i=0;i<subjects.length;i++) {
+			sb.append(subjects[i].getName()+" "+subjects[i].getScore()+" "+subjects[i].getGrade()+"\r\n");
+		}
+		
+		f= new File("D:\\홍길동.subjects");
+		try(FileWriter fw = new FileWriter(f)){
+			fw.append(sb.toString());
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
