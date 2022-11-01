@@ -121,6 +121,7 @@ public class Exam {
 		s.setName("사회");
 		s.setScore(71.1);
 		
+		System.out.println(Subject.parseSubject("과학 92 A").toString());
 		save(s);
 		System.out.println(load("D:\\홍길동.subjects"));
 	}

@@ -1,7 +1,6 @@
 package kr.co.exam02;
 import java.util.Objects;
 
-import pracrtice.Subject;
 
 public class Subject {
 
@@ -10,7 +9,7 @@ public class Subject {
 	private char grade;
 	
 	public static Subject parseSubject(String arr) {
-		Subject subject = null ;
+		Subject subject = new Subject() ;
 		String table[] = arr.split(" ");
 		for(int i=0; i<table.length;i++) {
 			subject.setName(table[0]);
