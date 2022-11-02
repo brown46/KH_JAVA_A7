@@ -2,6 +2,8 @@ package kr.co.exam05;
 
 import java.util.Objects;
 
+import pr.Student;
+
 public class Student {
 
 	private String stname;

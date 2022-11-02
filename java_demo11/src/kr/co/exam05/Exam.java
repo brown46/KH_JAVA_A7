@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Scanner;
 
 
 public class Exam {
@@ -32,45 +33,66 @@ public class Exam {
 		 */
 		HashMap<Student, ArrayList<Subject>> aMap = new HashMap<Student, ArrayList<Subject>>();
 		
-		Student st1= new Student("홍길동",3,5,28);
-		Subject sb1 = new Subject("국어",88.8);
-		Subject sb4 = new Subject("영어",76.8);
-		
-		Student st2= new Student("김철수",2,6,8);
-		Subject sb2 = new Subject("국어",78.8);
-		Subject sb5 = new Subject("영어",88.8);
-		
-		Student st3= new Student("박원정",3,7,17);
-		Subject sb3 = new Subject("국어",98.8);
-		Subject sb6 = new Subject("영어",74.8);
+//		Student st1= new Student("홍길동",3,5,28);
+//		Subject sb1 = new Subject("국어",88.8);
+//		Subject sb4 = new Subject("영어",76.8);
+//		
+//		Student st2= new Student("김철수",2,6,8);
+//		Subject sb2 = new Subject("국어",78.8);
+//		Subject sb5 = new Subject("영어",88.8);
+//		
+//		Student st3= new Student("박원정",3,7,17);
+//		Subject sb3 = new Subject("국어",98.8);
+//		Subject sb6 = new Subject("영어",74.8);
 		
 		HashSet<Student> stSet =new HashSet<Student>();
 		stSet.add(new Student("홍길동",3,5,28));
 		stSet.add(new Student("김철수",2,6,8));
 		stSet.add(new Student("박원정",3,7,17));
 		
-		HashSet<String> sbSet= new HashSet<String>();
-		sbSet.add("국어");
-		sbSet.add("영어");
-		sbSet.add("수학");
-		
-		for(Student name: stSet) {
-			
-			
+//		HashSet<Subject> sbSet= new HashSet<Subject>();
+//		sbSet.add(new Subject("국어",88.8));
+//		sbSet.add(new Subject("영어",74.8));
+//		sbSet.add(new Subject("수학",99.9));
+		Scanner sc = new Scanner(System.in);
+		for(Student student: stSet) {
+			aMap.put(student, new ArrayList<Subject>());
 		}
-	
+		for(Student student: stSet) {
+			HashSet<Subject> sbSet= new HashSet<Subject>();
+			System.out.println(student.getstname());
+			for(int i=0; i<3;i++) {
+				System.out.println("과목 입력");
+				String sb=sc.nextLine();
+				System.out.println("점수 입력");
+				double score =sc.nextDouble();
+				sc.nextLine();
+				sbSet.add(new Subject(sb,score));
+				
+			}
 		
-		ArrayList<Subject> aList = new ArrayList<Subject>();
-		aList.add(sb1);
-		aList.add(sb4);
+			sbSet.add(new Subject("국어",50+Math.random()*50));
+			sbSet.add(new Subject("영어",50+Math.random()*50));
+			sbSet.add(new Subject("수학",50+Math.random()*50));
+			for(Subject subject: sbSet) {
+				aMap.get(student).add(subject);
+			}
+		}
 		
-		aMap.put(st1, aList);
+		
+//		ArrayList<Subject> aList = new ArrayList<Subject>();
+//		aList.add(sb1);
+//		aList.add(sb4);
+//		
+//		aMap.put(st1, aList);
 		
 		File f =new File("D:\\학생성적관리정보.info");
 		
 		try(FileWriter fw = new FileWriter(f,true)){
-			fw.append(aMap.get(st1).toString());
-			
+			for(Student student :stSet) {
+				fw.append(student.toString());
+				fw.append(aMap.get(student).toString()+"\n");
+			}
 		} catch (IOException e) {
 			
 			e.printStackTrace();
