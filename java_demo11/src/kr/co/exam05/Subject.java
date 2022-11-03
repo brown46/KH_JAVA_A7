@@ -14,7 +14,7 @@ public class Subject {
 	}
 	@Override
 	public String toString() {
-		return "Subject [sbname=" + sbname + ", score=" + score + ", grade=" + grade + "]";
+		return sbname + "=" + score;
 	}
 	public String getSbname() {
 		return sbname;

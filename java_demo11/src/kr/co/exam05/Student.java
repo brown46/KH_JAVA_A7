@@ -2,8 +2,6 @@ package kr.co.exam05;
 
 import java.util.Objects;
 
-import pr.Student;
-
 public class Student {
 
 	private String stname;
@@ -37,7 +35,7 @@ public class Student {
 	}
 	@Override
 	public String toString() {
-		return "Student [stname=" + stname + ", years=" + years + ", cLass=" + cLass + ", number=" + number + "]";
+		return stname + "," + years + "," + cLass + "," + number+":" ;
 	}
 	public String getstname() {
 		return stname;
