@@ -1,6 +1,6 @@
 package kr.co.exam05;
 
-public class Subject {
+public class Subject implements Comparable<Subject> {
 
 	private String sbname;
 	private double score;
@@ -51,6 +51,11 @@ public class Subject {
 			grade = 'E';
 			break;
 		}
+	}
+	@Override
+	public int compareTo(Subject o) {
+			
+		return sbname.compareTo(o.getSbname());
 	}
 	
 	
