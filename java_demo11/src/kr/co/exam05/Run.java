@@ -112,7 +112,7 @@ public class Run {
 		case 5:
 			System.exit(0);
 		}
-//		r.start(); java.util.NoSuchElementException에러남
+//		sc.close(); java.util.NoSuchElementException에러남
 
 	}
 
@@ -131,27 +131,45 @@ public class Run {
 	public void addScore() {
 		load();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("입력할 과목 갯수 입력");
+		System.out.println("입력할 과목 갯수 입력(공백은 저장되지 않음)");
 		int times = sc.nextInt();
 		sc.nextLine();
 		for (Student student : stSet) {
 			HashSet<Subject> sbSet = new HashSet<Subject>();
 			System.out.println(student.getstname());
+			boolean isExistSubject= false;
 			for (int i = 0; i < times; i++) {
 				System.out.println("과목 입력");
 				String sb = sc.nextLine();
+				if(sb.equals("")) {
+					continue;
+				}
+//				for(Subject s: sbSet) {
+//					System.out.println(s.getSbname());
+//					System.out.println(sb);
+//					if((s.getSbname()).equals(sb)) {
+//						
+//						isExistSubject=true;
+//					}
+//				}sbSet은 처음부터 비어있음. 로드한 것을 aMap에서부터 찾아와야할듯
+				if(isExistSubject==true) {
+					System.out.println("중복된 과목을 입력하셨습니다.");
+					continue;
+				}
 				System.out.println("점수 입력");
 				double score = sc.nextDouble();
 				sc.nextLine();
+				if(score==0) continue;
 				sbSet.add(new Subject(sb, score));
 
 			}
 			for (Subject subject : sbSet) {
+				
 				aMap.get(student).add(subject);
 			}
 		}
 		save();
-	}
+	}//중복처리 다시
 
 	public void findScore(String stName) {
 		load();
@@ -164,17 +182,29 @@ public class Run {
 
 	public void modScore(String stName, String sbName, double score) {
 		load();
-		for (Student s : stSet) {
+		boolean isExist=false;
+		
+		 for (Student s : stSet) {
+			
 			if (s.getstname().equals(stName)) {
+				isExist=true;
 				for (Subject sb : aMap.get(s)) {
 					if (sb.getSbname().equals(sbName)) {
+						isExist=true;
 						sb.setScore(score);
+					
 					}
 				}
 			}
 		}
-		save();
-
+		if (isExist==false) {
+			System.out.println("학생이름 또는 과목이름을 잘못 입력하셨습니다.");
+			
+		}else {
+			save();
+		}
 	}
+	
+	//학생추가메서드!!
 
 }
