@@ -59,7 +59,7 @@ public class Run {
 			Subject subject = new Subject(temp[0],Double.valueOf(temp[1]));
 			subjectList.add(subject);
 		}
-		
+		stSet.add(student);
 		this.aMap.put(student, subjectList);
 		
 	}
@@ -67,13 +67,13 @@ public class Run {
 		StringBuilder sb = new StringBuilder();
 		for(Student student :stSet) {
 			sb.append(student.toString());
-			for(int i=0;i<stSet.size()+times;i++) {
+			for(int i=0;i<=stSet.size()+times;i++) {
 				sb.append(aMap.get(student).get(i).toString()+",");
 			}
 			sb.replace(sb.length()-1, sb.length(),"\r\n");
 		}
 		File f =new File("D:\\학생성적관리정보.info");
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(f,true))){
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(f))){
 			bw.write(sb.toString());
 		} catch (IOException e) {
 			
@@ -81,7 +81,7 @@ public class Run {
 		}
 	}
 	public void start() {
-		//load();
+		load();
 	
 //		stSet.add(new Student("홍길동",3,5,28));
 //		stSet.add(new Student("김철수",2,6,8));

@@ -106,9 +106,9 @@ public class Exam {
 		
 		Run r = new Run();
 		//r.start(); //여기서 로드가 안되거나 다시 덮어씌우는듯함
-		r.load();//메인메서드에서 로드는 잘됨....
+		//r.load();//메인메서드에서 로드는 잘됨....
 		r.start();
-		System.out.println(r.aMap.get(new Student("김자바",3,4,5)));
+		//System.out.println(r.aMap.get(new Student("김자바",3,4,5)));
 		
 	}
 
