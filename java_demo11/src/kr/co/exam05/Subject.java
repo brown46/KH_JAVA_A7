@@ -2,6 +2,8 @@ package kr.co.exam05;
 
 import java.util.Objects;
 
+import scoreMangement.Subject;
+
 public class Subject implements Comparable<Subject> {
 
 	private String sbname;

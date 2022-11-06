@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,14 +16,13 @@ import java.util.Scanner;
 public class Run {
 	HashMap<Student, ArrayList<Subject>> aMap = new HashMap<Student, ArrayList<Subject>>();
 	HashSet<Student> stSet = new HashSet<Student>();
+	Scanner sc = new Scanner(System.in);
 
 	public void printMenu() {
-		String menu = "<< 학생 성적 관리 프로그램>>\n" + 
-						"[1] 전체 학생 목록\n" + 
-						"[2] 성적 검색\n" + 
-						"[3] 성적 수정\n" + 
-						"[4] 성적 추가\n" + 
-						"[5] 프로그램 종료\n";
+		String menu = "<< 학생 성적 관리 프로그램>>\n" + "[1] 전체 학생 목록\n" + "[2] 성적 검색\n" + "[3] 성적 수정\n" + "[4] 성적 추가\n"
+				+ "[5] 학생 추가\n"
+				+ "[6] 학생 정보 삭제\n"
+				+ "[0] 프로그램 종료\n";
 		System.out.println(menu);
 	}
 
@@ -83,7 +81,7 @@ public class Run {
 
 	public void start() {
 		printMenu();
-		Scanner sc = new Scanner(System.in);
+	
 		int input = sc.nextInt();
 		sc.nextLine();
 		switch (input) {
@@ -104,12 +102,17 @@ public class Run {
 			double score = sc.nextDouble();
 			sc.nextLine();
 			modScore(student, subject, score);
-			findScore(student);
 			break;
 		case 4:
 			addScore();
 			break;
 		case 5:
+			addStudent();
+			break;
+		case 6: 
+			removeStudent();
+			break;
+		case 0:
 			System.exit(0);
 		}
 //		sc.close(); java.util.NoSuchElementException에러남
@@ -131,45 +134,47 @@ public class Run {
 	public void addScore() {
 		load();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("입력할 과목 갯수 입력(공백은 저장되지 않음)");
+		System.out.println("입력할 과목 갯수 입력(공백 입력시 메인화면으로 갑니다.)");
+
 		int times = sc.nextInt();
 		sc.nextLine();
+		if (times <= 0)
+			return;
 		for (Student student : stSet) {
 			HashSet<Subject> sbSet = new HashSet<Subject>();
+
 			System.out.println(student.getstname());
-			boolean isExistSubject= false;
+			boolean isExistSubject = false;
 			for (int i = 0; i < times; i++) {
-				System.out.println("과목 입력");
+				System.out.println("과목 입력. 공백입력시 저장되지 않습니다.");
 				String sb = sc.nextLine();
-				if(sb.equals("")) {
+				if (sb.equals("")) {
 					continue;
 				}
-//				for(Subject s: sbSet) {
-//					System.out.println(s.getSbname());
-//					System.out.println(sb);
-//					if((s.getSbname()).equals(sb)) {
-//						
-//						isExistSubject=true;
-//					}
-//				}sbSet은 처음부터 비어있음. 로드한 것을 aMap에서부터 찾아와야할듯
-				if(isExistSubject==true) {
+				for (Subject s : aMap.get(student)) {
+					if ((s.getSbname()).equals(sb)) {
+						isExistSubject = true;
+					}
+				}
+				if (isExistSubject == true) {
 					System.out.println("중복된 과목을 입력하셨습니다.");
 					continue;
 				}
 				System.out.println("점수 입력");
 				double score = sc.nextDouble();
 				sc.nextLine();
-				if(score==0) continue;
+				if (score == 0)
+					continue;
 				sbSet.add(new Subject(sb, score));
 
 			}
 			for (Subject subject : sbSet) {
-				
+
 				aMap.get(student).add(subject);
 			}
 		}
 		save();
-	}//중복처리 다시
+	}
 
 	public void findScore(String stName) {
 		load();
@@ -182,29 +187,61 @@ public class Run {
 
 	public void modScore(String stName, String sbName, double score) {
 		load();
-		boolean isExist=false;
-		
-		 for (Student s : stSet) {
-			
+		boolean isExistSt = false;
+		boolean isExistSb = false;
+
+		for (Student s : stSet) {
+
 			if (s.getstname().equals(stName)) {
-				isExist=true;
+				isExistSt = true;
 				for (Subject sb : aMap.get(s)) {
 					if (sb.getSbname().equals(sbName)) {
-						isExist=true;
+						isExistSb = true;
 						sb.setScore(score);
-					
+						System.out.println("수정 완료");
 					}
 				}
 			}
 		}
-		if (isExist==false) {
+		if (isExistSt == false||isExistSb==false) {
 			System.out.println("학생이름 또는 과목이름을 잘못 입력하셨습니다.");
-			
-		}else {
+
+		} else {
 			save();
 		}
 	}
 	
-	//학생추가메서드!!
+	public void addStudent() {
+		load();
+		System.out.println("학생 이름입력. 종료하려면 exit 입력");
+		String stname= sc.nextLine();
+		if(stname.equals("exit")) return;
+		System.out.println("학년, 반, 번호 입력(공백으로 구분)");
+		String input = sc.nextLine();
+		
+		String stringInfo[] = input.split(" ");
+		int intInfo[]= {Integer.valueOf(stringInfo[0]),Integer.valueOf(stringInfo[1]),Integer.valueOf(stringInfo[2])};
+		ArrayList<Subject> subjects = new ArrayList<Subject>();
+		subjects.add(new Subject("국어", 0));//기본과목추가
+		aMap.put(new Student(stname, intInfo[0], intInfo[1], intInfo[2]), subjects);	
+		System.out.println(aMap);
+		stSet.add(new Student(stname, intInfo[0], intInfo[1], intInfo[2]));
+		
+		save();
+	}
 
+	public void removeStudent() {
+		load();
+		System.out.println("학생 이름을 입력하세요");
+		String input= sc.nextLine();
+		for(Student s : stSet) {
+			if(s.getstname().equals(input))
+			aMap.remove(s);
+		}
+		for(Student s : stSet) {
+			if(s.getstname().equals(input))
+			stSet.remove(s);
+		}
+		save();
+	}
 }
