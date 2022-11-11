@@ -201,7 +201,7 @@ SELECT EMPLOYEE_ID AS 사번
 
 /*
  * 그룹 함수
- * 	  - COUNT(컬럼명 또는 *) : 조회된 Record Set 의 Record 수를 반환
+ * 	  - COUNT(컬럼명 또는 *) : 조회된 Record Set 의 Record 수를 반환. NULL은 집계안됨
  * 	  - MAX(컬럼명) : 지정한 컬럼의 값 중 가장 큰 값을 반환
  * 	  - MIN(컬럼명) : 지정한 컬럼의 값 중 가장 작은 값을 반환
  * 	  - AVG(컬럼명) : 지정한 컬럼의 값들의 평균값을 반환
@@ -212,7 +212,7 @@ SELECT  COUNT(EMPLOYEE_ID)
 FROM EMPLOYEES 
 WHERE SALARY >=10000;
 
-SELECT MAX(SALARY),MIN(SALARY), AVG(SALARY), SUM(SALARY)
+SELECT MAX(SALARY),MIN(SALARY), ROUND(AVG(SALARY),2), SUM(SALARY)
 FROM EMPLOYEES;
 
 
