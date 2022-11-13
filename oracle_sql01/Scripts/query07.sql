@@ -1,13 +1,45 @@
+SELECT * 
+FROM EMPLOYEES;
+
 /*
- * 1.1980년대 입사자, 1990년대 입사자, 2000년대 입사자의 수를 구하시오
- * 
- * 2. DEPARTMENT_ID 가 50, 80, 100인 부서의 평균 급여를 구하시오.
- * 
- * 3. 년도 구분 없이 1/4 분기, 2/4 분기, 3/4 분기 4/4 분기 별 입사자의 수를 구하시오
- * 
- * 4. 급여액이 10000 이상인 사원이 어느 부서에 많이 있는지 확인할 수 있는 조회 구문을 작성하시오
- * 
- * 5. 
+ * 1. 1980년대 입사자, 1990년대 입사자, 2000년대 입사자의 수를 구하시오.
  */
+SELECT EXTRACT(YEAR FROM HIRE_DATE ) AS 입사년도
+	 , COUNT(*) AS 입사자수
+  FROM EMPLOYEES
+  WHERE EXTRACT(YEAR FROM HIRE_DATE)=1990 OR EXTRACT(YEAR FROM HIRE_DATE)=2000
+GROUP BY EXTRACT(YEAR FROM HIRE_DATE); 
 
 
+
+/* 2. DEPARTMENT_ID 가 50, 80, 100 인 부서의 평균 급여를 구하시오.
+ */ 
+SELECT DEPARTMENT_ID AS 부서ID
+	 , ROUND(AVG(SALARY),2)  AS 평균급여
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID = 50 OR DEPARTMENT_ID =80 OR DEPARTMENT_ID =100
+GROUP BY  DEPARTMENT_ID;
+
+/* 3. 년도 구분 없이 1/4 분기, 2/4분기, 3/4분기 4/4분기 별 입사자의 수를 구하시오.
+ */ 
+SELECT COUNT(*) AS 입사자수	
+	 , EXTRACT(MONTH FROM HIRE_DATE)
+	 , CASE WHEN EXTRACT(MONTH FROM HIRE_DATE)/3<=1THEN '1분기'
+		 	WHEN  EXTRACT(MONTH FROM HIRE_DATE)/3<=2 THEN '2분기'
+		 	WHEN  EXTRACT(MONTH FROM HIRE_DATE)/3<=3 THEN '3분기'
+		 	ELSE  '4분기'
+   END AS 분기
+  FROM EMPLOYEES
+ GROUP BY EXTRACT(MONTH FROM HIRE_DATE)
+ORDER BY EXTRACT(MONTH FROM HIRE_DATE);
+
+
+/* 4. 급여액이 10000 이상인 사원이 어느 부서에 많이 있는지 확인할 수 있는 조회 구문을 작성하시오.
+ * 
+ */
+SELECT DEPARTMENT_ID
+	 , COUNT(*)
+ FROM EMPLOYEES 
+WHERE SALARY >=10000
+GROUP BY DEPARTMENT_ID
+ORDER BY COUNT(*);
