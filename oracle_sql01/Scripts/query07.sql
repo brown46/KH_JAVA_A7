@@ -51,9 +51,9 @@ ORDER BY 1;
 /* 4. 급여액이 10000 이상인 사원이 어느 부서에 많이 있는지 확인할 수 있는 조회 구문을 작성하시오.
  * 
  */
-SELECT DEPARTMENT_ID
-	 , COUNT(*)
+SELECT DEPARTMENT_ID 
+	 , COUNT(*) AS "급여가 10000이상인 사원 수"
  FROM EMPLOYEES 
 WHERE SALARY >=10000
 GROUP BY DEPARTMENT_ID
-ORDER BY COUNT(*);
+ORDER BY 2 DESC;
