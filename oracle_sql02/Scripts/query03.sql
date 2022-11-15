@@ -45,7 +45,7 @@ INSERT INTO 지출내역서 (ID, 날짜, 출입구분, 금액, 비고)
 UPDATE 지출내역서 SET 금액 =9000 ;
 UPDATE 지출내역서 SET 금액 =10000 WHERE ID = 1;
 UPDATE 지출내역서 SET 금액 =4000 WHERE ID = 2;
-UPDATE 지출내역서 SET 금액 =4000 ,비고 = '식비 - 순대국' WHERE ID =1;
+UPDATE 지출내역서 SET 금액 =6000 ,비고 = '식비 - 순대국' WHERE ID =1;
 UPDATE 지출내역서 SET 금액 =금액+1000;
 
 
@@ -53,3 +53,5 @@ DELETE FROM 지출내역서 WHERE ID =1;
 DELETE FROM 지출내역서 WHERE 출입구분 ='출';
 
 SELECT *FROM 지출내역서;
+
+DROP TABLE 지출내역서;
