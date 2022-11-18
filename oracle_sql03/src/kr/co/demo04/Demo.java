@@ -1,9 +1,8 @@
 package kr.co.demo04;
 
-import java.util.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import kr.co.db.connection.OracleConnection;
 import kr.co.vo.EmployeeVO;
 
