@@ -1,65 +1,57 @@
 package kr.co.demo04;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
+import java.util.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
+
+import kr.co.db.connection.OracleConnection;
+import kr.co.vo.EmployeeVO;
 
 public class Demo {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		OracleConnection oc = new OracleConnection("localhost:1521/XEPDB1", "dev01");
 		
-
-		// Oracle Drive 등록
-		Class.forName("oracle.jdbc.driver.OracleDriver");
+		EmployeeVO emp = new EmployeeVO();
+		emp.setEmpId(207);
+		emp.setFirstName("길동");
+		emp.setEmail("HGILDONG");
+		emp.setPhoneNumber("515.123.1234");
+		emp.setHireDate(new java.util.Date());
+		emp.setJobId("IT_PROG");
+		emp.setSalary(2800);
+		emp.setCommission(0);
+		emp.setManagerId(103);
+		emp.setDeptId(60);
 		
-	// Database Connection 생성
-		String url="jdbc:oracle:thin:@localhost:1521/XEPDB1";
-//		String url="jdbc:oracle:thin:@IP주소:Port/ServiceName";
-		String username= "dev01";
-		String password= "dev01";
-		Connection conn=DriverManager.getConnection(url,username,password);
-//		Connection conn=DriverManager.getConnection("ORACLE DB접속정보","계정","암호");
 		
 		
+		String query = "INSERT INTO EMPLOYEES VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+	
 		
-	// Query 작성(쿼리 문자열에 세미콜론은 넣지 마세요.)
-		int empId =100;
-		String jobId= "IT_PROG";
-		String query = "SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, HIRE_DATE FROM EMPLOYEES";
-		query+= " WHERE EMPLOYEE_ID =?";
-		query+= " OR JOB_ID=?";
-			//?:holder
 	// Statement 또는 PreparedStatement 객체 생성
-		//Statement stat = conn.createStatement();
-	  PreparedStatement pstat = conn.prepareStatement(query);
-	  pstat.setInt(1, empId);
-	  pstat.setString(2, jobId);
-		
-	// Query 전송 후 결과 저장
-		ResultSet rs=pstat.executeQuery();
-		
-	// ResultSet 에서 값 추출
-		SimpleDateFormat df = new SimpleDateFormat("yyyy년 MM월 dd일");
-		System.out.println("| ID  | FIRST_NAME      | LAST_NAME      | HIRE_DATE      |");
-		while(rs.next()) {
-			int id = rs.getInt("EMPLOYEE_ID");
-			String fName = rs.getString("FIRST_NAME");
-			String lName = rs.getString("LAST_NAME");
-			Date hireDate = rs.getDate("HIRE_DATE");
-			
-			System.out.printf("| %d | %15s | %15s| %s |\n",id, fName,lName,df.format(hireDate));
+	  //holder에 하나씩 대응됨
+	  PreparedStatement pstat = oc.getPrepared(query);
+	  pstat.setInt(1, emp.getEmpId());
+	  pstat.setString(2,emp.getFirstName());
+	  pstat.setString(3, emp.getLastName());
+	  pstat.setString(4, emp.getEmail());
+	  pstat.setString(5, emp.getPhoneNumber());
+	  pstat.setDate(6, emp.getHireDate());
+	  pstat.setString(7, emp.getJobId());
+	  pstat.setInt(8, emp.getSalary());
+	  pstat.setDouble(9, emp.getCommission());
+	  pstat.setInt(10, emp.getManagerId());
+	  pstat.setInt(11, emp.getDeptId());
+	
+	  int rs = oc.sendInsert();
+		if(rs >= 1 ) {
+			System.out.println(rs+ "개 행이 반영되었습니다.");
+		} else {
+			System.out.println("0개 행이 반영되었습니다.(쿼리에 문제가 있는것 같습니다.)");
 		}
-		
-	// Database 관련 연결 정보 Close (역순으로)
-		rs.close();
-		pstat.close();
-		conn.close();
-		
+
+		oc.close();
 		
 	}
 
