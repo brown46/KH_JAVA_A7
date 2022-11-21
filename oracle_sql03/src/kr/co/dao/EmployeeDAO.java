@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import kr.co.db.connection.OracleConnection;
+import kr.co.vo.DepartmentVO;
 import kr.co.vo.EmployeeVO;
 
 public class EmployeeDAO {
@@ -139,9 +140,30 @@ public class EmployeeDAO {
 
 	public ArrayList<EmployeeVO> selectDeptName(String deptName) {
 		deptName= deptName.toLowerCase();
-		String query = "SELECT * FROM EMPLOYEES WHERE LOWER(DEPARTMENT_ID) =(SELECT DEPARTMENT_ID  FROM DEPARTMENTS WHERE LOWER(DEPARTMENT_NAME)=  ?	)";
+		
+		
+		String query1 = "SELECT DEPARTMENT_ID, DEPARTMENT_NAME FROM DEPARTMENTS WHERE LOWER(DEPARTMENT_NAME)=  ?";
+		
+			PreparedStatement pstat;
+			try {
+				pstat = oc.getPrepared(query1);
+				pstat.setString(1,"%"+deptName+"%");
+				ResultSet rs = oc.sendSelect();
+				
+				ArrayList<DepartmentVO> empArray= new ArrayList<DepartmentVO>();
+				while(rs.next()) {
+					DepartmentVO dept= new DepartmentVO();
+					dept.setDeptName(rs.getString("DEPARTMENT_NAME"));
+					dept.setDeptId(rs.getInt("))
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+			
+		String query2 = "SELECT * FROM EMPLOYEES WHERE LOWER(DEPARTMENT_ID) =(SELECT DEPARTMENT_ID  FROM DEPARTMENTS WHERE LOWER(DEPARTMENT_NAME)=  ?	)";
 		try {
-			PreparedStatement pstat=oc.getPrepared(query);
+			pstat=oc.getPrepared(query2);
 			pstat.setString(1,"%"+deptName+"%");
 			ResultSet rs = oc.sendSelect();
 			
