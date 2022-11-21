@@ -76,6 +76,7 @@ public class EmployeeVO {
 	}
 
 	public void setHireDate(java.util.Date hireDate) {
+		if(hireDate!=null) 
 		this.hireDate = new Date(hireDate.getTime());
 	}
 
