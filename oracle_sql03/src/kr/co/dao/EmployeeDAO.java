@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import kr.co.db.connection.OracleConnection;
 import kr.co.vo.DepartmentVO;
@@ -139,57 +140,96 @@ public class EmployeeDAO {
 	}
 
 	public ArrayList<EmployeeVO> selectDeptName(String deptName) {
+		Scanner sc= new Scanner(System.in);
 		deptName= deptName.toLowerCase();
 		
 		
-//		String query1 = "SELECT DEPARTMENT_ID, DEPARTMENT_NAME FROM DEPARTMENTS WHERE LOWER(DEPARTMENT_NAME)=  ?";
-//		
-//			PreparedStatement pstat;
-//			try {
-//				pstat = oc.getPrepared(query1);
-//				pstat.setString(1,"%"+deptName+"%");
-//				ResultSet rs = oc.sendSelect();
-//				
-//				ArrayList<DepartmentVO> empArray= new ArrayList<DepartmentVO>();
-//				while(rs.next()) {
-//					DepartmentVO dept= new DepartmentVO();
-//					dept.setDeptName(rs.getString("DEPARTMENT_NAME"));
-//					dept.setDeptId(rs.getInt("DEPARTMENT_ID"));
-//				}
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
-			
-			
-		//String query2 = "SELECT * FROM EMPLOYEES WHERE LOWER(DEPARTMENT_ID) =(SELECT DEPARTMENT_ID  FROM DEPARTMENTS WHERE LOWER(DEPARTMENT_NAME) LIKE  ?	)";
-		String query2 = "SELECT * FROM EMPLOYEES E FULL OUTER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID=D.DEPARTMENT_ID WHERE LOWER(D.DEPARTMENT_NAME) LIKE ?";
-		PreparedStatement pstat;
-		try {
-			pstat=oc.getPrepared(query2);
-			pstat.setString(1,"%"+deptName+"%");
-			ResultSet rs = oc.sendSelect();
-			
-			ArrayList<EmployeeVO> empArray= new ArrayList<EmployeeVO>();
-			while(rs.next()) {
-				EmployeeVO emp = new EmployeeVO();
-				emp.setEmpId(rs.getInt("EMPLOYEE_ID"));
-				emp.setFirstName(rs.getString("FIRST_NAME"));
-				emp.setLastName(rs.getString("LAST_NAME"));
-				emp.setEmail(rs.getString("EMAIL"));
-				emp.setPhoneNumber(rs.getString("PHONE_NUMBER"));
-				emp.setHireDate(rs.getDate("HIRE_DATE"));			
-				emp.setJobId(rs.getString("JOB_ID"));
-				emp.setCommission(rs.getDouble("COMMISSION_PCT"));
-				emp.setManagerId(rs.getInt("MANAGER_ID"));
-				emp.setDeptId(rs.getInt("DEPARTMENT_ID"));
-				empArray.add(emp);
-			}
-			return empArray;
+		String query1 = "SELECT DEPARTMENT_ID, DEPARTMENT_NAME, LOCATION_ID, MANAGER_ID FROM DEPARTMENTS WHERE LOWER(DEPARTMENT_NAME) LIKE ?";
 		
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			PreparedStatement pstat;
+			try {
+				pstat = oc.getPrepared(query1);
+				pstat.setString(1,"%"+deptName+"%");
+				ResultSet rs = oc.sendSelect();
+				
+				ArrayList<DepartmentVO> deptArray= new ArrayList<DepartmentVO>();
+				while(rs.next()) {
+					DepartmentVO dept= new DepartmentVO();
+					dept.setDeptName(rs.getString("DEPARTMENT_NAME"));
+					dept.setDeptId(rs.getInt("DEPARTMENT_ID"));
+					dept.setLocationId(rs.getInt("LOCATION_ID"));
+					dept.setManagerId(rs.getInt("MANAGER_ID"));
+					deptArray.add(dept);
+				}
+//				if(deptArray.size()==1)
+				for(DepartmentVO dept: deptArray) {
+					System.out.println(dept);
+				}
+				System.out.println("부서코드 입력");
+				
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+			int input = sc.nextInt();
+			String query2="SELECT * FROM EMPLOYEES WHERE DEPARTMENT_ID =?";
+			try {
+				pstat = oc.getPrepared(query2);
+				pstat.setInt(1,input);
+				ResultSet rs = oc.sendSelect();
+				
+				ArrayList<EmployeeVO> empArray= new ArrayList<EmployeeVO>();
+				while(rs.next()) {
+					EmployeeVO emp = new EmployeeVO();
+					emp.setEmpId(rs.getInt("EMPLOYEE_ID"));
+					emp.setFirstName(rs.getString("FIRST_NAME"));
+					emp.setLastName(rs.getString("LAST_NAME"));
+					emp.setEmail(rs.getString("EMAIL"));
+					emp.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+					emp.setHireDate(rs.getDate("HIRE_DATE"));			
+					emp.setJobId(rs.getString("JOB_ID"));
+					emp.setCommission(rs.getDouble("COMMISSION_PCT"));
+					emp.setManagerId(rs.getInt("MANAGER_ID"));
+					emp.setDeptId(rs.getInt("DEPARTMENT_ID"));
+					empArray.add(emp);
+				}
+//				if(deptArray.size()==1)
+				for(EmployeeVO emp: empArray) {
+					System.out.println(emp);
+				}
+				
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		//String query2 = "SELECT * FROM EMPLOYEES WHERE LOWER(DEPARTMENT_ID) =(SELECT DEPARTMENT_ID  FROM DEPARTMENTS WHERE LOWER(DEPARTMENT_NAME) LIKE  ?	)";
+//		String query2 = "SELECT * FROM EMPLOYEES E FULL OUTER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID=D.DEPARTMENT_ID WHERE LOWER(D.DEPARTMENT_NAME) LIKE ?";
+//		PreparedStatement pstat;
+//		try {
+//			pstat=oc.getPrepared(query2);
+//			pstat.setString(1,"%"+deptName+"%");
+//			ResultSet rs = oc.sendSelect();
+//			
+//			ArrayList<EmployeeVO> empArray= new ArrayList<EmployeeVO>();
+//			while(rs.next()) {
+//				EmployeeVO emp = new EmployeeVO();
+//				emp.setEmpId(rs.getInt("EMPLOYEE_ID"));
+//				emp.setFirstName(rs.getString("FIRST_NAME"));
+//				emp.setLastName(rs.getString("LAST_NAME"));
+//				emp.setEmail(rs.getString("EMAIL"));
+//				emp.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+//				emp.setHireDate(rs.getDate("HIRE_DATE"));			
+//				emp.setJobId(rs.getString("JOB_ID"));
+//				emp.setCommission(rs.getDouble("COMMISSION_PCT"));
+//				emp.setManagerId(rs.getInt("MANAGER_ID"));
+//				emp.setDeptId(rs.getInt("DEPARTMENT_ID"));
+//				empArray.add(emp);
+//			}
+//			return empArray;
+//		
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		
 		return null;

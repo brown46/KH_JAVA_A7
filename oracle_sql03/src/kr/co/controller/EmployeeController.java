@@ -35,7 +35,7 @@ public class EmployeeController {
 	}
 	public void getDeptName(String deptName) {
 		ArrayList<EmployeeVO> datas = empDao.selectDeptName(deptName);
-		ev.print(datas);
+	//	ev.print(datas);
 		
 	}
 
