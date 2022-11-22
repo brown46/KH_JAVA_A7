@@ -100,7 +100,7 @@ SELECT J.JOB_ID
     ON J.JOB_ID =K.JOB_ID;
 
 --ALTER TABLE JOBS RENAME T0 JOB;   
-SELECT * FROM JOBS2;
+SELECT * FROM JOBS;
 --UPDATE JOBS SET JOB_TITLE_KR =
 
 
@@ -144,9 +144,10 @@ INSERT INTO JOBS (JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY) VALUES('NT_ENG','Netwo
  * 290				Network				NULL		3000
  */
 INSERT INTO DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) VALUES(280,'Server',NULL,3000);
---INSERT INTO DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) VALUES((SELECT(MAX(DEPARTMENT_ID)+10),'Server',NULL,3000);
+INSERT INTO DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) VALUES((SELECT(MAX(DEPARTMENT_ID)+10)FROM DEPARTMENTS),'Server',NULL,3000);
 INSERT INTO DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) VALUES(290,'Network',NULL,3000);
 
+SELECT * FROM DEPARTMENTS ;
 
 /*
  * 새로 신설된 Server, Network 부서를 위한 인력을 충원하고 있는 것으로 가정하여 각 부서마다
@@ -162,7 +163,8 @@ SELECT * FROM DEPARTMENTS;
 SELECT * FROM EMPLOYEES ;
 
  						--(SELECT MAX(EMPLOYEE_ID)+1 FROM EMPLOYEES)
-INSERT INTO EMPLOYEES VALUES(207,'Arnold','Cecil','Arn',NULL,SYSDATE,'SV_MGR',4000,0,100,280);
+INSERT INTO EMPLOYEES VALUES((SELECT MAX(EMPLOYEE_ID)+1 FROM EMPLOYEES),'Arnold','Cecil','Arn',NULL,SYSDATE,'SV_MGR',4000,0,100,280);
+--INSERT INTO EMPLOYEES VALUES(207,'Arnold','Cecil','Arn',NULL,SYSDATE,'SV_MGR',4000,0,100,280);
 INSERT INTO EMPLOYEES VALUES(208,'Erica','Florence ','Eri',NULL,SYSDATE,'SV_ENG',6000,0,207,280);
 INSERT INTO EMPLOYEES VALUES(209,'Daniel','Edgar  ','Dan',NULL,SYSDATE,'SV_ENG',6000,NULL,207,280);
 
@@ -203,31 +205,34 @@ UPDATE JOBS SET MAX_SALARY = CASE WHEN MAX_SALARY < 4000 THEN TRUNC(MAX_SALARY*1
 
 SELECT * FROM EMPLOYEES;		 
 /*
- * 
+ * 사내 공지를 위한 게시판 기능을 추가하려 한다. 다음의 요구사항에 맞추어 테이블을 생성하고
+ * 첫번째 공지를 작성하도록 한다.(첫번째 공지는 모든 부서가 열람할 수 있게 한다.)
+ *     - 공지 게시판은 부서별 공지와 전체 공지로 나누어져 운영돼야 한다.
+ *     - 전체 공지는 모든 부서가 확인할 수 있는 공지이며 부서별 공지는 지정한 부서에 소속된
+ *       사원만 볼수 있는 공지이다.
+ *     - 공지를 작성할 때 다음의 정보가 저장되어야 한다.
+ *         번호, 제목, 내용, 작성일자, 부서ID
  */								 
-CREATE TABLE 전체공지(
-       번호 NUMBER PRIMARY KEY
-     , 제목 VARCHAR2(30)
+CREATE TABLE 사내공지(
+       번호 NUMBER
+     , 제목 VARCHAR2(50)
      , 내용 VARCHAR2(300)
      , 작성일자 DATE
      , 부서ID NUMBER
 );
-
-SELECT * FROM 전체공지;
-INSERT INTO 전체공지 VALUES(001,'공지','전체공지',SYSDATE,NULL);
-DROP TABLE 전체공지;
+INSERT INTO 사내공지 VALUES(1, '전체 공지입니다.', '모든 부서에서 확인할 수 있습니다.', SYSDATE, 0);
 
 SELECT * FROM DEPARTMENTS;
 
-CREATE TABLE 사내공지(
-       번호 NUMBER
-     , 제목 VARCHAR2(30)
-     , 내용 VARCHAR2(300)
-     , 작성일자 DATE
-     , 부서ID NUMBER
-);
+ALTER TABLE 사내공지 MODIFY  제목 VARCHAR2(50);
+/*
+ * 사내 공지 게시판 테이블을 생성 후에 다음의 공지를 추가로 작성한다.
+ *     - 모든 부서마다 'xxx 부서만 확인할 수 있는 공지 입니다.' 라는 메시지를 추가한다.
+ */
+
 
 --(SELECT MAX(번호)+1 FROM 사내공지)
+
 
 SELECT * FROM 사내공지;
 INSERT INTO 사내공지 VALUES(1,'공지','관리 부서만 확인할 수 있는 공지입니다.',SYSDATE,10);
@@ -260,18 +265,50 @@ INSERT INTO 사내공지 VALUES(27,'공지','급여 부서만 확인할 수 있�
 INSERT INTO 사내공지 VALUES(28,'공지','서버 부서만 확인할 수 있는 공지입니다.',SYSDATE,280);
 INSERT INTO 사내공지 VALUES(29,'공지','네트워크 부서만 확인할 수 있는 공지입니다.',SYSDATE,290);
 
-		
+INSERT INTO 사내공지(
+       SELECT ROWNUM + 1 AS ID
+            , DEPARTMENT_NAME_KR || ' 부서 공지' AS TITLE
+            , DEPARTMENT_NAME_KR || ' 부서만 확인할 수 있는 공지 입니다.' AS CONTENT
+            , SYSDATE AS WRITE_DATE
+            , DEPARTMENT_ID AS DEPT_ID
+         FROM DEPARTMENTS
+);
+
+		/*
+ * 100 번 사원이 공지를 열람한다는 가정하에 100 번 사원이 소속된 부서의 공지와 전체 공지가
+ * 보일수 있는 SELECT 쿼리문을 작성하세요.
+ */
 SELECT * 
-  FROM 전체공지  A
-  JOIN 사내공지  D
-    ON A.제목 =D.제목
- WHERE D.부서ID=100;
+  FROM 사내공지 
+ WHERE 부서ID=(SELECT DEPARTMENT_ID  FROM EMPLOYEES WHERE EMPLOYEE_ID =100) OR 부서ID=0; 
   
   
+				/*
+ * 공지 게시판에 중요도 기능을 추가하여 가장 중요한 공지가 가장 먼저 조회될 수 있도록 테이블을
+ * 수정하도록 한다.
+ *     - 중요도는 1 ~ 5 까지 사용할 수 있게 한다.
+ *     - 중요도를 설정하지 않으면 기본 3으로 저장되게 한다.
+ *     - 전체 공지용으로 중요도 1 ~ 5 까지 총 5개의 공지 데이터를 추가한다.
+ *     - 추가한 공지 데이터를 조회할 때 중요도 순으로 조회가 될 수 있도록
+ *       SELECT 구문을 작성한다.
+ */				 
+ALTER TABLE 사내공지 ADD 중요도 NUMBER DEFAULT 3;	
+ALTER  TABLE 사내공지 DROP COLUMN 중요도;
 								 
 								 
-								 
-								 
+
+
+SELECT 순위 
+     , 번호
+     , 제목
+     , 내용
+  FROM (SELECT RANK() OVER(ORDER BY 중요도 DESC) AS 순위
+             , 제목
+             , 내용
+             , 번호
+  		FROM 사내공지 );
+
+
 								 
 								 
 								 
