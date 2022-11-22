@@ -206,7 +206,7 @@ SELECT * FROM EMPLOYEES;
  * 
  */								 
 CREATE TABLE 전체공지(
-       번호 NUMBER
+       번호 NUMBER PRIMARY KEY
      , 제목 VARCHAR2(30)
      , 내용 VARCHAR2(300)
      , 작성일자 DATE
@@ -226,6 +226,9 @@ CREATE TABLE 사내공지(
      , 작성일자 DATE
      , 부서ID NUMBER
 );
+
+--(SELECT MAX(번호)+1 FROM 사내공지)
+
 SELECT * FROM 사내공지;
 INSERT INTO 사내공지 VALUES(1,'공지','관리 부서만 확인할 수 있는 공지입니다.',SYSDATE,10);
 INSERT INTO 사내공지 VALUES(2,'공지','마케팅 부서만 확인할 수 있는 공지입니다.',SYSDATE,20);
