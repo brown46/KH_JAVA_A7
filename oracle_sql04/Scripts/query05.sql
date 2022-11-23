@@ -293,15 +293,15 @@ SELECT *
  *       SELECT 구문을 작성한다.
  */				 
 ALTER TABLE 사내공지 ADD 중요도 NUMBER DEFAULT 3;	
-ALTER  TABLE 사내공지 DROP COLUMN 중요도;
-								 
-								 
+ALTER TABLE 사내공지 ADD CONSTRAINT 사내공지_중요도_CK CHECK(중요도 BETWEEN 1 AND 5);
+							
+SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME ='사내공지';
 
+UPDATE 사내공지
+   SET 중요도 =1
+ WHERE 부서ID=0;
 
-SELECT 순위 
-     , 번호
-     , 제목
-     , 내용
+SELECT *
   FROM (SELECT RANK() OVER(ORDER BY 중요도 DESC) AS 순위
              , 제목
              , 내용
