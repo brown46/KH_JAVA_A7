@@ -1,4 +1,14 @@
 /*
+ * web_admin 계정을 새로 만들고 필요한 권한을 설정 후 
+ * web_admin 계정의 connection 정보를 생성 후 접속
+ * HQ_TABLE을 스크립트로 실행하여 테이블 및 데이터 추가 
+ * EMPLOYEE 테이블을 확인하여 추가가 잘 되었는지 확인
+ * 
+ * DROP USER DEV01 CASCADE;
+CREATE USER dev01 IDENTIFIED BY dev01;
+CREATE USER web_admin IDENTIFIED BY web_admin;
+GRANT CONNECT, RESOURCE, DBA TO web_admin;
+
  * SELECT, INSERT, UPDATE, DELETE
  * CREATE, ALTER, DROP
  * JOIN, SUBQUERY
@@ -8,7 +18,7 @@ SELECT * FROM EMPLOYEES;
  * EMPLOYEES의 HIRE_DATE 열의 값을 +10년 하여 수정한다.
  */
 
-UPDATE EMPLOYEES SET HIRE_DATE= ADD_MONTHS(HIRE_DATE,120); 
+UPDATE EMPLOYEES SET HIRE_DATE= HIRE_DATE+365*10; 
 
 
 /*
@@ -16,35 +26,32 @@ UPDATE EMPLOYEES SET HIRE_DATE= ADD_MONTHS(HIRE_DATE,120);
  * 한글로 번역하여 수정한다.
  * 단, MIN_SALARY, MAX_SALARY 칼럼은 만들 필요 없음
  */
-SELECT * FROM USER_TAB_COLUMNS WHERE TABLE_NAME='JOBS';
-SELECT * FROM JOBS;
-CREATE TABLE KJOBS
-AS
-SELECT JOB_ID, JOB_TITLE FROM JOBS;
 
+CREATE TABLE KJOBS(
+	   JOB_ID VARCHAR2(30)
+	 , JOB_TITLE VARCHAR2(50)
+);
+DROP TABLE KJOBS;
+SELECT * FROM KJOBS;
 
-UPDATE KJOBS SET JOB_TITLE = '회장' WHERE JOB_ID ='AD_PRES';
-UPDATE KJOBS SET JOB_TITLE = '부회장' WHERE JOB_ID ='AD_VP';
-UPDATE KJOBS SET JOB_TITLE = '행정 매니저 보조' WHERE JOB_ID ='AD_ASST';
-UPDATE KJOBS SET JOB_TITLE = '재무분석가' WHERE JOB_ID ='FI_MGR';
-UPDATE KJOBS SET JOB_TITLE = '회계사' WHERE JOB_ID ='FI_ACCOUNT';
-UPDATE KJOBS SET JOB_TITLE = '대리' WHERE JOB_ID ='AC_MGR';
-UPDATE KJOBS SET JOB_TITLE = '공인회계' WHERE JOB_ID ='AC_ACCOUNT';
-UPDATE KJOBS SET JOB_TITLE = '영업 부장' WHERE JOB_ID ='SA_MAN';
-UPDATE KJOBS SET JOB_TITLE = '판매 직원' WHERE JOB_ID ='SA_REP';
-UPDATE KJOBS SET JOB_TITLE = '구매부 이사' WHERE JOB_ID ='PU_MAN';
-UPDATE KJOBS SET JOB_TITLE = '구매부 사원' WHERE JOB_ID ='ST_MAN';
-UPDATE KJOBS SET JOB_TITLE = '창고 사원' WHERE JOB_ID ='ST_CLERK';
-UPDATE KJOBS SET JOB_TITLE = '운송 사원' WHERE JOB_ID ='SH_CLERK';
-UPDATE KJOBS SET JOB_TITLE = '프로그래머' WHERE JOB_ID ='IT_PROG';
-UPDATE KJOBS SET JOB_TITLE = '마케팅 매니저' WHERE JOB_ID ='MK_MAN';
-UPDATE KJOBS SET JOB_TITLE = '마케팅 부서 대표' WHERE JOB_ID ='MK_REP';
-UPDATE KJOBS SET JOB_TITLE = '인사부 대표' WHERE JOB_ID ='HR_REP';
-UPDATE KJOBS SET JOB_TITLE = '홍보부 대표' WHERE JOB_ID ='PR_REP';
-
-
-
-SELECT * FROM KJOBS ;
+INSERT INTO KJOBS VALUES('회장','AD_PRES');
+INSERT INTO KJOBS VALUES('부회장','AD_VP');
+INSERT INTO KJOBS VALUES('행정 매니저 보조','AD_ASST');
+INSERT INTO KJOBS VALUES('재무분석가','FI_MGR');
+INSERT INTO KJOBS VALUES('회계사','FI_ACCOUNT');
+INSERT INTO KJOBS VALUES('대리','AC_MGR');
+INSERT INTO KJOBS VALUES('공인회계','AC_ACCOUNT');
+INSERT INTO KJOBS VALUES('영업 부장','SA_MAN');
+INSERT INTO KJOBS VALUES('판매 직원','SA_REP');
+INSERT INTO KJOBS VALUES('구매부 이사','PU_MAN');
+INSERT INTO KJOBS VALUES('구매부 사원','PU_CLERK');
+INSERT INTO KJOBS VALUES('창고 사원','ST_CLERK');
+INSERT INTO KJOBS VALUES('운송 사원','SH_CLERK');
+INSERT INTO KJOBS VALUES('프로그래머','IT_PROG');
+INSERT INTO KJOBS VALUES('마케팅 매니저','MK_MAN');
+INSERT INTO KJOBS VALUES('마케팅 부서 대표','MK_REP');
+INSERT INTO KJOBS VALUES('인사부 대표','HR_REP');
+INSERT INTO KJOBS VALUES('홍보부 대표','PR_REP');
 
 /*
  * DEPARTMENTS 테이블에 DEPARTMENT_NAME_KR 컬럼을 추가 후 DEPARTMENT_NAME을 
@@ -81,33 +88,23 @@ UPDATE DEPARTMENTS SET DEPARTMENT_NAME_KR = '채용' WHERE DEPARTMENT_NAME ='Rec
 UPDATE DEPARTMENTS SET DEPARTMENT_NAME_KR = '급여' WHERE DEPARTMENT_NAME ='Payroll';
 UPDATE DEPARTMENTS SET DEPARTMENT_NAME_KR = '서버' WHERE DEPARTMENT_NAME ='Server';
 UPDATE DEPARTMENTS SET DEPARTMENT_NAME_KR = '네트워크' WHERE DEPARTMENT_NAME ='Network';
+
 /*
  *  KJOBS 테이블에 한글로 번역한 직무 타이틀을 JOBS 테이블에 JOB_TITLE_KR 컬럼을
  * 추가 후 수정이 되도록 한다.(DEPARTMENTS 테이블 처럼하나의 테이블에 영문/한글이 모두
  * 들어가게 한다.) 모든 작업을 완료 후 KJOBS 테이블은 제거 한다.
  */
-ALTER TABLE JOBS ADD JOB_TITLE_KR VARCHAR2(30);
 
-CREATE TABLE JOBS2
-AS
-SELECT J.JOB_ID
-	 , J.JOB_TITLE
-	 , J.MIN_SALARY
-	 , J.MAX_SALARY
-	 , K.JOB_TITLE AS JOB_TITLE_KR
-  FROM JOBS J
-  JOIN KJOBS K
-    ON J.JOB_ID =K.JOB_ID;
+ALTER TABLE JOBS ADD JOB_TITLE_KR VARCHAR2(50);
+ALTER TABLE KJOBS DROP  COLUMN JOB_TITLE_KR;
 
---ALTER TABLE JOBS RENAME T0 JOB;   
 SELECT * FROM JOBS;
---UPDATE JOBS SET JOB_TITLE_KR =
-
-
+SELECT * FROM KJOBS;
 
 
 UPDATE JOBS 
-   SET JOB_TITLE_KR=(SELECT JOB_TITLE FROM KJOBS WHERE JOB_ID=JOBS.JOB_ID);
+   SET JOB_TITLE_KR =(SELECT JOB_ID FROM KJOBS K WHERE K.JOB_TITLE  =JOBS.JOB_ID);
+DROP TABLE KJOBS ;
    
   UPDATE JOBS SET JOB_TITLE_KR = '인턴 프로그래머' WHERE JOB_ID ='IT_ITRN';
 UPDATE JOBS SET JOB_TITLE_KR = '서버 매니저' WHERE JOB_ID ='SV_MGR';
@@ -117,7 +114,7 @@ UPDATE JOBS SET JOB_TITLE_KR = '네트워크 엔지니어' WHERE JOB_ID ='NT_ENG
 
 SELECT * FROM JOBS;
 
-DROP TABLE KJOBS;
+
 
 /*
  * JOBS 테이블에 다음의 데이터를 추가 한다.(JOB_TITLE_KR도 추가되어 있어야함)
@@ -143,9 +140,12 @@ INSERT INTO JOBS (JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY) VALUES('NT_ENG','Netwo
  * 280				Server				NULL		3000
  * 290				Network				NULL		3000
  */
-INSERT INTO DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) VALUES(280,'Server',NULL,3000);
-INSERT INTO DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) VALUES((SELECT(MAX(DEPARTMENT_ID)+10)FROM DEPARTMENTS),'Server',NULL,3000);
-INSERT INTO DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) VALUES(290,'Network',NULL,3000);
+CREATE SEQUENCE SEQ2
+  	 START WITH 280
+      INCREMENT BY 10;
+              							--SEQ2.NEXTVAL
+INSERT INTO DEPARTMENTS  VALUES((SELECT (MAX(DEPARTMENT_ID)+10) FROM DEPARTMENTS),'Server',NULL,3000,'서버');
+INSERT INTO DEPARTMENTS VALUES((SELECT (MAX(DEPARTMENT_ID)+10) FROM DEPARTMENTS),'Network',NULL,3000,'네트워크');
 
 SELECT * FROM DEPARTMENTS ;
 
@@ -162,18 +162,27 @@ SELECT * FROM JOBS;
 SELECT * FROM DEPARTMENTS;
 SELECT * FROM EMPLOYEES ;
 
- 						--(SELECT MAX(EMPLOYEE_ID)+1 FROM EMPLOYEES)
-INSERT INTO EMPLOYEES VALUES((SELECT MAX(EMPLOYEE_ID)+1 FROM EMPLOYEES),'Arnold','Cecil','Arn',NULL,SYSDATE,'SV_MGR',4000,0,100,280);
---INSERT INTO EMPLOYEES VALUES(207,'Arnold','Cecil','Arn',NULL,SYSDATE,'SV_MGR',4000,0,100,280);
-INSERT INTO EMPLOYEES VALUES(208,'Erica','Florence ','Eri',NULL,SYSDATE,'SV_ENG',6000,0,207,280);
-INSERT INTO EMPLOYEES VALUES(209,'Daniel','Edgar  ','Dan',NULL,SYSDATE,'SV_ENG',6000,NULL,207,280);
+CREATE SEQUENCE SEQ
+          START WITH 207;
+ 									-- SEQ.NEXTVAL
+INSERT INTO EMPLOYEES VALUES((SELECT (MAX(EMPLOYEE_ID)+1) FROM EMPLOYEES),'Arnold','Cecil','Arn',NULL,SYSDATE,'SV_MGR',4000,NULL,NULL,280);
+INSERT INTO EMPLOYEES VALUES((SELECT (MAX(EMPLOYEE_ID)+1) FROM EMPLOYEES),'Erica','Florence ','Eri',NULL,SYSDATE,'SV_ENG',6000,NULL,NULL,280);
+INSERT INTO EMPLOYEES VALUES((SELECT (MAX(EMPLOYEE_ID)+1) FROM EMPLOYEES),'Daniel','Edgar  ','Dan',NULL,SYSDATE,'SV_ENG',6000,NULL,NULL,280);
 
-INSERT INTO EMPLOYEES VALUES(210,'Edward ','Eugene ','Edw',NULL,SYSDATE,'NT_MGR',5000,NULL,100,290);
-INSERT INTO EMPLOYEES VALUES(211,'Henry','Kenneth','Hen',NULL,SYSDATE,'NT_ENG',7000,NULL,210,290);
-INSERT INTO EMPLOYEES VALUES(212,'Julia','Linney  ','Juli',NULL,SYSDATE,'NT_ENG',7000,NULL,210,290);
+INSERT INTO EMPLOYEES VALUES((SELECT (MAX(EMPLOYEE_ID)+1) FROM EMPLOYEES),'Edward ','Eugene ','Edw',NULL,SYSDATE,'NT_MGR',5000,NULL,NULL,290);
+INSERT INTO EMPLOYEES VALUES((SELECT (MAX(EMPLOYEE_ID)+1) FROM EMPLOYEES),'Henry','Kenneth','Hen',NULL,SYSDATE,'NT_ENG',7000,NULL,NULL,290);
+INSERT INTO EMPLOYEES VALUES((SELECT (MAX(EMPLOYEE_ID)+1) FROM EMPLOYEES),'Julia','Linney  ','Juli',NULL,SYSDATE,'NT_ENG',7000,NULL,NULL,290);
 
-UPDATE DEPARTMENTS SET MANAGER_ID=207 WHERE DEPARTMENT_ID =280 ;
-UPDATE DEPARTMENTS SET MANAGER_ID=210 WHERE DEPARTMENT_ID =290 ;
+
+UPDATE EMPLOYEES SET MANAGER_ID =100 WHERE EMPLOYEE_ID =207;
+UPDATE EMPLOYEES SET MANAGER_ID =207 WHERE EMPLOYEE_ID =208;
+UPDATE EMPLOYEES SET MANAGER_ID =207 WHERE EMPLOYEE_ID =209;
+
+
+UPDATE EMPLOYEES SET MANAGER_ID =100 WHERE EMPLOYEE_ID =210;
+UPDATE EMPLOYEES SET MANAGER_ID =210 WHERE EMPLOYEE_ID =211;
+UPDATE EMPLOYEES SET MANAGER_ID =210 WHERE EMPLOYEE_ID =212;
+
 
 UPDATE EMPLOYEES  SET SALARY  =SALARY+2000 WHERE EMPLOYEE_ID =207 ;
 UPDATE EMPLOYEES SET SALARY=SALARY+2000 WHERE EMPLOYEE_ID =210 ;
@@ -187,21 +196,30 @@ UPDATE EMPLOYEES SET SALARY=SALARY+2000 WHERE EMPLOYEE_ID =210 ;
  * 		- 급여가 12000이상인 경우 5% 상승
  * 		- 정수 1번째 자리에서 절삭할 것. 예) 4333.333.은 4330
  */
-UPDATE EMPLOYEES SET SALARY= CASE WHEN SALARY < 4000 THEN TRUNC(SALARY*1.1,-1)
-								  WHEN  4000<=SALARY AND SALARY <8000 THEN TRUNC(SALARY*1.08,-1)
-								  WHEN  8000<=SALARY AND SALARY <12000 THEN TRUNC(SALARY*1.06,-1)
-								  WHEN  12000<=SALARY  THEN TRUNC(SALARY*1.05,-1)
-								  END ;
-UPDATE JOBS SET MIN_SALARY = CASE WHEN MIN_SALARY < 4000 THEN TRUNC(MIN_SALARY*1.1,-1)
-								  WHEN  4000<=MIN_SALARY AND MIN_SALARY <8000 THEN TRUNC(MIN_SALARY*1.08,-1)
-								  WHEN  8000<=MIN_SALARY AND MIN_SALARY <12000 THEN TRUNC(MIN_SALARY*1.06,-1)
-								  WHEN  12000<=MIN_SALARY  THEN TRUNC(MIN_SALARY*1.05,-1)
-								  END ;
-UPDATE JOBS SET MAX_SALARY = CASE WHEN MAX_SALARY < 4000 THEN TRUNC(MAX_SALARY*1.1,-1)
-								  WHEN  4000<=MAX_SALARY AND MAX_SALARY <8000 THEN TRUNC(MAX_SALARY*1.08,-1)
-								  WHEN  8000<=MAX_SALARY AND MAX_SALARY <12000 THEN TRUNC(MAX_SALARY*1.06,-1)
-								  WHEN  12000<=MAX_SALARY  THEN TRUNC(MAX_SALARY*1.05,-1)
-								  END ;
+
+SELECT * FROM JOBS ;
+
+UPDATE JOBS
+   SET (MIN_SALARY, MAX_SALARY) = (SELECT CASE WHEN MIN_SALARY <4000 THEN FLOOR(MIN_SALARY *1.1)
+											   WHEN MIN_SALARY <8000 THEN FLOOR(MIN_SALARY *1.08)
+											   WHEN MIN_SALARY <12000 THEN FLOOR(MIN_SALARY *1.06)
+											   ELSE FLOOR(MIN_SALARY*1.05)
+									      END AS MIN_SALARY
+										, CASE WHEN MAX_SALARY <4000 THEN FLOOR(MAX_SALARY *1.1)
+										       WHEN MAX_SALARY <8000 THEN FLOOR(MAX_SALARY *1.08)
+										       WHEN MAX_SALARY <12000 THEN FLOOR(MAX_SALARY *1.06)
+										       ELSE FLOOR(MAX_SALARY*1.05)
+										  END AS MAX_SALARY
+						     	   FROM JOBS J2    												 
+							      WHERE  J2.JOB_ID=JOBS.JOB_ID);
+												 
+UPDATE EMPLOYEES SET SALARY = (SELECT CASE WHEN SALARY <4000 THEN FLOOR(SALARY *1.1)
+										   WHEN SALARY <8000 THEN FLOOR(SALARY *1.08)
+										   WHEN SALARY <12000 THEN FLOOR(SALARY *1.06)
+										   ELSE FLOOR(SALARY*1.05)
+										   END 
+								 FROM EMPLOYEES e1
+								WHERE e1.EMPLOYEE_ID = EMPLOYEES.EMPLOYEE_ID );
 
 SELECT * FROM EMPLOYEES;		 
 /*
@@ -224,46 +242,14 @@ INSERT INTO 사내공지 VALUES(1, '전체 공지입니다.', '모든 부서에�
 
 SELECT * FROM DEPARTMENTS;
 
-ALTER TABLE 사내공지 MODIFY  제목 VARCHAR2(50);
+
 /*
  * 사내 공지 게시판 테이블을 생성 후에 다음의 공지를 추가로 작성한다.
  *     - 모든 부서마다 'xxx 부서만 확인할 수 있는 공지 입니다.' 라는 메시지를 추가한다.
  */
 
-
---(SELECT MAX(번호)+1 FROM 사내공지)
-DROP TABLE 사내공지;
-
 SELECT * FROM 사내공지;
-INSERT INTO 사내공지 VALUES(1,'공지','관리 부서만 확인할 수 있는 공지입니다.',SYSDATE,0);
-INSERT INTO 사내공지 VALUES(2,'공지','마케팅 부서만 확인할 수 있는 공지입니다.',SYSDATE,20);
-INSERT INTO 사내공지 VALUES(3,'공지','구매관리 부서만 확인할 수 있는 공지입니다.',SYSDATE,30);
-INSERT INTO 사내공지 VALUES(4,'공지','인사 부서만 확인할 수 있는 공지입니다.',SYSDATE,40);
-INSERT INTO 사내공지 VALUES(5,'공지','운송 부서만 확인할 수 있는 공지입니다.',SYSDATE,50);
-INSERT INTO 사내공지 VALUES(6,'공지','IT 부서만 확인할 수 있는 공지입니다.',SYSDATE,60);
-INSERT INTO 사내공지 VALUES(7,'공지','홍보 부서만 확인할 수 있는 공지입니다.',SYSDATE,70);
-INSERT INTO 사내공지 VALUES(8,'공지','판매 부서만 확인할 수 있는 공지입니다.',SYSDATE,80);
-INSERT INTO 사내공지 VALUES(9,'공지','경영 부서만 확인할 수 있는 공지입니다.',SYSDATE,90);
-INSERT INTO 사내공지 VALUES(10,'공지','재무 부서만 확인할 수 있는 공지입니다.',SYSDATE,100);
-INSERT INTO 사내공지 VALUES(11,'공지','경리 부서만 확인할 수 있는 공지입니다.',SYSDATE,110);
-INSERT INTO 사내공지 VALUES(12,'공지','자금 부서만 확인할 수 있는 공지입니다.',SYSDATE,120);
-INSERT INTO 사내공지 VALUES(13,'공지','세무본 부서만 확인할 수 있는 공지입니다.',SYSDATE,130);
-INSERT INTO 사내공지 VALUES(14,'공지','자산운용 부서만 확인할 수 있는 공지입니다.',SYSDATE,140);
-INSERT INTO 사내공지 VALUES(15,'공지','주주서비스 부서만 확인할 수 있는 공지입니다.',SYSDATE,150);
-INSERT INTO 사내공지 VALUES(16,'공지','복지 부서만 확인할 수 있는 공지입니다.',SYSDATE,160);
-INSERT INTO 사내공지 VALUES(17,'공지','제조 부서만 확인할 수 있는 공지입니다.',SYSDATE,170);
-INSERT INTO 사내공지 VALUES(18,'공지','건축 부서만 확인할 수 있는 공지입니다.',SYSDATE,180);
-INSERT INTO 사내공지 VALUES(19,'공지','계약 부서만 확인할 수 있는 공지입니다.',SYSDATE,190);
-INSERT INTO 사내공지 VALUES(20,'공지','동작 부서만 확인할 수 있는 공지입니다.',SYSDATE,200);
-INSERT INTO 사내공지 VALUES(21,'공지','IT지원 부서만 확인할 수 있는 공지입니다.',SYSDATE,210);
-INSERT INTO 사내공지 VALUES(22,'공지','네트워크운영센터  부서만 확인할 수 있는 공지입니다.',SYSDATE,220);
-INSERT INTO 사내공지 VALUES(23,'공지','IT헬프데스크 부서만 확인할 수 있는 공지입니다.',SYSDATE,230);
-INSERT INTO 사내공지 VALUES(24,'공지','정부판매 부서만 확인할 수 있는 공지입니다.',SYSDATE,240);
-INSERT INTO 사내공지 VALUES(25,'공지','소매판매 부서만 확인할 수 있는 공지입니다.',SYSDATE,250);
-INSERT INTO 사내공지 VALUES(26,'공지','채용 부서만 확인할 수 있는 공지입니다.',SYSDATE,260);
-INSERT INTO 사내공지 VALUES(27,'공지','급여 부서만 확인할 수 있는 공지입니다.',SYSDATE,270);
-INSERT INTO 사내공지 VALUES(28,'공지','서버 부서만 확인할 수 있는 공지입니다.',SYSDATE,280);
-INSERT INTO 사내공지 VALUES(29,'공지','네트워크 부서만 확인할 수 있는 공지입니다.',SYSDATE,290);
+
 
 INSERT INTO 사내공지(
        SELECT ROWNUM + 1 AS ID
@@ -274,7 +260,7 @@ INSERT INTO 사내공지(
          FROM DEPARTMENTS
 );
 
-		/*
+/*
  * 100 번 사원이 공지를 열람한다는 가정하에 100 번 사원이 소속된 부서의 공지와 전체 공지가
  * 보일수 있는 SELECT 쿼리문을 작성하세요.
  */
@@ -298,8 +284,10 @@ SELECT *
  *     - 추가한 공지 데이터를 조회할 때 중요도 순으로 조회가 될 수 있도록
  *       SELECT 구문을 작성한다.
  */				 
-ALTER TABLE 사내공지 ADD 중요도 NUMBER DEFAULT 3;	
-ALTER TABLE 사내공지 ADD CONSTRAINT 사내공지_중요도_CK CHECK(중요도 BETWEEN 1 AND 5);
+ 
+ALTER TABLE 사내공지 ADD 중요도 NUMBER DEFAULT 3;
+ALTER TABLE 사내공지 ADD CONSTRAINT 사내공지_중요도_CK CHECK(중요도 BETWEEN 1 AND 5); 
+ALTER TABLE 사내공지 DROP CONSTRAINT 사내공지_중요도_CK;
 							
 SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME ='사내공지';
 
@@ -307,32 +295,45 @@ UPDATE 사내공지
    SET 중요도 =1
  WHERE 부서ID=0;
 
-SELECT *
-  FROM (SELECT RANK() OVER(ORDER BY 중요도, 번호 ) AS 순위
-             , 번호 
-             , 내용
-             , 제목
-  		FROM 사내공지 );
+SELECT * FROM 사내공지;
+
+SELECT 번호
+	 , 제목
+	 , 내용
+	 , 작성일자
+	 , 부서ID
+  FROM (SELECT 번호
+  			 , 제목
+  			 , 내용
+  			 , 작성일자
+  			 , 부서ID
+  			 , 중요도
+  			 , RANK() OVER(ORDER BY 중요도, 번호) AS 순위
+  		  FROM 사내공지)
+  ORDER BY 순위;
+
+
 
 /*
  * DEPARTMENTS 테이블에서 MANAGER_ID가 없는 부서는 삭제하도록 한다.
  * NOTICE 테이블도 삭제할 부서의 공지사항이 삭제되도록 한다.
  */
- SELECT * FROM 사내공지;
+ 
+ DELETE 
+   FROM 사내공지 
+  WHERE 부서ID IN(SELECT DEPARTMENT_ID 
+                   FROM DEPARTMENTS 
+                  WHERE MANAGER_ID IS NULL); 
 
-SELECT 부서ID FROM 사내공지;
+                 
+DELETE FROM DEPARTMENTS WHERE MANAGER_ID IS NULL;
 
-DELETE FROM 사내공지 A
-	    JOIN DEPARTMENTS D
-	     ON A.부서ID= D.DEPARTMENT_ID 
-	  WHERE D.MANAGER_ID IS NULL;
+SELECT * FROM DEPARTMENTS ; 
+ 
+SELECT TABLE_NAME
+  FROM USER_CONSTRAINTS
+ WHERE CONSTRAINT_NAME='EMP_DEPT_FK';
 
-DELETE 사내공지 
- WHERE 사내공지.부서ID  
-    IN(SELECT d.DEPARTMENT_ID  
-         FROM DEPARTMENTS d
-        WHERE d.MANAGER_ID IS NULL);
-SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE MANAGER_ID IS NULL;
 /*
   * EMPLOYEES 테이블의 COMMISSION_PCT가 NULL인 경우 0으로 수정한다.
   */
@@ -345,38 +346,37 @@ SELECT* FROM EMPLOYEES;
   * EMPLOYEES 테이블의 MANAGER_ID가 없는 사원은 DEPARTMENT_ID에 해당하는 부서 
   * 정보를 찾아서 해당 부서의 MANAGER_ID 값이 EMPLOYEES 테이블의 MANAGER_ID 가 되도록 수정한다.
   */
- SELECT DEPARTMENT_ID  FROM EMPLOYEES WHERE MANAGER_ID IS NULL;
-SELECT MANAGER_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID =(SELECT DEPARTMENT_ID  FROM EMPLOYEES WHERE MANAGER_ID IS NULL);
+
+
+SELECT DEPARTMENT_ID  FROM EMPLOYEES WHERE MANAGER_ID IS NULL;
+SELECT MANAGER_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID =90;
 
 UPDATE EMPLOYEES 
-   SET MANAGER_ID =
-  	   (SELECT MANAGER_ID 
-  	      FROM DEPARTMENTS 
-  	     WHERE DEPARTMENT_ID = IS NULL) 
- WHERE MANAGER_ID IS NULL;
+   SET EMPLOYEES.MANAGER_ID =(SELECT D.MANAGER_ID 
+                                FROM DEPARTMENTS D
+                               WHERE D.DEPARTMENT_ID =EMPLOYEES.DEPARTMENT_ID)
+ WHERE EMPLOYEES.MANAGER_ID IS NULL;
 
+SELECT * FROM DEPARTMENTS;
 SELECT * FROM EMPLOYEES;
+
+
   /*
    * EMPLOYEES 테이블의 DEPARTMENT_ID가 없는 사원은 MANAGER_ID에 해당하는 사원 정보를 찾아서
    * 해당 사원의 DEPARTMENT_ID 값이 EMPLOYEES 테이블의 DEPARTMENT_ID가 되도록 수정한다.
    */
-  	SELECT MANAGER_ID  FROM EMPLOYEES WHERE DEPARTMENT_ID IS NULL;
-  
-  	UPDATE EMPLOYEES SET DEPARTMENT_ID=	(SELECT DEPARTMENT_ID  
-					  					   FROM EMPLOYEES 
-					  					  WHERE EMPLOYEE_ID =(SELECT MANAGER_ID  
-									  					  	    FROM EMPLOYEES 
-									  					  	   WHERE DEPARTMENT_ID IS NULL)) 
-     WHERE DEPARTMENT_ID IS NULL;
-  				 
-  		UPDATE EMPLOYEES E1 
-  		SET DEPARTMENT_ID=(SELECT E2.DEPARTMENT_ID  
-	  					     FROM EMPLOYEES E2
-	  					    WHERE E2.EMPLOYEE_ID =E1.MANAGER_ID) 
-  	     WHERE DEPARTMENT_ID IS NULL;
-  	    
-  	    
-  	SELECT DEPARTMENT_ID  FROM EMPLOYEES WHERE EMPLOYEE_ID =(SELECT MANAGER_ID  FROM EMPLOYEES WHERE DEPARTMENT_ID IS NULL);
+
+SELECT * FROM EMPLOYEES;
+
+UPDATE EMPLOYEES E 
+   SET E.DEPARTMENT_ID = (SELECT E2.DEPARTMENT_ID 
+                            FROM EMPLOYEES E2
+                           WHERE E2.EMPLOYEE_ID=E.MANAGER_ID)
+ WHERE E.DEPARTMENT_ID IS NULL;
+
+
+
+
   	
   
   
