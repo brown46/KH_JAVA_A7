@@ -84,6 +84,9 @@ GRANT SELECT ON PUBLIC_SAMPLE TO USER2;
 -- 권한ㅇ ㅣ부여된 후에는 공개 동의어로 접근가능
 SELECT * FROM PSAM; /*더이상 USER1과 같은 사용자계정 스키마가 필요하지 않음.*/
 
-
+--동의어 생성 정보 조회
 SELECT * FROM ALL_SYNONYMS WHERE TABLE_OWNER ='USER1';
 
+
+--다른 사용자에게 부여한 권한 정보 확인 가능
+SELECT * FROM USER_TAB_PRIVS;
