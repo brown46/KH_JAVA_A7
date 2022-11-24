@@ -13,7 +13,7 @@ CREATE SEQUENCE SEQ1
           CYCLE
         NOCACHE;
 		--10부터 10씩증가 최소 10 최대 100. 순환
-       --NOCACHE 미리 생성할 정수값 수량
+       --NOCACHE: 미리 생성할 정수값 수량. 속도가 빠름. 오류가 생길 수 있음
 
 ALTER SEQUENCE SEQ1
      INCREMENT BY 5
