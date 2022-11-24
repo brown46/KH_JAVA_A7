@@ -21,6 +21,19 @@ SELECT SUBSTR(PHONE_NUMBER,1,3) AS 전화번호앞자리
  * 년도별 입사자 수를 구하시오
  */
 
+SELECT * FROM EMPLOYEES e ;
+
+SELECT 순위
+	 , 수
+	 , 입사년도
+  FROM (SELECT COUNT(*) AS 수 
+	 	     , EXTRACT(YEAR FROM HIRE_DATE) AS 입사년도
+	 	     , RANK() OVER(ORDER BY COUNT(*) DESC) AS 순위
+  		 FROM EMPLOYEES 
+        GROUP BY EXTRACT(YEAR FROM HIRE_DATE))
+
+
+
 SELECT EXTRACT(YEAR FROM HIRE_DATE ) AS 입사년도
 	 , COUNT(*) AS 입사자수
   FROM EMPLOYEES 
@@ -31,6 +44,8 @@ SELECT EXTRACT(YEAR FROM HIRE_DATE ) AS 입사년도
  * COMMISSIN_PCT가 있는 경우 COMMISSION_PCT를 포함한 급여액으로 구하세요 
  */
  
+
+
 SELECT JOB_ID
 	 , COUNT(JOB_ID)
 	 , MAX(SALARY*(NVL(COMMISSION_PCT,0)+1)) AS 최고급여액
@@ -44,6 +59,10 @@ SELECT JOB_ID
  * 	  - 그룹에 대한 조건절로 사용한다.
  * 	  - WHERE 절에서 사용하는 조건은 GROUP으로 묶이기 전의 조건으로 사용됨.
  */
+
+
+
+
 
 SELECT DEPARTMENT_ID  
 	 , COUNT(DEPARTMENT_ID) 부서별총원
@@ -62,6 +81,8 @@ HAVING COUNT(*)>=20;
 /*
  * 30명 이상이 근무하는 부서의 전화번호 앞자리 사용수 집계
  */
+
+
 SELECT DEPARTMENT_ID 
 	 , SUBSTR(PHONE_NUMBER,1,3) AS 전화번호앞자리
 	 , COUNT(PHONE_NUMBER) AS 회선수
@@ -72,6 +93,17 @@ HAVING COUNT(DEPARTMENT_ID)>=30;
 /*
  * 커미션 지급을 받는 사원의 직무 분포 현황
  */ 
+
+SELECT * FROM EMPLOYEES e ;
+SELECT JOB_ID
+	 , COMMISSION_PCT
+	 , COUNT(JOB_ID)
+  FROM EMPLOYEES
+ GROUP BY JOB_ID, COMMISSION_PCT 
+HAVING COMMISSION_PCT IS NOT NULL;
+
+
+
 SELECT JOB_ID 
 	 , COMMISSION_PCT 
 	 , COUNT(JOB_ID) AS 수
