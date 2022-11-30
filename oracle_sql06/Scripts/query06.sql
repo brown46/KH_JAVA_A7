@@ -1,4 +1,19 @@
-
+/*
+ * DEPARTMENTS 테이블에 총원(EMP_TOTAL) 컬럼을 추가하여 부서별 인원을 기록할 수 있도록 수정한다.
+ * 
+ * 사원 추가(PROC_ADD_EMPLOYEE) 프로시져를 생성하여 사원을 추가할 때 다음의 기능이 동작하도록 한다.
+ *     - EMPLOYEES 테이블에 사원을 추가할 수 있는 최소한의 정보를 이용하여 프로시져가 동작하게 한다.
+ *     - 추가된 사원의 부서에 맞추어 DEPARTMENTS 테이블의 EMP_TOTAL 컬럼의 총원을 증가시키도록 한다.
+ * 
+ * 사원 수정(PROC_MOD_EMPLOYEE) 프로시져와 사원 삭제(PROC_DEL_EMPLOYEE) 프로시져를 생성하여 다음의 기능이
+ * 동작하도록 한다.
+ *     - EMPLOYEES 테이블의 사원정보를 수정/삭제 할 수 있는 최소한의 정보를 이용하여 프로시져가 동작하게 한다.
+ *     - 사원의 정보를 수정할 때는 급여, 직무, 부서 만 수정할 수 있게 한다.
+ *     - 수정/삭제된 사원의 부서에 맞추어 DEPARTMENTS 테이블의 EMP_TOTAL 컬럼의 총원을 증가 혹은 감소 시키도록 한다.
+ * 
+ * TRIGGER 로도 생성하여 만들어 본다.
+ * TRIGGER 로 생성하고 테스트 할 때에는 직접 INSERT, UPDATE, DELETE 쿼리문을 만들어서 실행해야 합니다.
+ */
 SELECT * FROM DEPARTMENTS;
 SELECT * FROM EMPLOYEES;
 SELECT * FROM JOBS;
