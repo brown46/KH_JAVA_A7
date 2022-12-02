@@ -7,7 +7,9 @@
     SELECT 'Hello Mybatis' FROM DUAL
   </select>
   <select id="reqAccount" resultType="kr.co.vo.AccountVO">
-  	SELECT AID, APW, AEMAIL, ADATE, ASTATE FROM 회원요청테이블
+  	SELECT AID, APW, AEMAIL, ADATE, ASTATE 
+  	  FROM 회원요청테이블
+  	 WHERE ASTATE != 'T'
   </select>
   <!--  
   <insert id=""></insert>
