@@ -4,58 +4,57 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class AccountVO {
-	private String aid;// VARCHAR2(10) PRIMARY KEY
-	private String apw;// VARCHAR2(20)
-	private String aemail;// VARCHAR2(40)
-	private Date adate;// DATE
-	private char astate;// VARCHAR2(2)
-	// 회원요청테이블의 컬럼을 멤버변수로 선언
-
-	public String getAid() {
-		return aid;
+	private int id; // ID NUMBER PRIMARY KEY
+	private String nickname; // NICKNAME VARCHAR2(50) UNIQUE
+	private String email; // EMAIL VARCHAR2(75) UNIQUE
+	private char isAllowed; // ISALLOWED CHAR(1) DEFAULT('P') CHECK(ISALLOWED IN ('N', 'Y', 'P'))
+	private Date reqDate; // REQDATE DATE DEFAULT(SYSDATE)
+	
+	public int getId() {
+		return id;
 	}
-
-	public void setAid(String aid) {
-		this.aid = aid;
+	
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	public String getApw() {
-		return apw;
+	
+	public String getNickname() {
+		return nickname;
 	}
-
-	public void setApw(String apw) {
-		this.apw = apw;
+	
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
-
-	public String getAemail() {
-		return aemail;
+	
+	public String getEmail() {
+		return email;
 	}
-
-	public void setAemail(String aemail) {
-		this.aemail = aemail;
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-	public Date getAdate() {
-		return adate;
+	
+	public char getIsAllowed() {
+		return isAllowed;
 	}
-
-	public void setAdate(Date adate) {
-		this.adate = adate;
+	
+	public void setIsAllowed(char isAllowed) {
+		this.isAllowed = isAllowed;
 	}
-
-	public char getAstate() {
-		return astate;
+	
+	public Date getReqDate() {
+		return reqDate;
 	}
-
-	public void setAstate(char astate) {
-		this.astate = astate;
+	
+	public void setReqDate(Date reqDate) {
+		this.reqDate = reqDate;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(aid);
+		return Objects.hash(id);
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -65,13 +64,13 @@ public class AccountVO {
 		if (getClass() != obj.getClass())
 			return false;
 		AccountVO other = (AccountVO) obj;
-		return Objects.equals(aid, other.aid);
+		return id == other.id;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "AccountVO [aid=" + aid + ", apw=" + apw + ", aemail=" + aemail + ", adate=" + adate + ", astate=" + astate
-				+ "]";
+		return "AccountVO [id=" + id + ", nickname=" + nickname + ", email=" + email + ", isAllowed=" + isAllowed
+				+ ", reqDate=" + reqDate + "]";
 	}
-
+	
 }

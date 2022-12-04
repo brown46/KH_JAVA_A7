@@ -9,25 +9,18 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class OracleConnection {
-
+	
 	public static SqlSession getSqlSession() {
-		SqlSession sess= null;
+		SqlSession sess = null;
 		
 		try(InputStream is = Resources.getResourceAsStream("mybatis/mybatis-config.xml")) {
-			SqlSessionFactory factory= new SqlSessionFactoryBuilder().build(is,"development");
-			sess = factory.openSession(false);		
+			SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is, "development");
+			sess = factory.openSession(false);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		return sess;
-	}
-	
-	public static void main(String[] args) {
-		SqlSession session = OracleConnection.getSqlSession();
-		String res = session.selectOne("test.hello");
-		System.out.println(res);
-		session.close();
 	}
 
 }

@@ -1,5 +1,6 @@
 package kr.co.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +13,36 @@ public class AccountDAO {
 
 	private SqlSession sess = OracleConnection.getSqlSession();
 	
-	public List<AccountVO> selectReqAccount(){
+	public List<AccountVO> selectReqAccount() {
 		List<AccountVO> result = new ArrayList<AccountVO>();
-		result = sess.selectList("test.reqAccount"); //mapper.xml이 먼저 만들어져 있어야 함
-//   <select id="reqAccount" resultType="kr.co.vo.AccountVO">
+		result = sess.selectList("test.reqAccount");
 		return result;
-		
+	}
+	
+	public boolean duplicationCheck(String nickname, String email) {
+		int result = sess.selectOne("test.dupCheckNickname", nickname);
+		if(result == 1) {
+			return false;
+		}
+		result = sess.selectOne("test.dupCheckEmail", email);
+		if(result == 1) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean insertReqAccount(AccountVO account) throws Throwable {
+		try {
+			int result = sess.insert("test.addReqAccount", account);
+			if(result == 1) {
+				sess.commit();
+				return true;
+			}
+		} catch(org.apache.ibatis.exceptions.PersistenceException e) {
+			e.printStackTrace();
+			throw e.getCause();
+		}
+		sess.rollback();
+		return false;
 	}
 }
