@@ -9,6 +9,25 @@ public class AccountVO {
 	private String email; // EMAIL VARCHAR2(75) UNIQUE
 	private char isAllowed; // ISALLOWED CHAR(1) DEFAULT('P') CHECK(ISALLOWED IN ('N', 'Y', 'P'))
 	private Date reqDate; // REQDATE DATE DEFAULT(SYSDATE)
+	private String password;
+	private Date loginDate;
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Date getLoginDate() {
+		return loginDate;
+	}
+
+	public void setLoginDate(Date loginDate) {
+		this.loginDate = loginDate;
+	}
+
 	
 	public int getId() {
 		return id;
@@ -66,11 +85,13 @@ public class AccountVO {
 		AccountVO other = (AccountVO) obj;
 		return id == other.id;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "AccountVO [id=" + id + ", nickname=" + nickname + ", email=" + email + ", isAllowed=" + isAllowed
-				+ ", reqDate=" + reqDate + "]";
+				+ ", reqDate=" + reqDate + ", password=" + password + ", loginDate=" + loginDate + "]";
 	}
+	
+
 	
 }
