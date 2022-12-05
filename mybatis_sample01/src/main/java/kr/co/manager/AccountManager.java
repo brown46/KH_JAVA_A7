@@ -52,7 +52,6 @@ public class AccountManager {
 			case 5:
 				if (user != null) {
 					this.setPassword();
-					this.logout();
 				}
 				break;
 			case 9:
@@ -64,10 +63,10 @@ public class AccountManager {
 
 	private void setPassword() {
 		AccountController ac = new AccountController();
+		System.out.println("현재 패스워드 입력");
+		String oPassword = sc.nextLine();
 		System.out.println("새 패스워드 입력");
 		String nPassword = sc.nextLine();
-		System.out.println("새 패스워드 입력");
-		String oPassword = sc.nextLine();
 		
 		if(this.user.getPassword().equals(oPassword)) {			
 			ac.setPassword(this.user, nPassword);
@@ -90,7 +89,7 @@ public class AccountManager {
 		String nickname = sc.nextLine();
 		System.out.println("암호: ");
 		String password = sc.nextLine();
-		AccountVO user = ac.login(nickname, password);
+		this.user = ac.login(nickname, password);
 	}
 
 	private void acceptAccountRequest() {

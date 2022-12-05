@@ -94,8 +94,11 @@ public class AccountDAO {
 		data.setPassword(nPassword);
 		int result= sess.update("test.updateNewPassword",data);
 		if(result ==1 ) {
-			sess.commit();
-			return true;
+			result=sess.update("test.insertLogoutAccessLog",data);
+			if(result==1) {
+				sess.commit();
+				return true;
+			}
 		}
 		sess.rollback();
 		return false;
