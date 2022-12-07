@@ -68,7 +68,7 @@ public class AccountDAO {
 		if(result != null) {
 			int cnt =sess.update("test.updateLoginDate", result);
 			if(cnt==1) {
-				sess.insert("test.insertLoginAccessLog",result);
+				cnt=sess.insert("test.insertLoginAccessLog",result);
 				if(cnt==1) {
 					sess.commit();
 				}else {
