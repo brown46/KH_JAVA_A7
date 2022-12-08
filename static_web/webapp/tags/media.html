@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>이미지 및 미디어 관련 태그</title>
+</head>
+<body>
+    <!--
+        이미지를 삽입하기 위해 사용하는 태그
+        웹 브라우저가 지원하는 이미지 형식은 다음과 같습니다.
+        APNG, AVIF, GIF, JPEG, PNG, SVG, WebP
+        모든 브라우저가 위의 이미지를 전부 지원하지는 않습니다.
+    -->
+    <img src="이미지 경로" alt="이미지에 문제가 있을 경우 대체할 문구">
+    <img src="/static/img/cat.jpeg" alt="고양이" width="360px"><br>
+
+    <!--
+        오디오를 삽입하기 위해 사용하는 태그 
+        controls: 오디오 컨트롤이 보이게 하는 속성
+        autoplay: 자동 재생 활성화 속성
+        loop: 반복 재생 활성화 속성
+        preload ="none": 재생버튼 눌렀을때 다운로드 받아 실행
+        preload ="metadata": 오디오 정보만 받아 표시(재생길이, 썸네일 이미지 등)
+        preload =": 전부 자동다운로드"
+        muted: 음소거 
+        오디오는 다음의 코덱을 지원.(브라우저마다 다르기 때문에 절대적이지 않음)
+        ACC, ALAC, AMR, FLAC, G.711, MP3, Opus, Vorbis
+        위의 코덱을 포함하는 오디오 파일 타입은 다음 중 하나이다.
+        MP3, MP4, FLAC, WebRCT, MOV, MPEG, WebM, Ogg
+    -->
+    <audio controls muted autoplay loop preload="metadata"
+    src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"></audio>
+    <br>
+    <audio controls>
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.ogg">
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mpeg">
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3">
+        <!--파일지원을 하지 않을 경우 대비-->
+    </audio>
+    <br>
+    <hr>
+    <video controls width="360px"
+        src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm">
+        <!-- audio 같은 속성 사용가능-->
+    </video>
+</body>
+</html>
