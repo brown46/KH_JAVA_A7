@@ -6,5 +6,8 @@
         {
             "path": "../java-class-a7"
         }
-    ]
+    ],
+    "settings": {
+        "liveServer.settings.multiRootWorkspaceName": "refactored-rotary-phone"
+    }
 }
