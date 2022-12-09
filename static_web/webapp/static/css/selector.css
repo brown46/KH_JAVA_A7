@@ -1,0 +1,96 @@
+/*전체 선택자*/
+*{
+    color: gray;
+}
+
+/* 태그 선택자*/
+h1,h2,h3{
+    border-style: solid;
+    border-width: 2px;
+}
+
+/*아이디 선택자*/
+#main-title{
+    font-size: 48px;
+
+}
+
+.bg-black{
+    background-color: black;
+    color: white;
+}
+/* 속성 선택자 */
+[type=text]{
+    background-color: aliceblue;
+}
+[type=password]{
+    background-color: antiquewhite;
+}
+[type=number]{
+    background-color: bisque;
+}
+[readonly]{
+    background-color: gainsboro;
+    color: cornsilk;
+}
+
+/*자식, 자손 선택자*/
+.parent1 >li{
+    color: black;
+}
+
+.parent2 li{
+    color: red;
+}
+
+/*형제 선택자*/
+.sibling1 +li {
+    color: brown    ;
+}
+
+.sibling2 ~li{
+    color: black;
+}
+/*의사클래스 선택자*/
+.pesudo :active{
+    background-color: red;
+}
+.pesudo :hover{
+    background-color: blue;
+}
+.pesudo :focus{
+    background-color: green;
+}
+.pesudo ::selection{
+    background-color: aqua;
+}
+.pesudo :visited{
+    color: red;
+}
+.pesudo :link{
+    color: skyblue;
+}
+
+.pesudo :checked{
+    box-shadow: 0 0 1px 2px black;
+}
+
+.pesudo2 li:first-child{
+    background-color: azure;
+}
+.pesudo2 li:last-child{
+    background-color: deepskyblue;
+}
+.pesudo2 li:nth-child(3){
+    background-color: coral;
+}
+
+.pesudo3  :first-of-type{
+    color: red;
+}
+.pesudo3  :last-of-type{
+    color: blue;
+}
+.pesudo3  :nth-of-type(2n){
+    color: crimson;
+}
