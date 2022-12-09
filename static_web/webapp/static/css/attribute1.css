@@ -1,0 +1,51 @@
+.fs1{
+    font-size: 2em;
+}
+/*em: 상대적 크기
+브라우저 기본은 12pt 16px
+2em : 2배 크기*/
+
+.fw1{
+    font-weight: bolder;
+    /*font-weight : 100~900*/
+}
+.fs2{
+    font-style: italic;
+    /*font-weight : 100~900*/
+}
+.ff1{
+    font-family: '궁서체',;
+}
+.c1{
+    color: rgb(0,255,0);
+    /* rgba(0,0,255,1) : 투명도까지 설정 가능
+    color: #ff0000;*/
+}
+
+.td1{
+    text-decoration: line-through;
+}
+
+.td1 a {
+    text-decoration: none;
+}
+
+.ts1{
+    text-shadow: 2px 2px 2px black;
+}/*가로 세로 번짐효과 색상*/
+
+.tal-left{
+    text-align: left;
+    /*start end center*/
+}
+.tal-right{
+    text-align: right;
+}
+.tal-justify{
+    text-align: justify;
+    /*균등분배*/
+}
+.lh1{
+    line-height: 50px;
+}
+
