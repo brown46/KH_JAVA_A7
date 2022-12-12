@@ -1,0 +1,60 @@
+.background-color{
+    background-color:  cornflowerblue;
+    width: 250px;
+    height: 200px;
+}
+.clip-border{
+    background-clip: border-box;
+    padding: 25px;
+    border-style: solid;
+    border-color: hsla(0, 0%, 0%, 0.200);
+    border-width: 5px;
+}
+.clip-padding{
+    background-clip: padding-box;
+    padding: 25px;
+    border-style: solid;
+    border-color: hsla(0, 0%, 0%, 0.200);
+    border-width: 5px;
+}
+.clip-content{
+    background-clip: content-box;
+    padding: 25px;
+    border-style: solid;
+    border-color: hsla(0, 0%, 0%, 0.200);
+    border-width: 5px;
+}
+.background-image{
+    width: 250px;
+    height: 200px;
+    background-image: url('/static/img/google.png');
+}
+.repeat-no{
+    background-repeat: no-repeat;
+}
+.repeat-x{
+    background-repeat: repeat-x;
+}
+.repeat-y{
+    background-repeat: repeat-y;
+}
+.bg-size-contain{
+    background-size: contain;
+}
+.bg-size-cover{
+    background-size: cover;
+}
+.background-position{
+    width: 250px;
+    height: 200px;
+    background-image: url('https://google.com/favicon.ico');
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+body{
+    background-image: url('https://naver.com/favicon.ico?1');
+    background-repeat: repeat-x;
+}
+body.background-attachment{
+    background-attachment: fixed;
+}
