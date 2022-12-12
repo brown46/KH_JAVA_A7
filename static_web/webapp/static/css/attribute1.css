@@ -49,3 +49,40 @@
     line-height: 50px;
 }
 
+.ws1{
+    word-spacing: 30px;
+}
+
+.ws2{
+    width: 300px;
+    
+}
+.ws2> .normal{
+    white-space: normal;
+}
+.ws2> .nowrap{
+    white-space: normal;
+}
+
+.ws2> .pre{
+    white-space: pre;
+}
+
+.ws2> .pre-wrap{
+    white-space: pre-wrap;
+}
+.to1{
+    width: 240px;
+}
+.to1>.clip{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    
+}
+.to1>.ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+}
