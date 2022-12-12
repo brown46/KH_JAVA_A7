@@ -1,0 +1,103 @@
+.width-height{
+    background-color: gray;
+    width: 250px;
+    height: 200px;
+}
+.padding-margin{
+    width: 200px;
+    padding-top: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    margin:25px 25px 25px 25px;
+    /*t-r-b-l 순서*/
+    border-width: 1px;
+    border-style: solid;
+}
+.display> .block{
+    display: block;
+}
+.display> .inline{
+    display: inline;
+}
+.display>.none{
+    display: none;
+}
+.visibility>.hidden{
+    visibility: hidden;
+}
+/*글자가 보이지는 않지만 영역은 차지한다.*/
+.box-sizing>.border-box{
+    width: 200px;
+    height: 200px;
+    border-style: solid;
+    border-color: black;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.box-sizing>.content-box{
+    width: 200px;
+    height: 200px;
+    border-style: solid;
+    border-color: black;
+    padding: 20px;
+    box-sizing: content-box;
+}
+.border>.style{
+    width: 200px;
+    height: 200px;
+    border-style: solid dashed dotted inset;
+    border-width: thin medium thick thin;
+    border-color: red darkred black crimson;
+    border-radius: 5px 10px 15px 20px;
+    box-shadow: 5px 5px 5px 2px gray;
+    /*가로 세로 흐림 번짐 색상*/
+}
+
+.inline-area{
+    border-style: solid;
+}
+.inline-area>.inline{
+    display: inline;
+    background-color: rgba(198, 198, 198,0.7);
+    width: 180px;
+    height: 180px;
+    /*인라인이라 너비/높이 설정 의미없음*/
+    padding:20px;
+    /*영역을 침범하면서 증가*/
+    border-style: solid;
+    border-width: 20px;
+    border-color: rgba(255,0,0,0.5);
+    margin:20px;
+    /*좌우 여백은 생기나 인라인 이기 때문에 위아래 여백은 설정되지 않는다.*/
+}
+.block-area{
+    border-style: solid;
+}
+.block-area>.block{
+    display: block;
+    background-color: rgba(198, 198, 198,0.7);
+    width: 180px;
+    height: 180px;
+    padding:20px;
+    
+    border-style: solid;
+    border-width: 20px;
+    border-color: rgba(255,0,0,0.5);
+    margin:20px;
+}
+.inline-block-area{
+    border-style: solid;
+}
+.inline-block-area>.inline-block{
+    display: inline-block;
+    background-color: rgba(198, 198, 198,0.7);
+    width: 180px;
+    height: 180px;
+    padding:20px;
+    
+    border-style: solid;
+    border-width: 20px;
+    border-color: rgba(255,0,0,0.5);
+    margin:20px;
+}
