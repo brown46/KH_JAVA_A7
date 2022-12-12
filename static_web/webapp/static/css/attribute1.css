@@ -45,44 +45,45 @@
     text-align: justify;
     /*균등분배*/
 }
-.lh1{
-    line-height: 50px;
+.lh1 {
+    line-height: 60px;
 }
 
-.ws1{
+.ls1 {
+    letter-spacing: 30px;
+}
+
+.ws1 {
     word-spacing: 30px;
 }
 
-.ws2{
+.ws2 {
     width: 300px;
-    
 }
-.ws2> .normal{
+.ws2 > .normal {
     white-space: normal;
 }
-.ws2> .nowrap{
-    white-space: normal;
+.ws2 > .nowrap {
+    white-space: nowrap;
 }
-
-.ws2> .pre{
+.ws2 > .pre {
     white-space: pre;
 }
-
-.ws2> .pre-wrap{
+.ws2 > .pre-wrap {
     white-space: pre-wrap;
 }
-.to1{
+
+.to1 {
     width: 240px;
 }
-.to1>.clip{
+.to1 > .clip {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: clip;
-    
 }
-.to1>.ellipsis{
+
+.to1 > .ellipsis {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    
 }
