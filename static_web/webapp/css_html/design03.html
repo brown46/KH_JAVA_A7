@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="/static/css/design03.css">
+    <title>사용자 입력 디자인</title>
+</head>
+<body>
+    <h3>버튼 디자인</h3>
+    <div>
+        <button class="btn-ok">확인</button>
+        <button class="btn-cancle">취소</button>
+    </div>
+    <hr>
+
+    <div>
+        <button class="btn-ok block">확인</button>
+        <button class="btn-cancle block">취소</button>
+    </div>
+    <hr>
+    <h3>사용자 입력(input)</h3>
+    <div>
+        
+        <input class="input-text" type="text" placeholder="text입력">
+    </div>
+    <div>
+        <input class="input-text" type="text" placeholder="password입력">
+    </div>
+    <div>
+        <input class="input-text" type="text" placeholder="number입력">
+        <input class="input-text block" type="text">
+    </div>
+    <!--radio와 checkbox는 다른 input처럼 적용되지 않는다.-->
+    <div>
+        <input class="input-check" id="chk1" type="radio">
+        <label class="check-form"></label>
+        <label for="chk1">체크박스</label>
+        <!--라벨을 클릭해도 체크 가능-->
+    </div>
+    <div>
+        <input class="input-radio" id="rdol" type="checkbox">
+        <label class="radio-form"></label>
+        <label for="rdol">라디오버튼</label>
+    </div>
+</body>
+</html>
