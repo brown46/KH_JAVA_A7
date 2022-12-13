@@ -16,3 +16,63 @@
     background-color: gray;
     color: deepskyblue;
 }
+
+.side-nav .menu{
+    width: 300px;
+    list-style-type: none;
+    background-color: blanchedalmond;
+    box-sizing: border-box;
+    padding-inline-start: 0px;
+    /*list-style-type: none;을 해서 빈 공간만 남았으므로 그 공간을 지워줌
+    box-sizing: border-box;으로 크기를 맞춰줌*/
+}
+
+.side-nav .menu-link{
+    display: inline-block;
+    padding: 16px;
+    width: 100%;
+    text-decoration: none;
+    box-sizing: border-box;
+    /*box-sizing: border-box;으로 크기를 맞춰줌*/
+    color: black;
+}
+.side-nav .menu-link:hover{
+    background-color: darksalmon;
+}
+.side-nav .active{
+    background-color: navajowhite;
+}
+
+.dropdown-menu {
+    position: relative;
+}
+.dropdown-nav .dropdown-menu {
+    background-color: rgb(64, 64, 64);
+}
+.dropdown-nav .dropdown-menu ,
+.dropdown-nav .sub-menu{
+    list-style: none;
+}
+
+.dropdown-nav .menu-item,
+.dropdown-nav .menu-link{
+    display: inline-block;
+}
+.dropdown-nav .menu-link{
+    text-decoration: none;
+    padding: 16px;
+    color: white;
+    background-color: rgb(64, 64, 64);
+}
+.dropdown-nav .menu-link:hover {
+    background-color: rgb(78, 135, 78);
+}
+.dropdown-menu .sub-menu {
+    display: none;
+    position: absolute;
+    left: 94px; top: 60px;
+}
+
+.dropdown-menu .menu-item:hover .sub-menu{
+    display: inline-block;
+}
