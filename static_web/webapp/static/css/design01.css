@@ -49,7 +49,7 @@
 
 
 
-.dropdown-nav.dropdown-menu .dropdown {
+.dropdown-nav .dropdown-menu .dropdown {
     position: relative;
 }
 .dropdown-nav .dropdown-menu {
@@ -116,7 +116,7 @@
 .side-dropdown-nav .menu-link{
     display: block;
     box-sizing: border-box;
-    text-decoration: none;
+    text-decoration: non;
     color: white;
     padding: 8px;
 }
