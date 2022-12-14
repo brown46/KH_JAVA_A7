@@ -1,0 +1,181 @@
+
+.form{
+    width: 550px;
+    position: absolute;
+    left: 25%;
+    top: 10%;
+}
+.form .ka{
+    font-size: 2em;
+    text-align: center;
+}
+.login-form{
+    width: 95%;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(203, 203, 203);
+    height: 450px;
+}
+.login-form .top{
+    
+    position: relative;
+    left: 10%;
+    top: 15%;
+    
+}
+.login-form .top .id,
+.login-form .top .pw{
+    display: block;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-width: 1px;
+    padding-bottom: 1em;
+    width: 80%;
+    font-size: 1.1em;
+    padding-bottom: 10px;
+}
+.login-form .top .pw{
+    padding-top: 10px;
+}
+.login-form .top .id:focus{
+    outline-style: none;
+}
+.login-form .top .pw:focus{
+    outline-style: none;
+}
+.login-form .top .tip{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.4em;
+    display: none;
+}
+.login-form .top .id:focus + .tip span {
+    color: red;
+    font-weight: bold;
+}
+.login-form .top .id:focus + .tip {
+    display: block;
+}
+
+
+.login-form .sus-login{
+    font-size: 0.7em;
+    padding-top: 20px;
+}
+input[type="checkbox"]{
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid #999;
+    cursor: pointer; 
+    transition: background 0.2;
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked{
+    background: rgb(254, 229, 0);
+    border: none;
+}
+label{
+    display: inline-block;
+    box-sizing: border-box;
+    height: 2.7em;
+    vertical-align: middle;
+}
+.login-form .between {
+    top:100%;
+}
+
+.login-form .between .normal{
+    background-color: rgb(254, 229, 0);
+    border-style: none;
+    position: relative;
+    width: 80%;
+    height: 50px;
+    border-radius: 4px;
+    
+}
+.login-form .between{
+    position: relative;
+    top: 100px;
+    text-align: center;
+    
+}
+.between .seperator span::before{
+    content: "";
+    height: 1px;
+    display: inline-block;
+    width: 37%;
+    border-width: 1px;
+    background-color: rgb(224, 224, 224);
+}
+.between .seperator span::after{
+    content: "";
+    height: 1px;
+    display: inline-block;
+    width: 37%;
+    background-clip: content-box;
+    border-width: 1px;
+    background-color: rgb(224, 224, 224);
+}
+.login-form .b{
+    font-size: 0.5em;
+    
+}
+
+
+.login-form .between .QR{
+    background-color: rgb(235, 235, 235);
+    border-style: none;
+    position: relative;
+    width: 80%;
+    height: 50px;
+    border-radius: 4px;
+    padding-top: ;
+}
+
+.bottom{
+    position: relative;
+    font-size: 0.5em;
+    text-align: center;
+    padding-top: 27%;
+    padding-left: 10%;
+    padding-right: 10%;
+    
+}
+.bottom .left{
+    float: left;
+}
+.bottom .right{
+    float: right;
+}
+.bottom a{
+    text-decoration: none;
+    color: black;
+    
+}
+
+
+.other{
+    padding-top: 35px;
+    text-align: center;
+    
+}
+
+.other a{
+    font-size: 0.7em;
+    text-decoration: none;
+    color: black;
+}
+.other a{
+    font-size: 0.7em;
+    text-decoration: none;
+    color: black;
+}
+
+.other .copyright{
+    font-size: 0.2em;
+    color: rgb(150, 147, 147);
+}
