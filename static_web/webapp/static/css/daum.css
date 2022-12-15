@@ -122,7 +122,7 @@ label{
 }
 .login-form .b{
     font-size: 0.5em;
-    
+    ;
 }
 
 
@@ -133,7 +133,7 @@ label{
     width: 80%;
     height: 50px;
     border-radius: 4px;
-    padding-top: ;
+    margin-top: 10px;
 }
 
 .bottom{
