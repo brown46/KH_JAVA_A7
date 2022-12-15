@@ -16,30 +16,36 @@
         <div class="top2">
             <a href="#">아이디 찾기</a>  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="#">비밀번호 찾기</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            
         </div>
         <div class="container-center">
             
 
             <div class="content">
                 <div class="content-name">
-                    <p class="p1"><b>아이디 찾기</b></p>
+                    <p class="p1"><b>아이디찾기</b><hr class="line"> </p>
+
                     <p>아이디 찾는 방법을 선택해 주세요</p>
                 </div>
 
                 <div class="find1">
                     <div class="with-phone1">
-                        <input type="radio" name="rd1" id="rd1-1">
-                        <label for="rd1-1">회원정보에 등록한 휴대전화로 인증</label>
+                        <input type="radio" name="rd1" id="rd1-1" checked>
+                        <label for="rd1-1"> 회원정보에 등록한 휴대전화로 인증</label>
                         <div class="hidden-context">
-                            <span>회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야, 인증번호를 받을 수 있습니다.</span>
+                            <span class="rd1-1">회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야, 인증번호를 받을 수 있습니다.</span>
                             <div class="input-NP">
-                                <label for="">이름</label>
-                                <input type="text">
-                                <label for="">휴대전화</label>
-                                <select>
-                                    <option>대한민국 +82</option> 
+                                <label class="name" for="">이름</label>
+                                <input class="nameinput" type="text">
+                                <br>
+                                <label class="phone" for="">휴대전화</label>
+                                <select class="forenum">
+                                    <option >대한민국 +82</option> 
                                 </select>
+                                <input class="phonenum" type="text" placeholder="휴대전화 번호">
+                                <button type="button"><span class="getnum">인증번호 받기</span></button><br>
+                                <input class="certnum" type="text" placeholder="인증번호 6자리 숫자 입력"><br>
+                                <span class="span1">인증번호가 오지 않나요?</span>
+                                <button class="qm" type="button"></button>
                             </div>
                         </div>
                     </div>

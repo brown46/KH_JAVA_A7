@@ -4,7 +4,7 @@
     
 }
 .container-center{
-    width: 700px;
+    width: 520px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -61,11 +61,80 @@
     padding-top: 5%;
     font-size: 1.2em;
     display: inline-block;
-}
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-line: underline;
 
+}
+.content .content-name hr{
+    margin-top:-3px;
+}
 [type=radio] ~.hidden-context{
     display: none;
 }
 [type=radio]:checked ~.hidden-context{
     display: block;
+}
+
+
+.content .find1{
+    border-style: solid;
+    border-width: 1px;
+    border-color: gray;
+    margin-top: 5%;
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-bottom: 5%;
+}
+
+
+.content .with-phone1 .rd1-1 {
+    font-size: 0.5em;
+    padding-left: 3%;
+}
+
+.content .with-phone1 .name,
+.content .with-phone1 .phone{
+    padding-left: 3%;
+    
+}
+.content .with-phone1 .nameinput{
+    margin-top: 20px;
+    margin-left: 10%;
+}
+.content .with-phone1 .forenum{
+    margin-left: 3.5%;
+    width: 10%;
+}
+
+.content .with-phone1 .phonenum{
+    width: 23.75%;
+}
+.content .with-phone1 button{
+    margin-left: 5px;
+    margin-top: 4px;
+    position: absolute;
+    height: 19px;
+    font-weight: bolder;
+    width: 80px;
+    background-color: white;
+    border-width: 1px;
+    cursor: pointer;
+}
+.content .with-phone1 .getnum{
+    font-size: 0.8em;
+}
+.content .with-phone1 .certnum{
+    margin-left: 20.75%;
+}
+.content .with-phone1 .span1{
+    font-size: 0.8em;
+    color: gray;
+    padding-left: 21%;
+}
+.content .with-phone1 .qm{
+    margin-top: 7px;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
 }
