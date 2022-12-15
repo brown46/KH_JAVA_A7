@@ -1,0 +1,71 @@
+*{
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    
+}
+.container-center{
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.entire .top1{
+    background-color:rgb(52,58,72);
+    height: 30px;
+}
+
+.entire .top1 .a1{
+    text-decoration: none;
+    color: rgb(0, 200, 80);
+    font-weight: bolder;
+    text-align: left;
+    padding-left: 10px;
+}
+.entire .top1 .a2{
+    text-decoration: none;
+    color: white;
+    
+    text-align: left;
+}
+.entire .top1 button{
+    float: right;
+    background-color: rgb(62,67,81);
+    color: white;
+    border-style: none;
+}
+
+.entire .top2{
+    background-color: rgb(94,188,30);
+    height: 65px;
+    text-align: center;
+    border-style: solid;
+    border-width: 1.5px;
+    
+}
+.entire .top2 a:first-child{
+    color: rgb(218, 232, 5);
+    text-decoration: none;
+    font-size: 1.2em;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.entire .top2 a:last-child{
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    
+}
+
+
+.content .content-name .p1 {
+    padding-top: 5%;
+    font-size: 1.2em;
+    display: inline-block;
+}
+
+[type=radio] ~.hidden-context{
+    display: none;
+}
+[type=radio]:checked ~.hidden-context{
+    display: block;
+}
