@@ -1,0 +1,6 @@
+[type=radio] ~.hidden-context{
+    display: none;
+}
+[type=radio]:checked ~.hidden-context{
+    display: block;
+}
