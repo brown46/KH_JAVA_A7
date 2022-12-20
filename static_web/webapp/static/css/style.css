@@ -1,0 +1,90 @@
+*{
+    box-sizing: border-box;
+}
+
+.entire-form{
+    margin-bottom: 20px;
+}
+.title{
+    margin-top: 10px;
+}
+.title label,
+.content label{
+    font-weight: bolder;
+    margin-left: 15px;
+    margin-right: 12px;  
+}
+.title input{
+    width: 33%;
+}
+.content input{
+    margin-top: 5px;
+    width: 33%;
+    height: 163px;
+}
+.content input::-webkit-input-placeholder{
+    position: absolute;
+    margin-top: -3px ;
+}
+.file{
+    margin-top:10px ;
+    margin-left: -6px;
+}
+.file span{
+    font-weight: bolder;
+}
+
+.wb{
+    margin-top:20px ;
+    margin-left: 17.5%;
+    margin-bottom: 2px ;
+}
+table{
+    margin-top: 20px;
+    border-style: solid;
+    border-width: 1px;
+    
+}
+td, th{
+    border-style: solid;
+    border-width: 1px;
+}
+.t-title
+{   color: white;
+    width: 404px;
+    background-color: rgb(255, 160, 122);
+    color: white;
+    border-style: solid;
+    border-color: black;
+    height: 40px;
+}
+    
+
+
+
+.row1,
+.t-result{
+    background-color: rgb(255, 160, 122);
+    color: white;
+    border-style: solid;
+    border-color: black;
+}
+td{
+    background-color: rgb(255, 254, 224);
+}
+
+.t-button{
+    width: 74px;
+}
+.t-date{
+    width:120px ;
+}
+.t-writer{
+    width: 100px;
+}
+.t-views{
+    width:52px;
+}
+.t-number{
+    width: 36px;
+}
