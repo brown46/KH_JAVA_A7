@@ -1,0 +1,206 @@
+*{
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+}
+header{
+    border-style: solid;
+    border-width: 1px;
+    margin: 10px;
+    
+}
+header div{
+    margin: 10px;
+}
+.float-left{
+    float: left;
+    
+}
+.header-center{
+    margin-left: 18%;
+    display: inline;
+}
+.header-center span a{
+    margin-right: 15px;
+    text-decoration: none;
+    color: black;
+}
+.float-right{
+    float: right;
+    margin-right: 50px;
+    background-color: white;
+    margin-top: 0px;
+    
+}
+.float-right .hidden{
+    position: absolute;
+    display: none;
+    margin-top: 20px;
+    z-index: 1;
+    background-color: white;
+}
+
+.float-right li{
+    list-style: none;
+    margin-bottom: 5px;
+}
+.float-right a{
+    text-decoration: none;
+    color: black;
+}
+.float-right:hover .hidden{
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+section .sector1{
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+    width: 25.5%;
+    margin-left: 10px;
+    height: 500px;
+    float: left;
+    
+}
+section .sector1 a{
+    text-decoration: none;
+    color: black;
+}
+section .sector1 div{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+section .sector1 hr{
+    margin-top: 3px;
+    margin-left: 2.5%;
+    width: 95%;
+    text-align: center;
+    height: 3px;
+    background-color: black;
+}
+
+
+
+
+
+
+
+section .sector2{
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+    width: 45%;
+    margin-left: 1%;
+    height: 500px;
+}
+
+section .sector2 form{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+section .sector2 form input{
+    margin-top: 10px ;
+    height: 22px;
+    border-radius: 0;
+    border-width: 1px;
+}
+section .sector2 form button{
+    width: 70px;
+    border-radius: 0;
+    border-width: 1px;
+    height: 22px;
+    background-color: white;
+    
+}
+section .sector2 form select{
+    float: right;
+    margin-top: 9px;
+    height: 22px;
+    border-radius: 0;
+    margin-right: 10%;
+}
+
+section .sector2 table{
+    margin-top: 10px;
+    width: 90%;
+    text-align: left;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+    /* background-color: ; */
+}
+section .sector2 th{
+    border-bottom: solid;
+    border-width: 1px;
+    
+}
+.sector2 table tr:nth-child(2n+1){
+    background-color: rgb(238, 237, 239);
+}
+.sector2 table th{
+    background-color: white;
+}
+.sector2 .buttons{
+    margin-left: 15%;
+}
+.sector2 .buttons button{
+    width: 25px;
+    background-color: rgb(166,165,166);
+    color: white;
+    margin-top: 20px;
+    border-color: white;
+}
+
+
+
+
+
+section .sector3{
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+    width: 25.5%;
+    margin-right: 10px;
+    height: 500px;
+    float: right;
+}
+section .sector3 a{
+    text-decoration: none;
+    color: black;
+}
+
+section .sector3 div{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+section .sector3 hr{
+    margin-top: 3px;
+    margin-left: 2.5%;
+    width: 95%;
+    text-align: center;
+    height: 3px;
+    background-color: black;
+}
+
+
+
+footer{
+    border-style: solid;
+    border-width: 1px;
+    margin: 10px;
+    
+}
+footer div{
+    margin: 10px;
+    text-align: right;
+    font-size: 0.7em;
+    color: rgb(200, 196, 199);
+}
