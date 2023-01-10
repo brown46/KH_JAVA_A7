@@ -27,4 +27,14 @@
   	<servlet-name>homeServlet</servlet-name>
   	<url-pattern>/home</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>visitServlet</servlet-name>
+  	<servlet-class>controller.VisitController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>visitServlet</servlet-name>
+  	<url-pattern>/visit</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
