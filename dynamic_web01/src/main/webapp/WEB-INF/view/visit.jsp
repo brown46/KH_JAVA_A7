@@ -24,7 +24,13 @@
 	<ul>
 	<%SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY년 MM월 dd일 a hh시 mm분 ss초"); %>
 	<% for(VisitDTO data:(List<VisitDTO>)request.getAttribute("dataList")){ %>
-		<li><%= data.getNickname() %> | <%= data.getContext() %> | <%= dateFormat.format(data.getCreateDate()) %></li>
+		<li><%= data.getNickname() %> | <%= data.getContext() %> | <%= dateFormat.format(data.getCreateDate()) %>
+			<form action="./visit/delete" method="post" id="deleteForm<%=data.getCreateDate()%>">
+				<input type="hidden" name="createdate" value=<%=data.getCreateDate()%>>
+			</form>
+			<button>수정</button>
+			<button type="submit" form="deleteForm<%=data.getCreateDate()%>">삭제</button>
+		</li>
 	<% } %>
 	</ul>
 </body>

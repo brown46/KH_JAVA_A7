@@ -22,4 +22,17 @@ public class VisitService {
 		List<VisitDTO> dataList =dao.select();
 		return dataList;
 	}
+
+	public boolean delete(VisitDTO dto) {
+		VisitDAO dao = new VisitDAO();
+		int count= dao.delete(dto);
+		if(count==1) {
+			dao.commit();
+			dao.close();
+			return true;
+		}
+		dao.rollback();
+		dao.close();	
+		return false;
+	}
 }

@@ -33,4 +33,22 @@ public class VisitDAO {
 		List<VisitDTO> dataList = session.selectList("visitMapper.selectNickname" , data);
 		return dataList;
 	}
+
+	public int delete(VisitDTO dto) {
+		int res=session.delete("visitMapper.delete",dto);
+		return res;
+	}
+
+	public void commit() {
+		session.commit();
+	}
+
+	public void close() {
+		session.close();
+		
+	}
+
+	public void rollback() {
+		session.rollback();
+	}
 }

@@ -17,4 +17,7 @@
 		 WHERE nickname = #{nickname}
  		 ORDER BY createdate DESC
 	</select>
+	<delete id="delete" parameterType="model.dto.VisitDTO">
+		DELETE FROM VISIT_T WHERE createdate = #{createDate}
+	</delete>
 </mapper>
