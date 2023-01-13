@@ -13,7 +13,7 @@
 		INSERT INTO BOOKMARK_T VALUES(#{id},#{url},#{name})
 	</insert>
 	<select id="getNextId" resultType="int">
-		SELECT MAX(id)+1 FROM BOOKMARK_T
+		SELECT NVL( MAX(id), 0)+1  FROM BOOKMARK_T
 	</select>
 	<update id="update" parameterType="model.dto.BookmarkDTO">
 		UPDATE BOOKMARK_T 
