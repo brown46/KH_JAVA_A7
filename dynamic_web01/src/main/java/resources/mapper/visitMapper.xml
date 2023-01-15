@@ -20,4 +20,15 @@
 	<delete id="delete" parameterType="model.dto.VisitDTO">
 		DELETE FROM VISIT_T WHERE createdate = #{createDate}
 	</delete>
+	
+	<select id="selectOne" resultType= "model.dto.VisitDTO" parameterType="model.dto.VisitDTO">
+		SELECT nickname, context, createdate FROM VISIT_T WHERE createdate= #{createDate}
+	</select>
+	
+	<update id="update" parameterType="model.dto.VisitDTO" >
+		UPDATE VISIT_T 
+   		   SET nickname= #{nickname}
+             , context= #{context}
+         WHERE createdate= #{createDate}
+	</update>
 </mapper>

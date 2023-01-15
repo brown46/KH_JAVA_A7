@@ -39,7 +39,7 @@ public class VisitController extends HttpServlet{
 		data.setContext(req.getParameter("context"));
 		data.setNickname(req.getParameter("nickname"));
 //		req.setCharacterEncoding("utf-8");
-		System.out.println(data);
+//		System.out.println(data);
 		VisitService service = new VisitService();
 		boolean result= service.add(data); //전달 후 응답 반환
 		if(result) {

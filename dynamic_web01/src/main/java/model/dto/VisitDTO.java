@@ -19,9 +19,12 @@ public class VisitDTO {
 	public void setContext(String context) {
 		this.context = context;
 	}
-	public long getCreateDate() {
-		return createDate.getTime();
+	public Date getCreateDate() {
+		return createDate;
 	}
+//	public long getCreateDateLong() {
+//		return createDate.getTime();
+//	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}

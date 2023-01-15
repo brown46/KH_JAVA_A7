@@ -18,8 +18,9 @@ public class VisitDeleteController extends HttpServlet{
 		//밀리세컨드로 받아야할듯
 		System.out.println(req.getParameter("createdate"));
 
-		Date date = new Date(Long.valueOf(req.getParameter("createdate")));
+		Date date = new Date(Long.parseLong(req.getParameter("createdate")));
 		dto.setCreateDate(date);
+		System.out.println(dto);
 		boolean result= service.delete(dto);
 		if(result) {
 			resp.sendRedirect("../visit");

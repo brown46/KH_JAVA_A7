@@ -26,9 +26,9 @@
 	<% for(VisitDTO data:(List<VisitDTO>)request.getAttribute("dataList")){ %>
 		<li><%= data.getNickname() %> | <%= data.getContext() %> | <%= dateFormat.format(data.getCreateDate()) %>
 			<form action="./visit/delete" method="post" id="deleteForm<%=data.getCreateDate()%>">
-				<input type="hidden" name="createdate" value=<%=data.getCreateDate()%>>
+				<input type="hidden" name="createdate" value=<%=data.getCreateDate().getTime()%>>
 			</form>
-			<button>수정</button>
+			<button onclick="location.href='./visit/update?createdate=<%=data.getCreateDate().getTime()%>'">수정</button>
 			<button type="submit" form="deleteForm<%=data.getCreateDate()%>">삭제</button>
 		</li>
 	<% } %>

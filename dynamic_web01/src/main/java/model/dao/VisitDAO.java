@@ -51,4 +51,14 @@ public class VisitDAO {
 	public void rollback() {
 		session.rollback();
 	}
+
+	public VisitDTO select(VisitDTO dto) {
+		VisitDTO data= session.selectOne("visitMapper.selectOne",dto);
+		return data;
+	}
+
+	public int update(VisitDTO dto) {
+		int res = session.update("visitMapper.update",dto);
+		return res;
+	}
 }

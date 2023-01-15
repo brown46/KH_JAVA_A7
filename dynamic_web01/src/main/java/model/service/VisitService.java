@@ -35,4 +35,26 @@ public class VisitService {
 		dao.close();	
 		return false;
 	}
+
+	public VisitDTO get(VisitDTO dto) {
+		VisitDAO dao = new VisitDAO();
+		VisitDTO data=new VisitDTO();
+		data=dao.select(dto);
+
+		return data;
+	
+	}
+
+	public boolean update(VisitDTO dto) {
+		VisitDAO dao =new VisitDAO();
+		int count= dao.update(dto);
+		if(count==1) {
+			dao.commit();
+			dao.close();
+			return true;
+		}
+		dao.rollback();
+		dao.close();	
+		return false;	
+	}
 }
