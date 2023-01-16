@@ -36,8 +36,8 @@ public class VisitController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		VisitDTO data =new VisitDTO();
-		data.setContext(req.getParameter("context"));
 		data.setNickname(req.getParameter("nickname"));
+		data.setContext(req.getParameter("context"));
 //		req.setCharacterEncoding("utf-8");
 //		System.out.println(data);
 		VisitService service = new VisitService();

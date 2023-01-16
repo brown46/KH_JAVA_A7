@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List, model.dto.BookmarkDTO" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +12,12 @@
 </head>
 <body>
 	<div>
-		<a href="./">메인</a>
+		<c:url var="mainUrl" value="/" />
+		<a href="${mainUrl }">메인</a>
 	</div>
 	<h2>즐겨찾기</h2>
-	<form action="./bookmark" method="post">
+	<c:url var="bookmarkUrl" value="/bookmark" />
+	<form action="${bookmarkUrl }" method="post">
 		<div>
 			<label>URL 주소:</label><input type="text" name="url">
 		</div>
@@ -23,6 +28,24 @@
 			<button type="submit">등록</button>
 		</div>
 	</form>
+		<ul>
+			<c:url var="bookmarkDeleteUrl" value="/bookmark/delete"/>
+			<c:forEach var="d" items="${requestScope.data }">
+				<c:url var="bookmarkUpdateUrl" value="/bookmark/update">
+					<c:param name="id" value="${d.id }" />
+				</c:url>
+					<li>
+						<a href="${d.url }">${d.name } </a>
+						<button type="button" onclick="location.href='${bookmarkUpdateUrl}'">수정</button>
+						<button type="submit" form="deleteForm${d.id }">삭제</button>
+						<form action="${bookmarkUrl }/delete" method="post" id="deleteForm${d.id }">
+							<input type="hidden" name="id" value="${d.id }">
+						</form> 
+					</li>
+			</c:forEach>	
+		</ul>
+		<br>
+	<%--	
 		<ul>
 			<% for(BookmarkDTO d: (List<BookmarkDTO>)request.getAttribute("data")){ %>
 				<li>
@@ -35,5 +58,6 @@
 				</li>
 			<%} %>		
 		</ul>
+		 --%>
 </body>
 </html>
