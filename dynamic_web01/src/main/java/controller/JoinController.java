@@ -32,10 +32,10 @@ public class JoinController extends HttpServlet{
 		
 		switch (result) {
 		case 1:
-			resp.sendRedirect("./login");  //로그인 페이지로 이동
+			resp.sendRedirect(req.getContextPath()+"/login");  //로그인 페이지로 이동
 			break;
 		case -1:
-			resp.sendRedirect("./error"); 
+			resp.sendRedirect(req.getContextPath()+"/error"); 
 			break;
 		case -2:
 			req.setAttribute("error", "동일한 아이디가 사용중입니다.");

@@ -24,5 +24,23 @@ public class UserService {
 		return -2;  //아이디가 중복일시
 		
 	}
+
+	public UserDTO login(UserDTO dto) {
+		UserDAO dao = new UserDAO();
+		UserDTO data = dao.selectUser(dto);
+		
+		if(data==null) {
+			dao.close();
+			return data;
+		}else {
+			if(data.getPassword().equals(dto.getPassword())){
+				dao.close();
+				return data;
+			}else {
+				dao.close();
+				return null;
+			}
+		}
+	}
 	
 }

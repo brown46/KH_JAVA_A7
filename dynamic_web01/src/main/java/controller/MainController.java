@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +29,11 @@ public class MainController extends HttpServlet{
 		req.setAttribute("iCnt", iCnt);
 		
 		System.out.println(cnt);
+		
+		
 		req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
+		
+		
 		
 	}
 	
