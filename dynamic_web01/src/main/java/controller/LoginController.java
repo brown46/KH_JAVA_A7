@@ -19,7 +19,7 @@ public class LoginController extends HttpServlet{
 		
 		if(session.getAttribute("login")!=null) {
 			if((boolean)session.getAttribute("login")) {
-				resp.sendRedirect(req.getContentType()+"/");
+				resp.sendRedirect(req.getContextPath()+"/");
 				return;
 			}
 		}
