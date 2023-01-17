@@ -31,8 +31,7 @@ public class LoginController extends HttpServlet{
 		String password =req.getParameter("password");
 		String remember= req.getParameter("remember");
 		
-		Cookie cookie = new Cookie("remember", userId);
-		cookie.setMaxAge(60*60*24);
+		
 		
 		
 		UserDTO dto = new UserDTO();
@@ -46,9 +45,13 @@ public class LoginController extends HttpServlet{
 			req.setAttribute("error","아이디 또는 패스워드가 잘못되었습니다.");
 			req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
 		}else {
+			Cookie cookie = new Cookie("remember", userId);
 			if(remember!=null) {
-				resp.addCookie(cookie);				
+				cookie.setMaxAge(60*60*24);				
+			}else {
+				cookie.setMaxAge(0);//
 			}
+			resp.addCookie(cookie);
 			resp.sendRedirect(req.getContextPath()+"/");//메인으로
 		}
 		
