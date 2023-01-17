@@ -20,7 +20,9 @@ public class UserService {
 			dao.rollback(); dao.close();
 			return -1;
 		}
+		dao.close();
 		return -2;  //아이디가 중복일시
+		
 	}
 	
 }
