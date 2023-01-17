@@ -7,6 +7,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.dto.UserDTO;
 import model.service.UserService;
 
@@ -14,18 +15,34 @@ public class LoginController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session= req.getSession();
+		
+		if(session.getAttribute("login")!=null) {
+			if((boolean)session.getAttribute("login")) {
+				resp.sendRedirect(req.getContentType()+"/");
+				return;
+			}
+		}
+			
 		Cookie[] cookies = req.getCookies();
 		for(Cookie c: cookies) {
 			if(c.getName().equals("remember")) {
 				req.setAttribute("rememberId", c.getValue());
-			}
+				}
+			}	
+			req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
 		}
 		
-		req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
-	}
+		
+		
+		
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
+		HttpSession session= req.getSession();//세션ID가 없으면 새로 생성
+// HttpSession session= req.getSession(false);//세션ID가 없어도 새로 생성하지 않음. 없으면 null
+		
+		
 		
 		String userId = req.getParameter("userId");
 		String password =req.getParameter("password");
@@ -45,6 +62,8 @@ public class LoginController extends HttpServlet{
 			req.setAttribute("error","아이디 또는 패스워드가 잘못되었습니다.");
 			req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
 		}else {
+			session.setAttribute("login", true);//로그인 상태를 기록하기 위한 속성
+			session.setAttribute("user", data); //로그인 계정 정보를 기록하기 위한 속성 
 			Cookie cookie = new Cookie("remember", userId);
 			if(remember!=null) {
 				cookie.setMaxAge(60*60*24);				
