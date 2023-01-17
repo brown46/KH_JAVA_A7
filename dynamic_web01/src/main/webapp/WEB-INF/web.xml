@@ -80,4 +80,14 @@
   
   
   
+  <servlet>
+  	<servlet-name>joinServlet</servlet-name>
+  	<servlet-class>controller.JoinController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>joinServlet</servlet-name>
+  	<url-pattern>/join</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>
