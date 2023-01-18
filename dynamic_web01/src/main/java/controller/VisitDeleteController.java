@@ -15,21 +15,24 @@ public class VisitDeleteController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		
+		
+		VisitDTO dto = new VisitDTO();
+		VisitService service = new VisitService();
+//		System.out.println(req.getParameter("createdate"));
+
+		Date date = new Date(Long.parseLong(req.getParameter("createdate")));
+		dto.setCreateDate(date);
+		
 		HttpSession session = req.getSession();
 		if( session.getAttribute("login")==null) {
 			resp.sendRedirect(req.getContextPath()+"/login");
 			return;
+		}else if(!(session.getAttribute("login").equals( dto.getId()))){
+			resp.sendRedirect(req.getContextPath()+"/");
+			return;
 		}
-		//되나?
-		
-		VisitDTO dto = new VisitDTO();
-		VisitService service = new VisitService();
-		//밀리세컨드로 받아야할듯
-		System.out.println(req.getParameter("createdate"));
-
-		Date date = new Date(Long.parseLong(req.getParameter("createdate")));
-		dto.setCreateDate(date);
-		System.out.println(dto);
+//		System.out.println(dto);
 		boolean result= service.delete(dto);
 		if(result) {
 			resp.sendRedirect("../visit");
