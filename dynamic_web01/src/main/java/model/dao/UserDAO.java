@@ -26,4 +26,8 @@ public class UserDAO {
 		UserDTO data = session.selectOne("userMapper.selectUser",dto);
 		return data;
 	}
+	public int update(UserDTO dto) {
+		int count =session.update("userMapper.update",dto);
+		return count;
+	}
 }

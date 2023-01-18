@@ -6,11 +6,17 @@
 	<select id="selectAll" resultType="model.dto.BookmarkDTO">
 		SELECT id, url, name FROM BOOKMARK_T
 	</select>
-	<select id="selectId" parameterType="int" resultType="model.dto.BookmarkDTO">
-		SELECT id, url, name FROM BOOKMARK_T WHERE id =#{id}
+	
+	<select id="selectAllById" parameterType="model.dto.BookmarkDTO" resultType="model.dto.BookmarkDTO">
+		SELECT ID, USERID, URL, NAME FROM BOOKMARK_T WHERE USERID =#{userId}
+	</select>
+	
+	
+	<select id="selectId" parameterType="model.dto.BookmarkDTO" resultType="model.dto.BookmarkDTO">
+		SELECT ID, USERID, URL, NAME FROM BOOKMARK_T WHERE ID =#{id} AND USERID =#{userId}
 	</select>	
 	<insert id="insert" parameterType="model.dto.BookmarkDTO">
-		INSERT INTO BOOKMARK_T VALUES(#{id},#{url},#{name})
+		INSERT INTO BOOKMARK_T VALUES(#{id},#{userId},#{url},#{name})
 	</insert>
 	<select id="getNextId" resultType="int">
 		SELECT NVL( MAX(id), 0)+1  FROM BOOKMARK_T
@@ -22,7 +28,8 @@
          WHERE id = #{id}
 	</update>
 	<delete id="delete" parameterType="model.dto.BookmarkDTO">
-		DELETE FROM BOOKMARK_T WHERE id = #{id}
+		DELETE FROM BOOKMARK_T WHERE id = #{id} AND USERID =#{userId}
 	</delete>
+	
 	
 </mapper>

@@ -7,9 +7,15 @@ import model.dto.BookmarkDTO;
 
 public class BookmarkService {
 
-	public List<BookmarkDTO> getAll() {
+//	public List<BookmarkDTO> getAll() {
+//		BookmarkDAO dao = new BookmarkDAO();
+//		List<BookmarkDTO> data = dao.selectAll();
+//		return data;
+//	}
+	
+public List<BookmarkDTO> getAllById(BookmarkDTO dto) {
 		BookmarkDAO dao = new BookmarkDAO();
-		List<BookmarkDTO> data = dao.selectAll();
+		List<BookmarkDTO> data =dao.selectAllById(dto);
 		return data;
 	}
 
@@ -30,8 +36,7 @@ public class BookmarkService {
 
 	public BookmarkDTO get(BookmarkDTO dto) {
 		BookmarkDAO dao = new BookmarkDAO();
-		BookmarkDTO data= dao.selectId(dto.getId());//id로 값을 찾아온다.
-//		System.out.println(data);
+		BookmarkDTO data= dao.selectId(dto);
 		return data;	
 	}
 
@@ -60,6 +65,8 @@ public class BookmarkService {
 		dao.close();
 		return false;
 	}
+
+	
 
 
 }
