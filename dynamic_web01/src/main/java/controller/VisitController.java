@@ -8,6 +8,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.dto.UserDTO;
 import model.dto.VisitDTO;
 import model.service.VisitService;
 
@@ -35,8 +37,16 @@ public class VisitController extends HttpServlet{
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		if(session.getAttribute("login")==null) {
+			resp.sendRedirect(req.getContextPath()+"/login");
+			return;
+		}
+		
+		UserDTO udto= (UserDTO)session.getAttribute("user");
+		
 		VisitDTO data =new VisitDTO();
-		data.setNickname(req.getParameter("nickname"));
+		data.setId(udto.getUserId());
 		data.setContext(req.getParameter("context"));
 //		req.setCharacterEncoding("utf-8");
 //		System.out.println(data);

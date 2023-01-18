@@ -7,12 +7,21 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.dto.VisitDTO;
 import model.service.VisitService;
 
 public class VisitDeleteController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		HttpSession session = req.getSession();
+		if( session.getAttribute("login")==null) {
+			resp.sendRedirect(req.getContextPath()+"/login");
+			return;
+		}
+		//되나?
+		
 		VisitDTO dto = new VisitDTO();
 		VisitService service = new VisitService();
 		//밀리세컨드로 받아야할듯

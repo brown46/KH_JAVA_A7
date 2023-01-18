@@ -7,14 +7,14 @@
 		SELECT 'CONNECT SUCCESS' FROM DUAL
 	</select>
 	<insert id="insert" parameterType="model.dto.VisitDTO">
-		INSERT INTO VISIT_T VALUES(#{nickname}, #{context}, DEFAULT)
+		INSERT INTO VISIT_T VALUES(#{id}, #{context}, DEFAULT)
 	</insert>
 	<select id="select" resultType="model.dto.VisitDTO">
-		SELECT nickname, context, createdate FROM VISIT_T ORDER BY createdate DESC
+		SELECT id, context, createdate FROM VISIT_T ORDER BY createdate DESC
 	</select>
-	<select id= "selectNickname" resultType= "model.dto.VisitDTO" parameterType= "model.dto.VisitDTO">	
-		SELECT nickname, context, createdate FROM VISIT_T
-		 WHERE nickname = #{nickname}
+	<select id= "selectid" resultType= "model.dto.VisitDTO" parameterType= "model.dto.VisitDTO">	
+		SELECT id, context, createdate FROM VISIT_T
+		 WHERE id = #{id}
  		 ORDER BY createdate DESC
 	</select>
 	<delete id="delete" parameterType="model.dto.VisitDTO">
@@ -22,12 +22,12 @@
 	</delete>
 	
 	<select id="selectOne" resultType= "model.dto.VisitDTO" parameterType="model.dto.VisitDTO">
-		SELECT nickname, context, createdate FROM VISIT_T WHERE createdate= #{createDate}
+		SELECT id, context, createdate FROM VISIT_T WHERE createdate= #{createDate}
 	</select>
 	
 	<update id="update" parameterType="model.dto.VisitDTO" >
 		UPDATE VISIT_T 
-   		   SET nickname= #{nickname}
+   		   SET id= #{id}
              , context= #{context}
          WHERE createdate= #{createDate}
 	</update>

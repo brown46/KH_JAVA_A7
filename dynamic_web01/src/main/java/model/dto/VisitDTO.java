@@ -4,14 +4,16 @@ import java.sql.Date;
 
 public class VisitDTO {
 	
-	private String nickname;
+	private String id;
 	private String context;
 	private Date createDate;
-	public String getNickname() {
-		return nickname;
+
+	
+	public String getId() {
+		return id;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getContext() {
 		return context;
@@ -30,7 +32,7 @@ public class VisitDTO {
 	}
 	@Override
 	public String toString() {
-		return "VisitDTO [nickname=" + nickname + ", context=" + context + ", createDate=" + createDate + "]";
+		return "VisitDTO [id=" + id + ", context=" + context + ", createDate=" + createDate + "]";
 	}
 	
 	
