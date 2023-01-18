@@ -16,11 +16,6 @@ public class VisitUpdateController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		HttpSession session = req.getSession();
-		if( session.getAttribute("login")==null) {
-			resp.sendRedirect(req.getContextPath()+"/login");
-			return;
-		} //현재 접속아이디와 방명록에 접속된 아이디가 일치하는지 검사 추가해야함
 		
 		//select로 받고 setatrribute로 dto 넘겨주기
 		VisitService service = new VisitService();
@@ -28,6 +23,18 @@ public class VisitUpdateController extends HttpServlet{
 		Date date= new Date(Long.valueOf(req.getParameter("createdate")));
 		dto.setCreateDate(date);
 		dto= service.get(dto);
+		
+		HttpSession session = req.getSession();
+		if( session.getAttribute("login")==null) {
+			resp.sendRedirect(req.getContextPath()+"/login");
+			return;
+		}else if(!(session.getAttribute("login").equals( dto.getId()))){
+			resp.sendRedirect(req.getContextPath()+"/");
+			return;
+		}
+		
+		//현재 접속아이디와 방명록에 접속된 아이디가 일치하는지 검사 추가해야함 delete에도 추가
+		
 		req.setAttribute("data", dto);
 		
 		req.getRequestDispatcher("/WEB-INF/view/visitupdate.jsp").forward(req, resp);
