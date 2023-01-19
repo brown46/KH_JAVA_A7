@@ -31,4 +31,20 @@
              , context= #{context}
          WHERE createdate= #{createDate}
 	</update>
+	
+	<select id="selectPage" parameterType="map" resultType="model.dto.VisitDTO">
+		SELECT id, context, createdate 
+  		  FROM(SELECT ROWNUM AS N 
+	     			, id
+	     			, context
+	     			, createdate
+	  			 FROM (SELECT *FROM VISIT_T ORDER BY CREATEDATE DESC) 
+	  	 		)
+		 WHERE N BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="getRowCount" resultType="int">
+		SELECT COUNT(*) FROM VISIT_T
+	</select>
+	
 </mapper>

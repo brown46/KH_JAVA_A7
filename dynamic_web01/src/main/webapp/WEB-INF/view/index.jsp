@@ -13,6 +13,7 @@
 <head>
 <meta charset="UTF-8">
 <title><%=getTitle()%></title>
+<%@ include file="./module/css_js_import.jsp" %>
 </head>
 <body>
 	<h1>Hello JSP/Servlet</h1>

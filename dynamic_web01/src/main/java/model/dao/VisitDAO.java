@@ -1,6 +1,8 @@
 package model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -60,5 +62,15 @@ public class VisitDAO {
 	public int update(VisitDTO dto) {
 		int res = session.update("visitMapper.update",dto);
 		return res;
+	}
+
+	public List<VisitDTO> selectPage(Map<String, Integer> page) {
+		List<VisitDTO> dataList =session.selectList("visitMapper.selectPage", page);
+		return dataList;
+	}
+
+	public int getRowCount() {
+		int rowCount= session.selectOne("visitMapper.getRowCount");
+		return rowCount;
 	}
 }

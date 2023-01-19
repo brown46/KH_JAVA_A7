@@ -22,10 +22,10 @@ public class BookmarkController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
-		if( session.getAttribute("login")==null) {
-			resp.sendRedirect(req.getContextPath()+"/login");
-			return;
-		}//직접 접근 불가능하게 하기
+//		if( session.getAttribute("login")==null) {
+//			resp.sendRedirect(req.getContextPath()+"/login");
+//			return;
+//		}//직접 접근 불가능하게 하기
 		
 		UserDTO udto = (UserDTO)session.getAttribute("user");
 		BookmarkService service = new BookmarkService();

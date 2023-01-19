@@ -25,8 +25,29 @@ public class VisitController extends HttpServlet{
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+				
+		String pageNumber = req.getParameter("p");
+		int pNum;
+		if(pageNumber== null || pageNumber.isEmpty()) {
+			pNum= 1;
+		}else {
+			pNum= Integer.valueOf(pageNumber);
+		}
+		
 		VisitService service =new VisitService();
-		List<VisitDTO> visitList= service.getList();
+		List<VisitDTO> visitList= service.getPage(pNum);
+		
+		int rowCount=service.getRowCount();
+		int pageCount=0;
+		if(rowCount%10==0) {
+			pageCount=rowCount/10;
+		}else {
+			pageCount=rowCount/10+1;
+		}
+		 
+		req.setAttribute("pageCount", pageCount);
+		
 //		System.out.println(visitList);
 		req.setAttribute("dataList", visitList);
 		req.getRequestDispatcher("/WEB-INF/view/visit.jsp").forward(req, resp);
@@ -48,8 +69,7 @@ public class VisitController extends HttpServlet{
 		VisitDTO data =new VisitDTO();
 		data.setId(udto.getUserId());
 		data.setContext(req.getParameter("context"));
-//		req.setCharacterEncoding("utf-8");
-//		System.out.println(data);
+
 		VisitService service = new VisitService();
 		boolean result= service.add(data); //전달 후 응답 반환
 		if(result) {

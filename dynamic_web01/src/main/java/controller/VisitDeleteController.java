@@ -16,8 +16,6 @@ public class VisitDeleteController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		
-		
 		VisitDTO dto = new VisitDTO();
 		VisitService service = new VisitService();
 //		System.out.println(req.getParameter("createdate"));
@@ -25,7 +23,6 @@ public class VisitDeleteController extends HttpServlet{
 		Date date = new Date(Long.parseLong(req.getParameter("createdate")));
 		dto.setCreateDate(date);
 		dto= service.get(dto);
-		
 		
 		HttpSession session = req.getSession();
 		UserDTO udto= (UserDTO)(session.getAttribute("user"));

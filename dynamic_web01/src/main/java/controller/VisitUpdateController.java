@@ -24,7 +24,6 @@ public class VisitUpdateController extends HttpServlet{
 		dto.setCreateDate(date);
 		dto= service.get(dto);
 		
-		
 		HttpSession session = req.getSession();
 		UserDTO udto= (UserDTO)(session.getAttribute("user"));
 		

@@ -14,11 +14,6 @@ public class MyinfoController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		if(session.getAttribute("login")==null) {
-			resp.sendRedirect(req.getContextPath()+"/login");
-			return;
-		}
 		req.getRequestDispatcher("WEB-INF/view/myinfo.jsp").forward(req, resp);
 		
 	}

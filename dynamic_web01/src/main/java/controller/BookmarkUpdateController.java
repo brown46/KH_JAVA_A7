@@ -23,10 +23,6 @@ public class BookmarkUpdateController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		if( session.getAttribute("login")==null) {
-			resp.sendRedirect(req.getContextPath()+"/login");
-			return;
-		}
 		
 	
 		BookmarkDTO dto = new BookmarkDTO();
