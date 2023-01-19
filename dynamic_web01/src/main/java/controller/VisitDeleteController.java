@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.dto.UserDTO;
 import model.dto.VisitDTO;
 import model.service.VisitService;
 
@@ -23,12 +24,16 @@ public class VisitDeleteController extends HttpServlet{
 
 		Date date = new Date(Long.parseLong(req.getParameter("createdate")));
 		dto.setCreateDate(date);
+		dto= service.get(dto);
+		
 		
 		HttpSession session = req.getSession();
-		if( session.getAttribute("login")==null) {
+		UserDTO udto= (UserDTO)(session.getAttribute("user"));
+		
+		if(session.getAttribute("login")==null) {
 			resp.sendRedirect(req.getContextPath()+"/login");
 			return;
-		}else if(!(session.getAttribute("login").equals( dto.getId()))){
+		}else if(!((udto.getUserId()).equals(dto.getId()))){
 			resp.sendRedirect(req.getContextPath()+"/");
 			return;
 		}

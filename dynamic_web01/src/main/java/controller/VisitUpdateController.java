@@ -24,16 +24,18 @@ public class VisitUpdateController extends HttpServlet{
 		dto.setCreateDate(date);
 		dto= service.get(dto);
 		
+		
 		HttpSession session = req.getSession();
-		if( session.getAttribute("login")==null) {
+		UserDTO udto= (UserDTO)(session.getAttribute("user"));
+		
+		if(session.getAttribute("login")==null) {
 			resp.sendRedirect(req.getContextPath()+"/login");
 			return;
-		}else if(!(session.getAttribute("login").equals( dto.getId()))){
+		}else if(!((udto.getUserId()).equals(dto.getId()))){
 			resp.sendRedirect(req.getContextPath()+"/");
 			return;
 		}
 		
-		//현재 접속아이디와 방명록에 접속된 아이디가 일치하는지 검사 추가해야함 delete에도 추가
 		
 		req.setAttribute("data", dto);
 		
