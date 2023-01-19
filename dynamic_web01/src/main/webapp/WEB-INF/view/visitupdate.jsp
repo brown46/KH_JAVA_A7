@@ -17,8 +17,6 @@
 		<a href="../visit">돌아가기</a>
 	</div>
 	<form action="./update" method="post">
-		<label>닉네임 수정</label>
-		<input name="nickname" type="text" value=<%= d.getId()%>>
 		<label>내용 수정</label>
 		<input name="context" type="text" value=<%=d.getContext() %>>
 		<input name="createdate" type="hidden" value=<%=d.getCreateDate().getTime()%>>
