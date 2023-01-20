@@ -60,10 +60,10 @@ public class VisitService {
 		return false;	
 	}
 
-	public List<VisitDTO> getPage(int pNum) {
+	public List<VisitDTO> getPage(int pNum, int cnt) {
 		Map<String, Integer> page =new HashMap<String, Integer>();
-		page.put("start", (pNum-1)*10+1);
-		page.put("end", pNum*10);
+		page.put("start", (pNum-1)*cnt+1);
+		page.put("end", pNum*cnt);
 		VisitDAO dao = new VisitDAO();
 		List<VisitDTO> dataList =dao.selectPage(page);
 		dao.close();

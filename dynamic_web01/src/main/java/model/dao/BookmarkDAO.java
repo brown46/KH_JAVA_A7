@@ -1,17 +1,20 @@
 package model.dao;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
+
 import database.connect.OracleConnection;
 import model.dto.BookmarkDTO;
 
 public class BookmarkDAO {
 	private SqlSession session = OracleConnection.getSqlSession();
 
-//	public List<BookmarkDTO> selectAll() {
-//		List<BookmarkDTO> data = s	ession.selectList("bookmarkMapper.selectAll");
-//		return data;
-//	}
+	public List<BookmarkDTO> selectAll() {
+		List<BookmarkDTO> data = session.selectList("bookmarkMapper.selectAll");
+		return data;
+	}
 
 	public List<BookmarkDTO> selectAllById(BookmarkDTO dto) {
 		List<BookmarkDTO> data = session.selectList("bookmarkMapper.selectAllById", dto);
@@ -57,6 +60,16 @@ public class BookmarkDAO {
 		int id = session.selectOne("bookmarkMapper.getNextId");
 		return id;
 	}
+	public int getRowNum(BookmarkDTO dto) {
+		int rowNum = session.selectOne("bookmarkMapper.getRowNum" ,dto);
+		return rowNum;
+	}
+	public List<BookmarkDTO> getPage(Map<String, Object> page) {
+		List<BookmarkDTO> dataList= session.selectList("bookmarkMapper.selectPage", page);
+		return dataList;
+	}
+
+
 
 	
 

@@ -34,6 +34,7 @@
 				</c:url>
 					<li>
 						<a href="${d.url }">${d.name } </a>
+						
 						<button type="button" onclick="location.href='${bookmarkUpdateUrl}'">수정</button>
 						<button type="submit" form="deleteForm${d.id }">삭제</button>
 						<form action="${bookmarkUrl }/delete" method="post" id="deleteForm${d.id }">
@@ -42,7 +43,14 @@
 					</li>
 			</c:forEach>	
 		</ul>
-		<br>
+		<div>
+			<a href="#">prev</a>
+			<c:forEach var="i" begin="${requestScope.start }" end="${requestScope.end }">
+				<a href="${bookmarkUrl }?p=${i }">${i }</a>
+			</c:forEach>
+			<a href="#">next</a>
+			
+		</div>
 	<%--	
 		<ul>
 			<% for(BookmarkDTO d: (List<BookmarkDTO>)request.getAttribute("data")){ %>
@@ -57,5 +65,8 @@
 			<%} %>		
 		</ul>
 		 --%>
+
+		 
+		 
 </body>
 </html>

@@ -25,15 +25,18 @@
 		</div>
 	</form>
 	
-	<div>
-		<select>
-			<option>10개</option>
-			<option>15개</option>
-			<option>20개</option>
-			<option>25개</option>
-			<option>30개</option>
-		</select>
-	</div>
+	<form action="${visitUrl }">
+		<div>
+			<select name="cnt" onchange="submit();">
+				<option value="2"${requestScope.cnt eq 2 ? "selected" : "" }>2개</option>
+				<option value="10"${requestScope.cnt eq 10 ? "selected" : "" }>10개</option>
+				<option value="15"${requestScope.cnt eq 15 ? "selected" : "" }>15개</option>
+				<option value="20"${requestScope.cnt eq 20 ? "selected" : "" }>20개</option>
+				<option value="25"${requestScope.cnt eq 25 ? "selected" : "" }>25개</option>
+				<option value="30"${requestScope.cnt eq 30 ? "selected" : "" }>30개</option>
+			</select>
+		</div>	
+	</form>	
 	
 	
 	<%-- 
@@ -65,11 +68,28 @@
 		</c:forEach>
 	</ul>
 	<div>
-		<a href="#">prev</a>
-		<c:forEach var="i" begin="1" end ="${requestScope.pageCount }">
+		<c:set var="pageNumber" value="${empty param.p ? 1 : param.p }" />
+		<c:choose>
+			<c:when test="${pageNumber eq 1 }">
+				<a>prev</a>
+			</c:when>
+			<c:otherwise>
+				<a href="${visitUrl }?p=${pageNumber-1}">prev</a>
+			</c:otherwise>
+		</c:choose>
+		<c:forEach var="i" begin="${requestScope.pageStart }" end ="${requestScope.pageEnd}">
 			<a href="${visitUrl }?p=${i } ">${i }</a>
 		</c:forEach>
-		<a href="#">next</a>
+		<c:choose>
+			<c:when test="${pageNumber eq pageCount }">
+				<a>next</a>
+			</c:when>
+		
+			<c:otherwise>
+				<a href="${visitUrl }?p=${pageNumber+1}">next</a>
+			</c:otherwise>
+		</c:choose>
+		
 	</div>
 </body>
 </html>

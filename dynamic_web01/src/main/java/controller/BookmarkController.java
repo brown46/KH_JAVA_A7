@@ -31,13 +31,64 @@ public class BookmarkController extends HttpServlet {
 		BookmarkService service = new BookmarkService();
 		BookmarkDTO bdto = new BookmarkDTO();
 		bdto.setUserId(udto.getUserId());
-		List<BookmarkDTO> data=service.getAllById(bdto);
+//		List<BookmarkDTO> data=service.getAllById(bdto);
 //		List<BookmarkDTO> data=service.getAll();
 		
+		
+		
+		//10개씩 나눠서 표시하기
+		List<BookmarkDTO> data =service.getPage(bdto);
+		//map에 object를 담음
+		//또는 새 클래스 생성해서 담아 넘기기
+		
+		
+		//페이지 이동 구현해야됨
+		
+		
+		//현재 위치한 페이지 
+		int pNum=0;
+		if(req.getParameter("p")==null) {
+			pNum=1;
+		}else if(req.getParameter("p").isEmpty()) {
+			pNum=1;
+		}else {
+			pNum= Integer.valueOf(req.getParameter("p")); 			
+		}
+		
+		
+		//p값에 따라 페이지 변경하기. 페이지 수 구하기. DTO를 넘겨서 ID에 해당하는 데이터만 구한다.
+		int pages= service.getAllPages(bdto);
+		
+		int start=1;
+		int end=1;
+		
+		if(pNum<5/2+1) {
+			start=1;
+			end=5;
+		}else {
+			start= pNum-2;
+			end= pNum+2;
+		}
+		if(end>=pages) {
+			end= pages;
+		}
+		
+		
+		//페이지 목록
+//		req.setAttribute("pages", pages);
+		req.setAttribute("start", start);
+		req.setAttribute("end", end);
+		
+
+		
+
+		
+	
+		
+		
+		
 		req.setAttribute("data", data);
-		
 		req.getRequestDispatcher("/WEB-INF/view/bookmark.jsp").forward(req, resp);
-		
 	}
 
 	
