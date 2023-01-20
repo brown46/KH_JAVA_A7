@@ -26,20 +26,20 @@ SELECT COUNT(*) FROM VISIT_T ;
 
 /** 
 SELECT ROWNUM
-     , EMPLOYEE_ID
-     , FIRST_NAME
-     , LAST_NAME
-     , SALARY
-  FROM (SELECT EMPLOYEE_ID
-  			 , FIRST_NAME
-  			 , LAST_NAME
+	     , EMPLOYEE_ID
+	     , FIRST_NAME
+	     , LAST_NAME
+	     , SALARY
+	  FROM (SELECT EMPLOYEE_ID
+	  			 , FIRST_NAME
+	  			 , LAST_NAME
   			 , SALARY
           FROM EMPLOYEES
          ORDER BY SALARY DESC)
  WHERE ROWNUM<=10;
  */
 	
-
+SELECT COUNT(*) FROM BOOKMARK_T WHERE USERID='1234';
 
 DROP TABLE VISIT_T;
 
@@ -73,5 +73,34 @@ SELECT * FROM BOOKMARK_T;
 SELECT * FROM USER_T;
 
 
+SELECT *
+   FROM(SELECT ROWNUM AS N
+   			 , ID
+   			 , USERID
+             , URL
+             , NAME 
+          FROM (SELECT * FROM BOOKMARK_T WHERE USERID = '아이디' ORDER BY ID)
+        )WHERE N BETWEEN 1 AND 5;
+   
+
+SELECT * FROM BOOKMARK_T ORDER BY ID;
+
+
+INSERT INTO BOOKMARK_T VALUES(9,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(10,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(11,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(12,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(13,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(14,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(15,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(16,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(17,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(18,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(19,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(20,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(21,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(22,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(23,'아이디','https://google.com','구글');
+INSERT INTO BOOKMARK_T VALUES(24,'아이디','https://google.com','구글');
 
 
