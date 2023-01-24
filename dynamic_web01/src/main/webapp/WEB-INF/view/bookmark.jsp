@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List, model.dto.BookmarkDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -26,9 +26,24 @@
 			<button type="submit">등록</button>
 		</div>
 	</form>
+	
+	<div>
+		<form action="${bookmarkUrl }">
+			<select name="cnt" onchange="submit();">
+				<option value="2" ${requestScope.paging.pageLimit eq 2 ? "selected" : "" }>2 개</option>
+				<option value="10" ${requestScope.paging.pageLimit eq 10 ? "selected" : "" }>10 개</option>
+				<option value="15" ${requestScope.paging.pageLimit eq 15 ? "selected" : "" }>15 개</option>
+				<option value="20" ${requestScope.paging.pageLimit eq 20 ? "selected" : "" }>20 개</option>
+				<option value="25" ${requestScope.paging.pageLimit eq 25 ? "selected" : "" }>25 개</option>
+				<option value="30" ${requestScope.paging.pageLimit eq 30 ? "selected" : "" }>30 개</option>
+			</select>
+		</form>
+	</div>
+	
+	
 		<ul>
 			<c:url var="bookmarkDeleteUrl" value="/bookmark/delete"/>
-			<c:forEach var="d" items="${requestScope.data }">
+			<c:forEach var="d" items="${requestScope.paging.page }">
 				<c:url var="bookmarkUpdateUrl" value="/bookmark/update">
 					<c:param name="id" value="${d.id }" />
 				</c:url>
@@ -44,12 +59,41 @@
 			</c:forEach>	
 		</ul>
 		<div>
+	
+			<c:set var="pageNumber" value="${empty param.p ? 1 : param.p }"/>
+			<c:choose>
+				<c:when test="${requestScope.paging.prevPage eq -1 }">
+					<a>prev</a>
+				</c:when>
+				<c:otherwise>
+					<a href="${bookmarkUrl }?p=${requestScope.paging.prevPage }">prev</a>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="pNum" items="${requestScope.paging.pageList }">
+				<a href="${visitUrl }?p=${pNum }">${pNum }</a>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${requestScope.paging.nextPage eq -1 }">
+					<a>next</a>
+				</c:when>
+				<c:otherwise>
+					<a href="${bookmarkUrl }?p=${requestScope.paging.nextPage}">next</a>
+				</c:otherwise>
+			</c:choose>
+			
+			
+			
+			
+		
+		
+		
+	<%--
 			<a href="#">prev</a>
 			<c:forEach var="i" begin="${requestScope.start }" end="${requestScope.end }">
 				<a href="${bookmarkUrl }?p=${i }">${i }</a>
 			</c:forEach>
 			<a href="#">next</a>
-			
+	 --%>	
 		</div>
 	<%--	
 		<ul>
