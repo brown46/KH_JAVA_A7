@@ -38,7 +38,7 @@ public class BookmarkController extends HttpServlet {
 		
 		
 		
-		//10개씩 나눠서 표시하기(임시)
+		//10개씩 나눠서 표시하기
 		//map에 object를 담음
 //		List<BookmarkDTO> data =service.getPage(bdto);
 		//또는 새 클래스 생성해서 담아 넘기기
@@ -66,8 +66,8 @@ public class BookmarkController extends HttpServlet {
 		
 	
 		String cnt =req.getParameter("cnt");
-		if(cnt!=null) {
-			if(cnt.isEmpty()) {
+		if(cnt!=null) {	            //web01/bookmark?  		-> null
+			if(cnt.isEmpty()) {		//web01/bookmark?cnt=  	-> 빈문자열
 				if(cookie!=null) {
 					cnt=cookie.getValue();					
 				}else {
