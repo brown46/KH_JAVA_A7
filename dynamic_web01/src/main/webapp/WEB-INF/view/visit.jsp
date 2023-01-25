@@ -67,29 +67,40 @@
 			<button type="submit" form="deleteForm${data.createDate.getTime()}">삭제</button>
 		</c:forEach>
 	</ul>
-	<div>
+	<ul class="pagination">
+		
 		<c:set var="pageNumber" value="${empty param.p ? 1 : param.p }" />
 		<c:choose>
 			<c:when test="${pageNumber eq 1 }">
-				<a>prev</a>
+				<li class="page-item disabled"> 
+					<a class="page-link">prev</a>
+				</li>
 			</c:when>
 			<c:otherwise>
-				<a href="${visitUrl }?p=${pageNumber-1}">prev</a>
+				<li class="page-item">
+					<a class="page-link" href="${visitUrl }?p=${pageNumber-1}">prev</a>
+				</li>
 			</c:otherwise>
 		</c:choose>
 		<c:forEach var="i" begin="${requestScope.pageStart }" end ="${requestScope.pageEnd}">
-			<a href="${visitUrl }?p=${i } ">${i }</a>
+			<li class="page-item ${i eq pageNumber ? 'active' : '' }">
+				<a class="page-link" href="${visitUrl }?p=${i } ">${i }</a>
+			</li>
 		</c:forEach>
 		<c:choose>
 			<c:when test="${pageNumber eq pageCount }">
-				<a>next</a>
+				<li class="page-item disabled">
+					<a class="page-link" >next</a>
+				</li>
 			</c:when>
 		
 			<c:otherwise>
-				<a href="${visitUrl }?p=${pageNumber+1}">next</a>
+				<li class="page-item">
+					<a class="page-link" href="${visitUrl }?p=${pageNumber+1}">next</a>
+				</li>	
 			</c:otherwise>
 		</c:choose>
 		
-	</div>
+	</ul>
 </body>
 </html>
