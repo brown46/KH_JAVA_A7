@@ -147,7 +147,20 @@ INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'N','공지글 테스트','공지글 
 INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'N','공지글 테스트','공지글 작성 테스트4',
 									'1234',DEFAULT,DEFAULT,DEFAULT);
 INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'N','공지글 테스트','공지글 작성 테스트5',
-									'1234',DEFAULT,DEFAULT,DEFAULT);								
+									'1234',DEFAULT,DEFAULT,DEFAULT);	
+DROP TABLE	BOARD_T;							
 SELECT * FROM BOARD_T;
 
 
+
+SELECT id, btype, title, writer, createDate, viewCnt
+   FROM(SELECT ROWNUM AS N
+   			 , id
+   			 , btype
+   			 , title
+             , writer
+             , createDate 
+             , viewCnt
+          FROM (SELECT id, btype, title, writer, createDate, viewCnt FROM BOARD_T ORDER BY btype DESC, id)
+        )WHERE N BETWEEN 6 AND 10;
+   
