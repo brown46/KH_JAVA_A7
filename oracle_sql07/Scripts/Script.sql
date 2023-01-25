@@ -104,3 +104,50 @@ INSERT INTO BOOKMARK_T VALUES(23,'아이디','https://google.com','구글');
 INSERT INTO BOOKMARK_T VALUES(24,'아이디','https://google.com','구글');
 
 
+
+/**
+ * 공지사항이 있는 게시판
+ * btype의 값이 N인 경우 공지사항, B인 경우 일반 게시무로 합니다.
+ */
+CREATE TABLE BOARD_T(
+	   id NUMBER PRIMARY KEY
+	 , btype VARCHAR2(1) CHECK(btype IN ('N', 'B')) NOT NULL
+     , title VARCHAR2(500) NOT NULL
+     , context VARCHAR2(4000) NOT NULL
+     , writer VARCHAR2(20) REFERENCES USER_T(USERID)
+	 , createDate DATE DEFAULT(SYSDATE)
+	 , updateDate DATE DEFAULT(SYSDATE)
+	 , viewCnt NUMBER DEFAULT(0)
+);
+
+CREATE SEQUENCE BOARD_S NOCACHE; 
+DROP SEQUENCE BOARD_S;
+
+
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'B','게시글 테스트','게시판 글 작성 테스트',
+									'1234',DEFAULT,DEFAULT,DEFAULT);
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'B','게시글 테스트','게시판 글 작성 테스트2',
+									'1234',DEFAULT,DEFAULT,DEFAULT);
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'B','게시글 테스트','게시판 글 작성 테스트3',
+									'1234',DEFAULT,DEFAULT,DEFAULT);
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'B','게시글 테스트','게시판 글 작성 테스트4',
+									'1234',DEFAULT,DEFAULT,DEFAULT);								
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'N','공지글 테스트','공지글 작성 테스트',
+									'1234',DEFAULT,DEFAULT,DEFAULT);
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'N','공지글 테스트','공지글 작성 테스트2',
+									'1234',DEFAULT,DEFAULT,DEFAULT);
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'B','게시글 테스트','게시판 글 작성 테스트5',
+									'1234',DEFAULT,DEFAULT,DEFAULT);
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'B','게시글 테스트','게시판 글 작성 테스트6',
+									'1234',DEFAULT,DEFAULT,DEFAULT);								
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'B','게시글 테스트','게시판 글 작성 테스트7',
+									'1234',DEFAULT,DEFAULT,DEFAULT);								
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'N','공지글 테스트','공지글 작성 테스트3',
+									'1234',DEFAULT,DEFAULT,DEFAULT);
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'N','공지글 테스트','공지글 작성 테스트4',
+									'1234',DEFAULT,DEFAULT,DEFAULT);
+INSERT INTO BOARD_T VALUES(BOARD_S.NEXTVAL,'N','공지글 테스트','공지글 작성 테스트5',
+									'1234',DEFAULT,DEFAULT,DEFAULT);								
+SELECT * FROM BOARD_T;
+
+
