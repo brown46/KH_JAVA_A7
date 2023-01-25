@@ -75,7 +75,7 @@
 			</c:choose>
 			<c:forEach var="pNum" items="${requestScope.paging.pageList }">
 				<li class="page-item">
-					<a class="page-link ${pNum eq pageNumber? 'active' : '' }" href="${visitUrl }?p=${pNum }">${pNum }</a>
+					<a class="page-link ${pNum eq pageNumber? 'active' : '' }" href="${bookmarkUrl }?p=${pNum }">${pNum }</a>
 				</li>
 			</c:forEach>
 			<c:choose>
