@@ -5,10 +5,57 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sun.net.httpserver.Authenticator.Result;
 
 import first.common.JDBCTemplate;
+import member.model.vo.MemberVO;
 
 public class MemberDAO {
+	
+	public List<MemberVO> selectMemberList(Connection conn){
+		List<MemberVO> result =null;
+		 
+		String query = "SELECT * FROM test_member";
+		PreparedStatement pstmt= null;
+		ResultSet rset= null;
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+//			pstmt.setString(parameterIndex, x);//? 가 없음
+			rset= pstmt.executeQuery();
+			result= new ArrayList<MemberVO>();
+			
+			if(rset.next()) {
+				result = new ArrayList<MemberVO>();
+				do {
+					String id = rset.getString("id");
+					String passwd = rset.getString("passwd");
+					String name = rset.getString("name");
+					String email = rset.getString("email");
+					MemberVO vo = new MemberVO();
+					vo.setEmail(email);
+					vo.setId(id);
+					vo.setName(name);
+					vo.setPasswd(passwd);
+					result.add(vo);
+				}while(rset.next());				
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);	
+		}
+		return result;
+	}
+	
+	
+	
 	public int login(Connection conn,String id, String pw) {
 		int result =-1;//
 //		String query ="SELECT COUNT(*) cnt FROM TEST_MEMBER WHERE ID=#{id} AND PASSWD=#{pw}";	//마이바티스	

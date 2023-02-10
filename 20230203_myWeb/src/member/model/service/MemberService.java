@@ -1,9 +1,11 @@
 package member.model.service;
 
 import java.sql.Connection;
+import java.util.List;
 
 import first.common.JDBCTemplate;
 import member.model.dao.MemberDAO;
+import member.model.vo.MemberVO;
 
 public class MemberService {
 	//1. Connection 생성
@@ -12,6 +14,15 @@ public class MemberService {
 	//4. Connection close
 	
 	//login
+	public List<MemberVO> selectMemberList(){
+		List<MemberVO> result =null;
+		Connection conn= JDBCTemplate.getConnection();
+		result= new MemberDAO().selectMemberList(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+	
 	public int login(String id, String pw) {
 		int result =0;
 		Connection conn= JDBCTemplate.getConnection();

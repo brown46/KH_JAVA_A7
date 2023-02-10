@@ -46,11 +46,17 @@ public class LoginExamServlet extends HttpServlet {
 		// TODO: DB 갔다오기
 		int result = new MemberService().login(id, pw); // 1: 로그인 성공, 0: 로그인 실패
 		if (result == 1) {
+			//로그인 세션 만들기
+			request.getSession().setAttribute("loginss", "Y");
+			request.getSession().setAttribute("loginssGrade", "3");
+			
+			
 //			response.sendRedirect("/"); //포트번호 까지만 나온다. contextPath필요
 //			response.sendRedirect("./");//상대경로
 			request.setAttribute("msg","xx님 로그인 되셨습니다");
 //			request.getRequestDispatcher("/WEB-INF/msgAlert.jsp").forward(request, response);
 		}else if(result ==-1) {
+			
 			request.setAttribute("msg","죄송합니다. 현재시스템이 비정상동작하여 잠시 후 다시 시도해주세요.");
 		}else {
 			request.setAttribute("msg","일치하는 아이디와 패스워드가 없습니다. 다시 확인하시고 로그인하주세요.");
