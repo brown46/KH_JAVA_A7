@@ -13,13 +13,13 @@ import member.model.service.MemberService;
  * Servlet implementation class LoginServlet
  */
 @WebServlet("/loginurl")
-public class LoginServlet extends HttpServlet {
+public class LoginExamServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LoginServlet() {
+	public LoginExamServlet() {
 		super();
 	}
 
