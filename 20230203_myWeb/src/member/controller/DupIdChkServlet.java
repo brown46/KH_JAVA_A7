@@ -33,12 +33,13 @@ public class DupIdChkServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//한글 인코딩
-		response.setContentType("utf-8");
-//		response.setCharacterEncoding(charset);
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		// 1. 
 		String id = request.getParameter("id");
 		System.out.println("전달받은 데이터 : "+id);
 		// 2. db
+//		int result = new MemberService().
 		//TODO:
 //		new MemberService().
 		//3. 결과에 데이터를 전달(페이지 이동안함)

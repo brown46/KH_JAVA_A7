@@ -25,19 +25,20 @@
 	$("#dupId").click(checkDupId);
 	function checkDupId() {
 		$.ajax({url:"<%=request.getContextPath()%>/dupid.lo"
-			, type:"post" 
-			, async:false
-			, data: {id: $("input").first().val() } 
-			, success: function(result){
-				console.log(result);
-				if(result==1){
-					$("#dupId").next().html("중복아이디가 있습니다. 다시 입력해주세요");
-					$("#dupId").next().css("color","red");				
-				}else{
-					$("#dupId").next().html("사용가능한 아이디입니다.");
-					$("#dupId").next().css("color","blue");
-				}
-			}
+			  , type:"post" 
+			  , async:false
+			  , contentType: "application/json; charset:utf-8"
+			  , data: {id: $("input").first().val() } 
+			  , success: function(result){
+				             console.log(result);
+				             if(result==1){
+					             $("#dupId").next().html("중복아이디가 있습니다. 다시 입력해주세요");
+					             $("#dupId").next().css("color","red");				
+				             }else{
+					             $("#dupId").next().html("사용가능한 아이디입니다.");
+					             $("#dupId").next().css("color","blue");
+				             }
+			             }
 			, error: function(request, status, error){
 				alert(request.status);
 			}
