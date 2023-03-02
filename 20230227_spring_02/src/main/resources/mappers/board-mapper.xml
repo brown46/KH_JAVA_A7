@@ -1,28 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="board">
+<!-- 
+	<resultMap type="hashmap" id="rsMap">
+		<result column="sdate" property="boardDate"/>		
+		<result column="board_num" property="boardNum"/>		
+	</resultMap>
+	<select id="tempSelect" resultMap="rsMap">
+		select sysdate as sdate, board_num from board
+	</select>
+ -->
+	
 
-	<insert id="insert" parameterType="kh.spring.s02.board.model.vo.BoardVO">
+	<insert id="insert" parameterType="BoardVO">
 		insert into BOARD values
 		(	
+	
+		
+		
 			(select NVL(max(BOARD_NUM),0)+1 from BOARD)
 			,#{boardTitle}
 			,#{boardWriter}
 			,#{boardContent}
 			,#{boardOriginalFilename}
 			,#{boardRenameFilename}
-			, DEFAULT,DEFAULT
-			,(select NVL(max(BOARD_NUM),0)+1 from BOARD)
+			, DEFAULT
+				<choose>
+			<when test="boardNum !=0">
+			,(select board_level+1 from board where board_num=#{boardNum})
+			,(select board_ref from board where board_num=#{boardNum})
+			,(select board_reply_seq+1 from board where board_num=#{boardNum})
+			</when>
+			<otherwise>
 			,DEFAULT
+			,(select NVL(max(BOARD_NUM),0)+1 from BOARD)
+			,DEFAULT			
+			</otherwise>		
+		</choose>
 			,DEFAULT
 		)
 	</insert>
+	
 	<update id="update">
 		update board set
 			   board_Title= #{boardTitle}		
 			 , board_Content= #{boardContent}	
+			 <if test="boardOriginalFilename !=null and !boardOriginalFilename.equals('')">
 			 , board_Original_Filename= #{boardOriginalFilename}	
-			 , board_Rename_Filename= #{boardRenameFilename}
+			 </if>
+			 <if test="boardOriginalFilename ==null or boardOriginalFilename.equals('')">
+			  , board_Original_Filename=null
+			 </if>
+			  , board_Rename_Filename=
+			 <choose>
+			 	<when test="boardRenameFilename!= null and !boardRenameFilename.equals('')">
+			 	  #{boardRenameFilename}
+			 	</when>
+			 	<otherwise>
+			 	null
+			 	 </otherwise>
+			 </choose>
 			 , board_Date = SYSDATE
 		 where board_Num =#{boardNum}
 	</update>
@@ -41,14 +78,62 @@
 	<delete id="delete">
 		delete from board where board_Num =#{boardNum}
 	</delete>
-	<select id="selectOne" resultType="kh.spring.s02.board.model.vo.BoardVO">
+	<select id="selectOne" resultType="BoardVO">
 		select * from board where board_Num =#{boardNum}
 	</select>
-	<select id="selectList" resultType="kh.spring.s02.board.model.vo.BoardVO">
-		select * from board
+	<select id="selectList" resultType="BoardVO">
+		select  BOARD_NUM,BOARD_TITLE,BOARD_WRITER,BOARD_CONTENT,BOARD_ORIGINAL_FILENAME,
+				BOARD_RENAME_FILENAME, BOARD_DATE, BOARD_LEVEL,BOARD_REF,BOARD_REPLY_SEQ,BOARD_READCOUNT
+ 		from board
+ 			<trim prefix="where" prefixOverrides="AND/OR">
+				<if test="searchWord != null and searchWord neq ''">
+					title like #{searchWord}
+					or content like #{searchWord}
+				</if>
+			</trim>
+  		order by board_ref desc, board_reply_seq asc
 	</select>
 	
 	<select id="selectOneCount" resultType="int">
 		select count(*) cnt from board
+		<trim prefix="where" prefixOverrides="AND/OR">
+				<if test="searchWord != null and searchWord neq ''">
+					title like #{searchWord}
+					or content like #{searchWord}
+				</if>
+			</trim>
 	</select>
+	
+	<select id="tempTrimSelect">
+		select * from board
+			<trim prefix="where" prefixOverrides="AND/OR">
+				<if test="searchWord != null and searchWord neq ''">
+					title like #{searchWord}
+					or content like #{searchWord}
+				</if>
+			</trim>
+	</select>
+	
+	<select id="tempCallableSelect" parameterType="boardVO" resultType="boardVo" 
+	statementType="CALLABLE">
+	{
+		CALL f1()
+			
+	}
+	</select>	
+	
+	<delete id="tempForeachDelete">
+		delete from board
+		<where>
+			1=0 or 
+			<foreach collection="list" item="bNum" open="board_num in(" close=")" separator=",">
+			#{bnum}
+			</foreach>
+		</where>
+	</delete>
+	
+	
+	
+	
+	
 </mapper>

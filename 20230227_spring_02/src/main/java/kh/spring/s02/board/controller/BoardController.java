@@ -2,6 +2,9 @@ package kh.spring.s02.board.controller;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,25 +25,45 @@ import kh.spring.s02.board.model.vo.BoardVO;
 @RequestMapping("/board")
 public class BoardController {	
 	@Autowired BoardService service;
-//	@GetMapping("/boardinsert")
-//	@RequestMapping(value ="/boardinsert", method =RequestMethod.GET)
+	
+	
+	private static final int BOARD_LIMIT=5;
+	private static final int Page_LIMIT=3;
 	@GetMapping("/list")
-//	public ModelAndView viewInsertBoard(
 	public ModelAndView viewInsertBoard(
 			ModelAndView mv
-//			Model mo
 		  ,	HttpServletRequest request
 		  , HttpSession session
 		  , BoardVO vo
 		    ) {
-		System.out.println("board List Controller!");
-		request.setAttribute("request", "request");
-//		mv.addObject("test", "test value");
-//		mo.addAttribute("test","test");
+		
+		//12345
+		int currentPage= 1;		
+		int totalCnt= service.selectOneCount();
+		int totalPage = (totalCnt/BOARD_LIMIT==0) ?  (totalCnt/BOARD_LIMIT): (totalCnt/BOARD_LIMIT+1);
+		int startPage=currentPage%Page_LIMIT==0 ? 
+						(currentPage/Page_LIMIT-1)*Page_LIMIT+1
+						:(currentPage/Page_LIMIT)*Page_LIMIT+1 ;
+		int endPage=startPage+Page_LIMIT<totalPage? startPage+Page_LIMIT: totalPage ;
+		
+		Map<String, Integer> map = new HashMap();
+
+		map.put("totalPage", totalPage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		map.put("currentPage", currentPage);
+		
+//		mv.addObject("totalCnt",totalCnt); 
+//		mv.addObject("totalPage",totalPage); 
+//		mv.addObject("startPage",startPage); 
+//		mv.addObject("currentPage",currentPage); 
+		mv.addObject("pageInfo",map);
+		mv.addObject("boardList",service.selectList(currentPage,BOARD_LIMIT)); 
+//		mv.addObject("boardList", service.selectList()); 
 		mv.setViewName("board/list");
-		mv.addObject("boardList", service.selectList()); 
 		return mv;
 	}
+	
 //	@RequestMapping(value ="/boardinsert", method =RequestMethod.Post)
 	@GetMapping("/insert")
 	public ModelAndView doInsertBoard(ModelAndView mv, HttpSession session, BoardVO vo) {
@@ -61,12 +84,51 @@ public class BoardController {
 		return mv;
 	}
 	
-
+//답글 작성 페이지 이동
+	@GetMapping("/insertReply")
+	public ModelAndView viewInsertReply(ModelAndView mv, int boardNum) {
+		
+		return mv;
+	}
+//답글 작성
+//	@PostMapping("/insertReply")
+	@GetMapping("/insertPostReply")
+	public ModelAndView viewInsertReply(ModelAndView mv, BoardVO vo) {
+		//TODO
+		int boardNum =4;
+		vo.setBoardNum(boardNum);
+		vo.setBoardContent("임시4답글내용");
+		vo.setBoardTitle("임시4답글제목");
+		vo.setBoardWriter("user22");
+		
+		service.insert(vo);
+		
+		return mv;
+	}	
+	
+	
 	@GetMapping("/update")
 	public void viewUpdateBoard() {
-		return ;
+		
 	}
 	
+//	@PostMapping("/update")
+	@GetMapping("/updatePostTest")
+	public void UpdateBoard() {
+		int boardNum=1;
+		String title= "수정제목";
+		String content= "수정내용";
+		String boardOriginalFilename="";//"" 파일없음
+		String boardRenameFilename="";//"" 파일없음
+		
+		BoardVO vo = new BoardVO();
+		vo.setBoardTitle(title);
+		vo.setBoardContent(content);
+		vo.setBoardOriginalFilename(boardOriginalFilename);
+		vo.setBoardRenameFilename(boardRenameFilename);
+		
+		int result= service.update(vo);
+	}
 	@GetMapping("/delete")
 	public void viewDeleteBoard() {
 		int boardNum=13;
@@ -93,9 +155,9 @@ public class BoardController {
 		return ;
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public String exceptionHandler() {
-		return "error";
-	}
+//	@ExceptionHandler(Exception.class)
+//	public String exceptionHandler() {
+//		return "error";
+//	}
 	
 }

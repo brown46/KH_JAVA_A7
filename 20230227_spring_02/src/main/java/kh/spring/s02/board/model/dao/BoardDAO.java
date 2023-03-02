@@ -1,11 +1,14 @@
 package kh.spring.s02.board.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.s02.board.controller.BoardController;
 import kh.spring.s02.board.model.vo.BoardVO;
 
 @Repository
@@ -38,7 +41,23 @@ public class BoardDAO {
 	public List<BoardVO> selectList() {
 		return sqlSession.selectList("board.selectList");
 	}
+	public List<BoardVO> selectList(int currentPage, int limit) {
+//		int offset = (currentPage-1)*limit;
+//		RowBounds rb = new RowBounds(offset, limit);
+//		return sqlSession.selectList("board.selectList",null,rb);
+		return sqlSession.selectList("board.selectList",null,new RowBounds((currentPage-1)*limit, limit));
+	}
 	public int selectOneCount() { 
 		return sqlSession.selectOne("board.selectOneCount");
 	}
+	
+//	public List<HashMap<String, Object>> tempSelect() {
+//		List<HashMap<String, Object>> listmap = sqlSession.selectList("board.tempSelect");
+//		for(HashMap<String, Object> map : listmap) {
+//			System.out.println((String)map.get("boardDate"));
+//			//property = key = attribute = column = field 
+//		}
+//		return listmap;
+////		return sqlSession.selectList("board.tempSelect");
+//	}
 }
