@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.s02.board.model.service.MemberService;
@@ -20,32 +21,38 @@ public class MemberController {
 	@Autowired 
 	private MemberService service;
 	
-//	@GetMapping("/signUp")
-	@GetMapping("/testSignUp")
-	public ModelAndView viewInsert(ModelAndView mv,MemberVO vo) {
-		vo.setEmail("emailadd");
-		vo.setId("idd");
-		vo.setName("namee");
-		vo.setPasswd("passswd");
-		int result= service.insert(vo);
+	@GetMapping("/signUp")
+	public ModelAndView viewInsert(ModelAndView mv) {
+		
+		mv.setViewName("member/signUp");
 		return mv;
-		//TODO
+		
 	}
+
 	@PostMapping("/signUp")
 	public ModelAndView insert(ModelAndView mv,MemberVO vo) {
+		
+		int result= service.insert(vo);
+		mv.setViewName("member/signUp");
+		if(result>0) {
+			mv.setViewName("redirect:/");
+		}else {
+			mv.setViewName("redirect:/member/signUp");			
+		}
 		return mv;
 	}
 	@GetMapping("/update")
-	public ModelAndView  viewUpdate(ModelAndView mv) {
+	public ModelAndView  viewUpdate(ModelAndView mv, String id) {
+		MemberVO vo = service.selectOne(id);
+		mv.addObject("memberVO", vo);
+		mv.setViewName("/member/update");
 		return mv;
 	}
-//	@PostMapping("/update")
-	@GetMapping("/testUpdate")
+//	@GetMapping("/testUpdate")
+	@PostMapping("/update")
 	public ModelAndView viewUpdate(ModelAndView mv, MemberVO vo) {
-		vo.setEmail("user333@email");
-		vo.setId("user3");
-		vo.setPasswd("pass333");
-		int result=service.update(vo);
+		service.update(vo);
+		mv.setViewName("redirect:/");
 		return mv;
 	}
 	
@@ -59,9 +66,13 @@ public class MemberController {
 	}
 	
 	@GetMapping("/info")
-//	public ModelAndView selectOne(ModelAndView mv,String id) {
-	public ModelAndView selectOne(ModelAndView mv) {
-		String id= "user3";
+	public ModelAndView selectOne(ModelAndView mv,String id) {
+//	public ModelAndView selectOne(ModelAndView mv) {
+//		String id= "user3";
+		if(id==null) {
+			mv.setViewName("redirect:/");			
+			return mv;
+		}
 		MemberVO vo= service.selectOne(id);
 		return mv;
 	}
