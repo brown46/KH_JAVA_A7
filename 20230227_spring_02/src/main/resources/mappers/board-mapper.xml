@@ -81,14 +81,15 @@
 	<select id="selectOne" resultType="BoardVO">
 		select * from board where board_Num =#{boardNum}
 	</select>
-	<select id="selectList" resultType="BoardVO">
+	<select  id="selectList" resultType="BoardVO">
 		select  BOARD_NUM,BOARD_TITLE,BOARD_WRITER,BOARD_CONTENT,BOARD_ORIGINAL_FILENAME,
 				BOARD_RENAME_FILENAME, BOARD_DATE, BOARD_LEVEL,BOARD_REF,BOARD_REPLY_SEQ,BOARD_READCOUNT
  		from board
  			<trim prefix="where" prefixOverrides="AND/OR">
 				<if test="searchWord != null and searchWord neq ''">
-					title like #{searchWord}
-					or content like #{searchWord}
+					BOARD_TITLE like '%'|| #{searchWord}||'%'
+					or BOARD_CONTENT like '%'|| #{searchWord}||'%'
+					or BOARD_WRITER like '%'|| #{searchWord}||'%'
 				</if>
 			</trim>
   		order by board_ref desc, board_reply_seq asc
@@ -98,8 +99,9 @@
 		select count(*) cnt from board
 		<trim prefix="where" prefixOverrides="AND/OR">
 				<if test="searchWord != null and searchWord neq ''">
-					title like #{searchWord}
-					or content like #{searchWord}
+					BOARD_TITLE like '%'|| #{searchWord}||'%'
+					or BOARD_CONTENT like '%'|| #{searchWord}||'%'
+					or BOARD_WRITER like '%'|| #{searchWord}||'%'
 				</if>
 			</trim>
 	</select>

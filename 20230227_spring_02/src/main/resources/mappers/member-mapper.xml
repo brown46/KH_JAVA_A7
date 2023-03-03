@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+	<resultMap type="memberVO" id="mMap">
+		<id column="ID" property="id"/>
+		<result column="PASSWD" property="passwd"/>
+		<result column="NAME" property="name"/>
+		<result column="EMAIL" property="email"/>
+	</resultMap>
+	
+	<insert id="insertId" parameterType="memberVO">
+		insert into TEST_MEMBER values(#{id},#{passwd},#{name},#{email})
+	</insert>
+	
+	<update id="updateId" parameterType="memberVO">
+		update TEST_MEMBER 
+		   set PASSWD = #{passwd}
+		     , EMAIL=#{email} 
+		 where ID= #{id}
+	</update>
+	
+	<delete id="deleteId" parameterType="string">
+		delete from TEST_MEMBER where ID= #{id}
+	</delete>
+	
+	<!-- 
+	<select id="selectOneId" resultType="mMap">
+	 -->
+	<select id="selectOneId" resultType="memberVO">
+		select * from TEST_MEMBER where ID =#{id}
+	</select>
+	
+	<select id="selectListId" resultType="memberVo">
+		select * from TEST_MEMBER
+	</select>
+</mapper>

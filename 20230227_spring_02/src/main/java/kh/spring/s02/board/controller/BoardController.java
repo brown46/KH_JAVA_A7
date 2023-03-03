@@ -37,10 +37,16 @@ public class BoardController {
 		  , BoardVO vo
 		    ) {
 		
+		//TODO
+		//검색단어는 제목, 내용, 작성자에서 포함되어있으면 찾기
+		//null 또는 ''은 검색하지 않음 
+//		String searchword= null;
+//		String searchword= "";
+		String searchWord= "답";//임시 테스트용
 		//12345
 		int currentPage= 1;		
-		int totalCnt= service.selectOneCount();
-		int totalPage = (totalCnt/BOARD_LIMIT==0) ?  (totalCnt/BOARD_LIMIT): (totalCnt/BOARD_LIMIT+1);
+		int totalCnt= service.selectOneCount(searchWord);
+		int totalPage = (totalCnt%BOARD_LIMIT==0) ?  (totalCnt/BOARD_LIMIT): (totalCnt/BOARD_LIMIT+1);
 		int startPage=currentPage%Page_LIMIT==0 ? 
 						(currentPage/Page_LIMIT-1)*Page_LIMIT+1
 						:(currentPage/Page_LIMIT)*Page_LIMIT+1 ;
@@ -58,7 +64,12 @@ public class BoardController {
 //		mv.addObject("startPage",startPage); 
 //		mv.addObject("currentPage",currentPage); 
 		mv.addObject("pageInfo",map);
-		mv.addObject("boardList",service.selectList(currentPage,BOARD_LIMIT)); 
+		
+		
+
+		
+		
+		mv.addObject("boardList",service.selectList(currentPage,BOARD_LIMIT, searchWord)); 
 //		mv.addObject("boardList", service.selectList()); 
 		mv.setViewName("board/list");
 		return mv;

@@ -47,8 +47,17 @@ public class BoardDAO {
 //		return sqlSession.selectList("board.selectList",null,rb);
 		return sqlSession.selectList("board.selectList",null,new RowBounds((currentPage-1)*limit, limit));
 	}
+	
+	public List<BoardVO> selectList(int currentPage, int limit, String searchWord) {
+		
+		return sqlSession.selectList("board.selectList",searchWord,new RowBounds((currentPage-1)*limit, limit));
+	}
+	
 	public int selectOneCount() { 
 		return sqlSession.selectOne("board.selectOneCount");
+	}
+	public int selectOneCount(String searchWord) { 
+		return sqlSession.selectOne("board.selectOneCount",searchWord);
 	}
 	
 //	public List<HashMap<String, Object>> tempSelect() {
