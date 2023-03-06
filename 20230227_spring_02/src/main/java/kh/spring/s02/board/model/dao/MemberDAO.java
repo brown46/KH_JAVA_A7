@@ -15,25 +15,25 @@ public class MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public int insert(MemberVO vo) {		
+	public int insert(MemberVO vo) throws Exception{		
 		return sqlSession.insert("memberMapper.insertId",vo);
 	}
 	
-	public int update(MemberVO vo) {
+	public int update(MemberVO vo) throws Exception {
 		return sqlSession.update("memberMapper.updateId",vo);
 		
 	}
 	
-	public int delete(String id ) {
+	public int delete(String id ) throws Exception {
 		return sqlSession.delete("memberMapper.deleteId",id);
 		
 	}
 	
-	public MemberVO selectOne(String id) {
+	public MemberVO selectOne(String id) throws Exception {
 		return sqlSession.selectOne("memberMapper.selectOneId",id);
 		
 	}
-	public List<MemberVO> selectList() {
+	public List<MemberVO> selectList() throws Exception {
 		return sqlSession.selectList("memberMapper.selectListId");
 		
 	}

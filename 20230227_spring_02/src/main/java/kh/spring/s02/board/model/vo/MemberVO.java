@@ -2,7 +2,9 @@ package kh.spring.s02.board.model.vo;
 
 
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 @Component
+//@Validated
 	public class MemberVO {
 		private String id;
 		private String passwd;

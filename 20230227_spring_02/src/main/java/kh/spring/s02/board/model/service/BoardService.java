@@ -5,6 +5,7 @@ import java.util.List;
 import kh.spring.s02.board.model.vo.BoardVO;
 
 public interface BoardService {
+	//서비스의 역할 - Transaction 기능:  Dao의 여러 메소드를 하나의 기능으로 묶어서 처리함
 	public int insert(BoardVO vo) ;
 //	public int updateForReply (int boardNum);
 	public int update(BoardVO vo);
