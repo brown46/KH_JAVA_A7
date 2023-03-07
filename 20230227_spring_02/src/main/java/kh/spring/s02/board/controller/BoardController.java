@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.s02.board.model.service.BoardService;
@@ -42,10 +43,11 @@ public class BoardController {
 		//null 또는 ''은 검색하지 않음 
 //		String searchword= null;
 //		String searchword= "";
-		String searchWord= "답";//임시 테스트용
+//		String searchWord= "답";//임시 테스트용
 		//12345
 		int currentPage= 1;		
-		int totalCnt= service.selectOneCount(searchWord);
+//		int totalCnt= service.selectOneCount(searchWord);
+		int totalCnt= service.selectOneCount();
 		int totalPage = (totalCnt%BOARD_LIMIT==0) ?  (totalCnt/BOARD_LIMIT): (totalCnt/BOARD_LIMIT+1);
 		int startPage=currentPage%Page_LIMIT==0 ? 
 						(currentPage/Page_LIMIT-1)*Page_LIMIT+1
@@ -69,7 +71,8 @@ public class BoardController {
 
 		
 		
-		mv.addObject("boardList",service.selectList(currentPage,BOARD_LIMIT, searchWord)); 
+//		mv.addObject("boardList",service.selectList(currentPage,BOARD_LIMIT, searchWord)); 
+		mv.addObject("boardList",service.selectList(currentPage,BOARD_LIMIT)); 
 //		mv.addObject("boardList", service.selectList()); 
 		mv.setViewName("board/list");
 		return mv;
@@ -158,12 +161,28 @@ public class BoardController {
 //		
 //	}
 	@GetMapping("/read")
-	public void viewReadBoard(Model m 
-			, @RequestParam(required = false, defaultValue ="5") int param1) {
+	public ModelAndView viewReadBoard(ModelAndView mv 
+			, @RequestParam(required = false, defaultValue ="5") int boardNum) {
+		//TODO
+		String writer="user22";
 		
-		m.addAttribute("param1", param1);
-		m.addAttribute("boardList", service.selectList());
-		return ;
+		mv.addObject("board", service.selectOne(boardNum, writer));
+		mv.setViewName("board/read");
+		return mv ;
+	}
+	
+	@PostMapping("/insertReplyAjax")
+	@ResponseBody
+	public String insertReplyAjax(BoardVO vo) {
+//		int boardNum =5;
+//		vo.setBoardNum(boardNum);
+//		vo.setBoardContent("임시5답글내용");
+//		vo.setBoardTitle("임시5답글제목");
+		vo.setBoardWriter("user22");
+		
+		service.insert(vo);
+		return "ok"; //ajax로 왔으므로 다른 페이지로 이동하지않는다. ajax의 success가 실행됨
+		
 	}
 	
 //	@ExceptionHandler(Exception.class)
