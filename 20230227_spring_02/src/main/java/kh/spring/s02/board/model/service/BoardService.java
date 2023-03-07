@@ -13,9 +13,14 @@ public interface BoardService {
 	public int delete(int boardNum /*BoardVO 또는 PK 또는 List<PK>*/);
 //	public BoardVO selectOne(int boardNum /*PK*/);
 	public BoardVO selectOne(int boardNum, String writer);
+	
 	public List<BoardVO> selectList(); //전체 읽기
 	public List<BoardVO> selectList(int currentPage,int limit); //paging 처리
-	public Object selectList(int currentPage, int boardLimit, String searchWord);//String으로 검색
+	public List<BoardVO> selectList(int currentPage, int boardLimit, String searchWord);//String으로 검색
+	
+	public List<BoardVO> selectReplyList(int boardNum);//글의 답글 전체읽기
+	public List<BoardVO> selectReplyList(int boardNum,int currentPage,int limit);//글의 답글 페이징
+	
 	public int selectOneCount();
 	public int selectOneCount(String searchWord);
 	

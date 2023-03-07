@@ -31,6 +31,34 @@
 	</fieldset>
 	</form>
 	
+<hr>
+<h4>답글</h4>
+<table border="1">
+	<thead>
+		<tr>
+			<td>글번호</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>작성일</td>
+			<td>조회수</td>
+		</tr>
+	</thead>
+	<tbody>
+	<c:forEach items="${replyList }" var="reply">
+		<!-- 제목을 누르면 글읽기 화면으로 이동 -->
+		<tr>
+			<td>${reply.boardNum }</td>
+			<td><a href="<%=request.getContextPath()%>/board/read?boardNum=${reply.boardNum }">${reply.boardTitle }</a></td>
+			<td>${reply.boardWriter }</td>
+			<td>${reply.boardDate }</td>
+			<td>${reply.boardReadcount }</td>
+		</tr>
+	</c:forEach>
+	</tbody>
+</table>
+
+	
+	
 <script type="text/javascript">
 	$(".btn.reply").on("click",replyClickHandler);
 	
@@ -43,22 +71,46 @@
 			url:"<%=request.getContextPath()%>/board/insertReplyAjax",
 			type:"post",
 			data:$("#frmReply").serialize(),
+			dataType:"json", //받아오는 데이터타입은 json이고 js object로 변형해서 result에 전달
 			//data:{boardTitle:$("#a").val(),boardContent:$("#b").val(), boardNum: '${board.boardNum}'}, //따옴표 필요!!
 			success:function(result){
 				console.log(result);
 				//$("#frmReply")[0].reset();//작성된 글 초기화
 				frmReply.reset();//자바스크립트
-				if(result=="ok"){
+				if(result.length>0){
 					alert("답글이 작성되었습니다.");
 				}else{
 					alert("답글이 작성되지 않았습니다.");
 				}
+				//답글 부분 화면 업데이트
+				displayReply(result);
 			}
 			,error: function(){
 				
 			}
 		});
 	}
+	
+	function displayReply(result){
+		console.log(result[0]);
+		console.log(result[0].boardDate);
+		
+		var htmlVal= '';
+		for(i = 0 ; i<result.length;i++){
+			var reply = result[i];	
+			htmlVal+='<tr>';
+			htmlVal+='<td>'+reply.boardNum+'</td>';
+			htmlVal+='<td><a href="<%=request.getContextPath()%>/board/read?boardNum='+reply.boardNum+'">'+reply.boardTitle+'</a></td>';
+			htmlVal+='<td>'+reply.boardWriter +'</td>';
+			htmlVal+='<td>'+reply.boardDate +'</td>';
+			htmlVal+='<td>'+reply.boardReadcount +'</td>';
+			htmlVal+='</tr>';
+		
+		}
+		$("tbody").html(htmlVal);		
+	}
+	
+	
 </script>
 
 </body>

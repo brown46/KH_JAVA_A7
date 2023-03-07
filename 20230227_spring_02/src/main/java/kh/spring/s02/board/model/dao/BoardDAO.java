@@ -59,7 +59,9 @@ public class BoardDAO {
 	public int selectOneCount(String searchWord) { 
 		return sqlSession.selectOne("board.selectOneCount",searchWord);
 	}
-	
+	public List<BoardVO> selectReplyList(int boardNum) {
+		return sqlSession.selectList("board.selectReplyList",boardNum);
+	}
 //	public List<HashMap<String, Object>> tempSelect() {
 //		List<HashMap<String, Object>> listmap = sqlSession.selectList("board.tempSelect");
 //		for(HashMap<String, Object> map : listmap) {

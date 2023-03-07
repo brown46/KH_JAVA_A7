@@ -106,7 +106,42 @@
 			</trim>
 	</select>
 	
-	<select id="tempTrimSelect">
+
+	
+	<select id="selectReplyList" resultType="boardVO">
+		select * from board 
+		where BOARD_LEVEL > (select BOARD_LEVEL from board where board_Num=#{board_Num} )
+			and BOARD_REF = (select BOARD_REF from board where board_Num=#{board_Num} )
+			and BOARD_REPLY_SEQ > (select BOARD_REPLY_SEQ from board where board_Num=#{board_Num} )
+		order by BOARD_REPLY_SEQ asc
+
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		<select id="tempTrimSelect">
 		select * from board
 			<trim prefix="where" prefixOverrides="AND/OR">
 				<if test="searchWord != null and searchWord neq ''">
@@ -133,9 +168,5 @@
 			</foreach>
 		</where>
 	</delete>
-	
-	
-	
-	
 	
 </mapper>

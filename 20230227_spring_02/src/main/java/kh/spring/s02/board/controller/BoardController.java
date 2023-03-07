@@ -3,6 +3,7 @@ package kh.spring.s02.board.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 import kh.spring.s02.board.model.service.BoardService;
 import kh.spring.s02.board.model.vo.BoardVO;
@@ -168,6 +171,10 @@ public class BoardController {
 		
 		mv.addObject("board", service.selectOne(boardNum, writer));
 		mv.setViewName("board/read");
+		
+		List<BoardVO> replyList = service.selectReplyList(boardNum);
+		mv.addObject("replyList", replyList);
+		
 		return mv ;
 	}
 	
@@ -180,8 +187,15 @@ public class BoardController {
 //		vo.setBoardTitle("임시5답글제목");
 		vo.setBoardWriter("user22");
 		
+		
+		
+		//답글 작성
 		service.insert(vo);
-		return "ok"; //ajax로 왔으므로 다른 페이지로 이동하지않는다. ajax의 success가 실행됨
+		//연관 답글들을 조회해서 ajax로 return 해야함
+		List<BoardVO> replyList = service.selectReplyList(vo.getBoardNum());
+//		mv.addObject("replyList", replyList); //ajax는 mv로 전달 할 수 없음
+		//
+		return new Gson().toJson(replyList); //ajax로 왔으므로 다른 페이지로 이동하지않는다. ajax의 success가 실행됨
 		
 	}
 	
