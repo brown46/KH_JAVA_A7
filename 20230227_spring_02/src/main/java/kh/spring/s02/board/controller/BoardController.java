@@ -2,28 +2,33 @@ package kh.spring.s02.board.controller;
 
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
 import kh.spring.s02.board.model.service.BoardService;
 import kh.spring.s02.board.model.vo.BoardVO;
+import kh.spring.s02.common.file.FileUtil;
 
 @Controller
 @RequestMapping("/board")
@@ -33,6 +38,7 @@ public class BoardController {
 	
 	private static final int BOARD_LIMIT=5;
 	private static final int Page_LIMIT=3;
+	private static final String UPLOAD_FOLDER ="\\resources\\uploadfiles";
 	@GetMapping("/list")
 	public ModelAndView viewInsertBoard(
 			ModelAndView mv
@@ -88,18 +94,29 @@ public class BoardController {
 		return mv;
 	}
 	
-	//TODO
-//	@PostMapping("/insert")
-	@GetMapping("/insertTest")
-	public ModelAndView doInsertBoard(ModelAndView mv, BoardVO vo) {
-		vo.setBoardContent("임시내용");
-		vo.setBoardTitle("임시제목");
-		vo.setBoardWriter("user22");
-		mv.setViewName("board/insert");
-		
+	@PostMapping("/insert")
+	public ModelAndView doInsertBoard(ModelAndView mv
+			, MultipartHttpServletRequest multiReq
+			, MultipartFile report  //jsp의 input type="file" name과 같은이름. 다른 이름을 쓰고 싶다면 @RequestParam(name="report", required = false)
+			, HttpServletRequest request
+			, BoardVO vo) {
+		Map<String, String> filePath;
+		List<Map<String, String>> fileListPath;
+		try {
+			fileListPath = new FileUtil().saveFileList(multiReq, request, null);
+			filePath = new FileUtil().saveFile(report, request, null);
+			vo.setBoardOriginalFilename(filePath.get("original"));
+			vo.setBoardRenameFilename(filePath.get("rename"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		vo.setBoardWriter("user22");//TODO
 		int result= service.insert(vo);
 		return mv;
-	}
+		
+		}
+
 	
 //답글 작성 페이지 이동
 	@GetMapping("/insertReply")

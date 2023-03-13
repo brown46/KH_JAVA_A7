@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="cPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,10 +17,10 @@
 	게시글 작성자:${board.boardWriter} <br>
 	게시글 작성일:${board.boardDate} <br>
 	게시글 내용:${board.boardContent} <br>
-
 	
-	
-	
+	<div>
+	<img alt="" src="${cPath }${board.boardRenameFilename }">
+	</div>
 	
 	<form  id="frmReply">
 	<fieldset>
@@ -68,7 +69,7 @@
 		console.log($("#frmReply").serialize()); 
 		
 		$.ajax({
-			url:"<%=request.getContextPath()%>/board/insertReplyAjax",
+			url:"${pageContext.request.contextPath}/board/insertReplyAjax",
 			type:"post",
 			data:$("#frmReply").serialize(),
 			dataType:"json", //받아오는 데이터타입은 json이고 js object로 변형해서 result에 전달
