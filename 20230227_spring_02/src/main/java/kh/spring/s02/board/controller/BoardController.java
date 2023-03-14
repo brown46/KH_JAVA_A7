@@ -197,7 +197,15 @@ public class BoardController {
 	
 	@PostMapping("/insertReplyAjax")
 	@ResponseBody
-	public String insertReplyAjax(BoardVO vo) {
+	public String insertReplyAjax(BoardVO vo
+			, MultipartFile report
+			) {
+		
+		if(report !=null) {
+			System.out.println(report.getOriginalFilename());
+		}else {
+			System.out.println("파일 없음");
+		}
 //		int boardNum =5;
 //		vo.setBoardNum(boardNum);
 //		vo.setBoardContent("임시5답글내용");

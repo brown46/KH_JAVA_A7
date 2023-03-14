@@ -22,11 +22,12 @@
 	<img alt="" src="${cPath }${board.boardRenameFilename }">
 	</div>
 	
-	<form  id="frmReply">
+	<form  id="frmReply" enctype="multipart/form-data">
 	<fieldset>
 	<legend>답글 작성 </legend>
 		<div>제목<input type="text" name="boardTitle" ></div>
 		<div>내용<input type="text" name="boardContent"></div>
+		<div>파일 <input type="file" name="report"></div>
 		<input type="hidden" name="boardNum" value="${board.boardNum}">
 		<button class="btn reply" type="button">답글 작성</button>
 	</fieldset>
@@ -68,10 +69,20 @@
 		console.log($(this)); //jQuery 형태로 변경
 		console.log($("#frmReply").serialize()); 
 		
+		var formdata= new FormData();
+		formdata.append("boardTitle", $("[name=boardTitle]").val());
+		formdata.append("boardContent",$("[name=boardContent]").val() );
+		formdata.append("report", $("[name=report]").files[0]);
+		formdata.append("boardNum", $("[name=boardNum]").val());
+
+		
+		console.log(formData);
+		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/board/insertReplyAjax",
 			type:"post",
-			data:$("#frmReply").serialize(),
+			contentType:"multipart/form-data",
+			data: formData,
 			dataType:"json", //받아오는 데이터타입은 json이고 js object로 변형해서 result에 전달
 			//data:{boardTitle:$("#a").val(),boardContent:$("#b").val(), boardNum: '${board.boardNum}'}, //따옴표 필요!!
 			success:function(result){
