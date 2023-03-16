@@ -10,7 +10,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- properties 이용 -->
-	<context:property-placeholder location="classpath:properties/khs.properties"/>
+	<context:property-placeholder location="classpath:properties/*.properties"/>
 	
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="basicDataSource">
 		<property name="driverClassName" value="${jdbc.driverName}">
@@ -28,6 +28,8 @@
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
 		<property name="dataSource" ref="basicDataSource"></property>
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<property name="mapperLocations" value="classpath:mappers/*"></property>
+		
 	</bean>
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
 		<constructor-arg ref="sqlSessionFactory"></constructor-arg>

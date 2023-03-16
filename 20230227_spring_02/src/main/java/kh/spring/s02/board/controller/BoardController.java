@@ -2,23 +2,20 @@ package kh.spring.s02.board.controller;
 
 
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -33,11 +30,15 @@ import kh.spring.s02.common.file.FileUtil;
 @Controller
 @RequestMapping("/board")
 public class BoardController {	
-	@Autowired BoardService service;
-	
+	@Autowired
+	BoardService service;
+	@Autowired 
+	@Qualifier("fileUtil")
+	private FileUtil fileUtil;
 	
 	private static final int BOARD_LIMIT=5;
 	private static final int Page_LIMIT=3;
+
 	private static final String UPLOAD_FOLDER ="\\resources\\uploadfiles";
 	@GetMapping("/list")
 	public ModelAndView viewInsertBoard(
@@ -103,8 +104,8 @@ public class BoardController {
 		Map<String, String> filePath;
 		List<Map<String, String>> fileListPath;
 		try {
-			fileListPath = new FileUtil().saveFileList(multiReq, request, null);
-			filePath = new FileUtil().saveFile(report, request, null);
+			//fileListPath = fileUtil.saveFileList(multiReq, request, null);
+			filePath = fileUtil.saveFile(report, request, null);
 			vo.setBoardOriginalFilename(filePath.get("original"));
 			vo.setBoardRenameFilename(filePath.get("rename"));
 			
@@ -180,9 +181,18 @@ public class BoardController {
 //		
 //		
 //	}
-	@GetMapping("/read")
+	
+	//URL
+	//  /board/read?boardNum=27&replyPage=3
+		// location.href="board/read?boardNum=${elboardNum}&replyPage=${elreplyPage}"
+	//  /board/read/27/3
+		// location.href="board/read/27/3"
+	@GetMapping("/read/{boardNum}/{replyPage}")
 	public ModelAndView viewReadBoard(ModelAndView mv 
-			, @RequestParam(required = false, defaultValue ="5") int boardNum) {
+//			, @RequestParam(required = false, defaultValue ="5") int boardNum) {
+			, @PathVariable int replyPage
+			, @PathVariable int boardNum
+			) {
 		//TODO
 		String writer="user22";
 		

@@ -21,6 +21,22 @@
 	<div>
 	<img alt="" src="${cPath }${board.boardRenameFilename }">
 	</div>
+	<!-- 첨부 파일들 모두 표시 -->
+	<div>	
+	
+	<c:forEach varStatus="vs" items="${board.boardFileList }" var="boardfile">
+		<p>${boardfile.originalFilename } </p>
+		<img alt="" src="${cPath }${boardfile.renameFilename }">	
+	</c:forEach>
+	
+		<img alt="" src="${cPath }/1번이미지">
+		<img alt="" src="${cPath }/3번이미지">
+		<img alt="" src="${cPath }/4번이미지">
+	</div>
+	
+	
+	
+	<hr>
 	
 	<form  id="frmReply" enctype="multipart/form-data">
 	<fieldset>
