@@ -33,29 +33,26 @@
 	
 	
 
-
-	<insert id="insert" parameterType="BoardVO">
+<!-- sequence 사용 -->
+	<insert id="insert" parameterType="hashmap">
 		insert into BOARD values
 		(	
-	
-		
-		
-			(select NVL(max(BOARD_NUM),0)+1 from BOARD)
-			,#{boardTitle}
-			,#{boardWriter}
-			,#{boardContent}
-			,#{boardOriginalFilename}
-			,#{boardRenameFilename}
+			 #{seqBoardNum}
+			,#{bvo.boardTitle}
+			,#{bvo.boardWriter}
+			,#{bvo.boardContent}
+			,#{bvo.boardOriginalFilename}
+			,#{bvo.boardRenameFilename}
 			, DEFAULT
 				<choose>
 			<when test="boardNum !=0">
-			,(select board_level+1 from board where board_num=#{boardNum})
-			,(select board_ref from board where board_num=#{boardNum})
-			,(select board_reply_seq+1 from board where board_num=#{boardNum})
+			,(select board_level+1 from board where board_num=#{bvo.boardNum})
+			,(select board_ref from board where board_num=#{bvo.boardNum})
+			,(select board_reply_seq+1 from board where board_num=#{bvo.boardNum})
 			</when>
 			<otherwise>
 			,DEFAULT
-			,(select NVL(max(BOARD_NUM),0)+1 from BOARD)
+			,#{seqBoardNum}
 			,DEFAULT			
 			</otherwise>		
 		</choose>
@@ -141,8 +138,12 @@
 	
 	
 	
-	
-	
+	<select id="getSeqBoardNum" resultType="_int">
+		select SEQ_BOARD_NUM.nextval from dual
+	</select>
+	<insert id="" parameterType="boardVO">
+		INSERT INTO board_file VALUES(#{},#{boardOriginalFilename},#{boardRenameFileName}) 
+	</insert>
 	
 	
 	
